@@ -1,0 +1,13 @@
+{
+    "require": {
+        "php": "^7.4"
+    },
+    "require-dev": {},
+    "autoload": {
+        "psr-4": {
+            "Your_Namespace\\": [
+                "classes/"
+            ]
+        }
+    }
+}
