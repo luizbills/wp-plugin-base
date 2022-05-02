@@ -6,20 +6,19 @@ return [
 	'php' => [
 		'message' => function () {
 			$req_version = h::config_get( 'REQUIRED_PHP_VERSION', false );
-			return "Atualize o PHP para a versão $req_version ou superior";
+			return __( "You need update the server PHP to version $req_version or more recent", 'your_text_domain' );
 		},
 		'check' => function () {
 			$req_version = h::config_get( 'REQUIRED_PHP_VERSION', false );
 			$serv_version = \preg_replace( '/[^0-9\.]/', '', PHP_VERSION );
-			return \version_compare( $serv_version, $req_version, '>=' );
+			return $req_version && $serv_version ? \version_compare( $serv_version, $req_version, '>=' ) : true;
 		}
 	],
-	'woocommerce' => [
-		'message' => __( 'You need install and activate the WooCommerce plugin.', '' ),
-		'check' => function () {
-			$req_version = h::config_get( 'REQUIRED_PHP_VERSION', '' );
-			$server_version = $req_version ? \preg_replace( '/[^0-9\.]/', '', PHP_VERSION ) : false;
-			return $req_version && $server_version ? \version_compare( $server_version, $req_version, '>=' ) : true;
-		}
-	],
+
+// 	'woocommerce' => [
+// 		'message' => __( 'You need install and activate the WooCommerce plugin.', 'your_text_domain' ),
+// 		'check' => function () {
+// 			return \function_exists( 'WC' ); 
+// 		}
+// 	],
 ];
