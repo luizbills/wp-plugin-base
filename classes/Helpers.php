@@ -83,21 +83,6 @@ abstract class Helpers {
 		return h::prefix( $transient ) . '_' . h::get_plugin_version();
 	}
 
-	// ARRAY
-	public static function array_get ( $arr, $key, $default = false ) {
-		// usage #1: `h::array_get( $arr, 'x' ); // $arr['x']`
-		// usage #2: `h::array_get( $arr, [ 'x', 'y' ] ); // $arr['x']['y']`
-		$keys = is_array( $key ) ? $key : [ $key ];
-		foreach ( $keys as $k ) {
-			if ( is_array( $arr ) && isset( $arr[ $k ] ) ) {
-				$arr = $arr[ $k ];
-			} else {
-				return $default;
-			}
-		}
-		return $arr;
-	}
-
 	// DEBUG
 	public static function dd ( $value, $pre = true ) {
 		if ( $pre ) echo '<pre>';
@@ -116,6 +101,64 @@ abstract class Helpers {
 
 	public static function get_wp_error_message ( $wp_error, $code = '' ) {
 		return \is_wp_error( $wp_error ) ? $wp_error->get_error_message( $code ) : '';
+	}
+	
+	// ARRAY
+	public static function array_get ( $arr, $key, $default = false ) {
+		// usage #1: `h::array_get( $arr, 'x' ); // $arr['x']`
+		// usage #2: `h::array_get( $arr, [ 'x', 'y' ] ); // $arr['x']['y']`
+		$keys = is_array( $key ) ? $key : [ $key ];
+		foreach ( $keys as $k ) {
+			if ( is_array( $arr ) && isset( $arr[ $k ] ) ) {
+				$arr = $arr[ $k ];
+			} else {
+				return $default;
+			}
+		}
+		return $arr;
+	}
+	
+	// STRING
+	public static function str_length ( $string, $encoding = null ) {
+		return \mb_strlen( $string, $encoding ? $encoding : 'UTF-8' );
+	}
+
+	public static function str_lower ( $string, $encoding = null ) {
+		return \mb_strtolower( $string, $encoding ? $encoding : 'UTF-8' );
+	}
+
+	public static function str_upper ( $string, $encoding = null ) {
+		return \mb_strtoupper( $string, $encoding ? $encoding : 'UTF-8' );
+	}
+
+	public static function str_before ( $string, $search ) {
+		return '' === $search ? $string : \explode( $search, $string )[0];
+	}
+
+	public static function str_after ( $string, $search ) {
+		return '' === $search ? $string : \array_reverse( \explode( $search, $string, 2 ) )[0];
+	}
+	
+	public static function str_starts_with ( $string, $search ) {
+        return h::str_after( $string, $search ) !== $string;
+    }
+	
+	public static function str_ends_with ( $string, $search ) {
+        return h::str_before( $string, $search ) !== $string;
+    }
+
+	public static function str_mask ( $string, $mask, $symbol = 'X' ) {
+		// usage: `h::str_mask( 'XXX.XXX.XXX-XX', '83699642062' ); // outputs 836.996.420-62`
+		$result = '';
+		$k = 0;
+		for ( $i = 0; $i < \strlen( $mask ); ++$i ) {
+			if ( $mask[ $i ] === $symbol ) {
+				if ( isset( $string[ $k ] ) ) $result .= $string[ $k++ ];
+			} else {
+				$result .= $mask[ $i ];
+			}
+		}
+		return $result;
 	}
 
 	// == YOUR CUSTOM HELPERS (ALWAYS STATIC) ==
