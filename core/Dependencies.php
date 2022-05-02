@@ -28,18 +28,27 @@ abstract class Dependencies {
 
 	public static function check_dependencies () {
 		$errors = [];
+		$passed = [];
 
 		foreach ( self::$dependencies as $key => $dep ) {
+			Debug::log( 'checking ' . $key );
+
 			$check = is_callable( $dep['check'] ) ? call_user_func( $dep['check'] ) : $dep['check'];
+			$message = is_callable( $dep['message'] ) ? call_user_func( $dep['message'] ) : $dep['message'];
+
+			Debug::log( 'Result:', $check );
+
 			if ( ! $check ) {
-				$errors[ $key ] = $dep['message'];
+				$errors[ $key ] = $message;
+			} else {
+				$passed[ $key ] = $message;
 			}
 		}
 
 		self::$dependencies = null;
 
 		if ( count( $errors ) > 0 ) {
-			self::display_errors( $errors );
+			self::display_errors( $errors, $passed );
 		}
 
 		$should_start = 0 === count( $errors );
@@ -51,15 +60,13 @@ abstract class Dependencies {
 		Config::set( 'PLUGIN_STARTED', $should_start );
 	}
 
-	protected static function display_errors ( $errors ) {
+	protected static function display_errors ( $errors, $passed ) {
 		if ( ! \is_admin() ) return;
 
-		\add_action( 'admin_notices', function () use ( $errors ) {
+		\add_action( 'admin_notices', function () use ( $errors, $passed ) {
 			$allowed_html = [
-				'a' => [
-					'href' => [],
-					'title' => [],
-				],
+				'a' => [ 'href' => [], 'title' => [] ],
+				'span' => [ 'style' => [] ],
 				'br' => [],
 				'em' => [],
 				'strong' => [],
@@ -67,14 +74,23 @@ abstract class Dependencies {
 
 			echo "<div class='notice notice-error'><p>";
 			echo sprintf(
-				'Missing dependencies for %s:',
+				__( 'Missing dependencies for %s:', 'your_text_domain' ),
 				"<strong>" . Config::get( 'NAME' ) . "</strong>",
 			);
 
 			foreach ( $errors as $error_message ) {
 				$line = \sprintf(
-					'%s • %s',
-					\str_repeat( '&nbsp;', 8 ),
+					'<br>%s <span style="color:#e03131">✖ %s</span>',
+					\str_repeat( '&nbsp;', 4 ),
+					$error_message
+				);
+				echo \wp_kses( $line, $allowed_html );
+			}
+
+			foreach ( $passed as $error_message ) {
+				$line = \sprintf(
+					'<br>%s <span style="color:#2b8a3e">✔ %s</span>',
+					\str_repeat( '&nbsp;', 4 ),
 					$error_message
 				);
 				echo \wp_kses( $line, $allowed_html );
