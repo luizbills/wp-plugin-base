@@ -31,11 +31,6 @@ abstract class Helpers {
 		return \plugins_url( $path, h::config_get( 'FILE' ) );
 	}
 
-	// PLUGIN VERSION
-	public static function get_plugin_version () {
-		return h::config_get( 'VERSION', '' );
-	}
-
 	// WP OPTIONS
 	public static function update_option ( $key, $value ) {
 		if ( null === $value ) {
