@@ -22,6 +22,7 @@ abstract class Helpers {
 	}
 
 	public static function prefix ( $appends = '' ) {
+		$appends = $appends ? \sanitize_title_with_dashes( $appends ) : '';
 		return h::config_get( 'PREFIX' ) . $appends;
 	}
 
@@ -30,8 +31,13 @@ abstract class Helpers {
 		// usage: `echo h::plugin_url( 'assets/js/app.js' );`
 		return \plugins_url( $path, h::config_get( 'FILE' ) );
 	}
+	
+	// PLUGIN VERSION
+	public static function get_plugin_version () {
+		return preg_replace( '/[^0-9.]/', '',  h::config_get( 'VERSION', '' ) );
+	}
 
-	// WP OPTIONS
+	// WP OPTIONS PREFIXED
 	public static function update_option ( $key, $value ) {
 		if ( null === $value ) {
 			return \delete_option( h::prefix( $key ) );
@@ -64,15 +70,19 @@ abstract class Helpers {
 	public static function remember ( $transient, $expiration, $callback ) {
 		$key = h::get_transient_key( $transient );
 		$value = h::get_transient( $key );
-		if ( null === $value ) {
+		if ( null === $value || false === $value ) {
 			$value = call_user_func( $callback );
-			\set_transient( $key, $value, $expiration );
+			if ( null !== $value && false !== $value ) {
+				\set_transient( $key, $value, $expiration );
+			}
 		}
 		return $value;
 	}
 
 	public static function get_transient_key ( $transient ) {
-		return h::prefix( $transient ) . '_' . h::get_plugin_version();
+		h::throw_if( ! $transient, 'Invalid transient key' ); 
+		$key = h::prefix( $transient ) . '_' . h::get_plugin_version();
+		h::throw_if( strlen( $key ) > 172, 'Transient key must have 172 or less in length' ); 
 	}
 
 	// ARRAY
