@@ -10,11 +10,12 @@ $prompts = [
 ];
 $defaults = [];
 
-$ready = true;
-$values = [
-	'Plugin Name' => 'Test',
-	'PHP Namespace' => 'Test\Plugin',
-];
+// FOR DEBUG ONLY
+// $ready = true;
+// $values = [
+// 	'Plugin Name' => 'Test',
+// 	'PHP Namespace' => 'Test\Plugin',
+// ];
 
 // get some plugin informations
 while ( ! $ready ) {
@@ -137,5 +138,4 @@ echo PHP_EOL . "The plugin was successfully created in $dest_dir" . PHP_EOL . PH
 
 chdir( $dest_dir );
 echo shell_exec( 'ls -Apl' );
-
 file_put_contents( $src_dir . '/' . '.newplugin', $dest_dir );
