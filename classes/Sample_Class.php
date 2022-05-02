@@ -7,7 +7,9 @@ use Your_Namespace\Helpers as h;
 final class Sample_Class {
 	public function __start () {
 		// This method is called automatically when all plugin dependencies are active.
-		// Use this method to log your actions and filters hooks
+		// Use this method to add your actions and filters hooks
+
+		// example:
 		\add_action( 'plugins_loaded', [ $this, 'init' ], 10 );
 	}
 
