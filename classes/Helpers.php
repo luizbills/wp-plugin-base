@@ -49,16 +49,19 @@ abstract class Helpers {
 		return \get_option( h::prefix( $key ), $default );
 	}
 
-	// CACHE/TRANSIENTS
+	// CACHE/TRANSIENTS (DISABLED IF WP_DEBUG = TRUE)
 	public static function set_transient ( $transient, $value, $expiration = 0 ) {
-		$key = h::get_transient_key( $transient );
-		if ( null === $value ) {
-			return \delete_transient( $key );
+		if ( ! WP_DEBUG ) {
+			$key = h::get_transient_key( $transient );
+			if ( null === $value ) {
+				return \delete_transient( $key );
+			}
+			if ( is_callable( $value ) ) {
+				$value = \call_user_func( $value );
+			}
+			\set_transient( $key, $value, $expiration );
 		}
-		if ( is_callable( $value ) ) {
-			$value = \call_user_func( $value );
-		}
-		return \set_transient( $key, $value, $expiration );
+		return $value;
 	}
 
 	public static function get_transient ( $transient, $default = false ) {
@@ -68,21 +71,16 @@ abstract class Helpers {
 	}
 
 	public static function remember ( $transient, $expiration, $callback ) {
-		$key = h::get_transient_key( $transient );
-		$value = h::get_transient( $key );
+		$value = ! WP_DEBUG ? h::get_transient( $transient ) : null;
 		if ( null === $value || false === $value ) {
 			$value = call_user_func( $callback );
-			if ( null !== $value && false !== $value ) {
-				\set_transient( $key, $value, $expiration );
-			}
+			if ( ! WP_DEBUG ) h::set_transient( $transient, $value, $expiration );
 		}
 		return $value;
 	}
 
 	public static function get_transient_key ( $transient ) {
-		h::throw_if( ! $transient, 'Invalid transient key' ); 
-		$key = h::prefix( $transient ) . '_' . h::get_plugin_version();
-		h::throw_if( strlen( $key ) > 172, 'Transient key must have 172 or less in length' ); 
+		return h::prefix( $transient ) . '_' . h::get_plugin_version();
 	}
 
 	// ARRAY
