@@ -12,12 +12,13 @@ Execute this script below in your `wp-content/plugins` to generate a new plugin 
 
 ```bash
 git clone \
-  --branch master \
+  --branch main \
   --single-branch --no-tags \
   https://github.com/luizbills/wp-plugin-base.git .wp_plugin_base \
-&& cd .wp_plugin_base && php .bin/install.php && sleep .1
+&& cd .wp_plugin_base && php .bin/install.php && sleep .1 \
 && cd $(cat .newplugin) \
 && rm -rf ../.wp_plugin_base/
+
 ```
 
 ## Contributing
