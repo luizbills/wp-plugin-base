@@ -6,7 +6,7 @@ return [
 	'php' => [
 		'message' => function () {
 			$req_version = h::config_get( 'REQUIRED_PHP_VERSION', false );
-			return sprintf (
+			return sprintf(
 				__( "Update your %s version to $req_version or later.", 'your_text_domain' ),
 				'<strong>PHP</strong>'
 			);
@@ -19,7 +19,7 @@ return [
 	],
 
 	// 'woocommerce' => [
-	// 	'message' => sprintf (
+	// 	'message' => sprintf(
 	// 		__( 'Install and activate the %s plugin.', 'your_text_domain' ),
 	// 		'<strong>WooCommerce</strong>'
 	// 	),
