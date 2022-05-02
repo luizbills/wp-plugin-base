@@ -31,13 +31,9 @@ abstract class Dependencies {
 		$passed = [];
 
 		foreach ( self::$dependencies as $key => $dep ) {
-			Debug::log( 'checking ' . $key );
-
 			$check = is_callable( $dep['check'] ) ? call_user_func( $dep['check'] ) : $dep['check'];
 			$message = is_callable( $dep['message'] ) ? call_user_func( $dep['message'] ) : $dep['message'];
-
-			Debug::log( 'Result:', $check );
-
+			
 			if ( ! $check ) {
 				$errors[ $key ] = $message;
 			} else {
