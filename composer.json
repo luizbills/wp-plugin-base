@@ -12,5 +12,8 @@
                 "core/"
             ]
         }
+    },
+    "suggest": {
+        "ext-mbstring": "Needed for some string helpers"
     }
 }
