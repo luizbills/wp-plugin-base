@@ -31,7 +31,7 @@ abstract class Helpers {
 		// usage: `echo h::plugin_url( 'assets/js/app.js' );`
 		return \plugins_url( $path, h::config_get( 'FILE' ) );
 	}
-	
+
 	// PLUGIN VERSION
 	public static function get_plugin_version () {
 		return preg_replace( '/[^0-9.]/', '',  h::config_get( 'VERSION', '' ) );
@@ -102,7 +102,7 @@ abstract class Helpers {
 	public static function get_wp_error_message ( $wp_error, $code = '' ) {
 		return \is_wp_error( $wp_error ) ? $wp_error->get_error_message( $code ) : '';
 	}
-	
+
 	// ARRAY
 	public static function array_get ( $arr, $key, $default = false ) {
 		// usage #1: `h::array_get( $arr, 'x' ); // $arr['x']`
@@ -117,7 +117,7 @@ abstract class Helpers {
 		}
 		return $arr;
 	}
-	
+
 	// STRING
 	public static function str_length ( $string, $encoding = null ) {
 		return \mb_strlen( $string, $encoding ? $encoding : 'UTF-8' );
@@ -138,11 +138,11 @@ abstract class Helpers {
 	public static function str_after ( $string, $search ) {
 		return '' === $search ? $string : \array_reverse( \explode( $search, $string, 2 ) )[0];
 	}
-	
+
 	public static function str_starts_with ( $string, $search ) {
         return h::str_after( $string, $search ) !== $string;
     }
-	
+
 	public static function str_ends_with ( $string, $search ) {
         return h::str_before( $string, $search ) !== $string;
     }
@@ -161,7 +161,7 @@ abstract class Helpers {
 		return $result;
 	}
 
-	// == YOUR CUSTOM HELPERS (ALWAYS STATIC) ==
+	// YOUR CUSTOM HELPERS (ALWAYS STATIC)
 	// public static function foo () {
 	//     return 'bar';
 	// }
