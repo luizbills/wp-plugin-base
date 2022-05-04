@@ -123,6 +123,9 @@ foreach ( $files as $file ) {
 	if ( 'composer.json' === $filename ) {
 		$find_replace['Your_Namespace'] = str_replace( "\\\\", "\\", $find_replace['Your_Namespace'] );
 	}
+	elseif ( '.gitignore' === $filename ) {
+		$content = str_replace( "\n/.newplugin", '', $content );
+	}
 
 	file_put_contents( $target, $content );
 }
