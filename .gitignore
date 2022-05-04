@@ -1,4 +1,4 @@
-/wp-build/
 /vendor/
 /node_modules/
+/wp-build/
 /.newplugin
