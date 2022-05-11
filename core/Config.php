@@ -22,7 +22,7 @@ abstract class Config {
 			$values = include $root . '/config.php';
 			foreach ( $values as $k => $v ) {
 				if ( 'SLUG' === \mb_strtoupper( $k ) ) {
-					$v = \sanitize_title_with_dashes( $v );
+					$v = self::sanitize_slug( $v );
 				}
 				self::set( $k, $v );
 			}
@@ -65,5 +65,18 @@ abstract class Config {
 			throw new \Exception( __CLASS__ . ": Undefined config key: $key" );
 		}
 		return $default;
+	}
+	
+	public static function sanitize_slug ( $string, $sep = '-' ) {
+		$slug = \strtolower( \remove_accents( $string ) ); // Convert to ASCII
+		// Standard replacements
+		$slug = \str_replace( [ ' ', '_', '-' ], $sep, $slug );
+		// Replace all non-alphanumeric by $separator
+		$slug = \preg_replace( "/[^a-z0-9\\$sep]/", $sep, $slug );
+		// Replace any more than one $separator in a row
+		$slug = \preg_replace( "/\\$sep+/", $sep, $slug );
+		// Remove last $separator if at the end
+		$slug = \trim( $slug, $sep );
+		return $slug;
 	}
 }
