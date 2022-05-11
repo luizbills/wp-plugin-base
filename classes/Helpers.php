@@ -21,8 +21,8 @@ abstract class Helpers {
 		return h::config_get( 'SLUG' );
 	}
 
-	public static function prefix ( $appends = '' ) {
-		$appends = $appends ? \sanitize_title_with_dashes( $appends ) : '';
+	public static function prefix ( $appends = '', $sanitize = true ) {
+		$appends = $sanitize && $appends ? h::sanitize_slug( $appends, '_' ) : $appends;  
 		return h::config_get( 'PREFIX' ) . $appends;
 	}
 
@@ -101,6 +101,11 @@ abstract class Helpers {
 
 	public static function get_wp_error_message ( $wp_error, $code = '' ) {
 		return \is_wp_error( $wp_error ) ? $wp_error->get_error_message( $code ) : '';
+	}
+	
+	// SECURITY
+	public static function sanitize_slug ( $string, $sep = '-' ) {
+		return Config::sanitize_slug( $string, $sep );
 	}
 
 	// ARRAY
