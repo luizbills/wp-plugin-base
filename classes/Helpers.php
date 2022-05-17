@@ -108,6 +108,14 @@ abstract class Helpers {
 		return Config::sanitize_slug( $string, $sep );
 	}
 
+	public static function esc_unsafe_html ( $html ) {
+		// remove all script and style tags with code
+		$html = \preg_replace( '/<(script|style)[^>]*?>.*?<\/\\1>/si', '', $html );
+		// remove any script, style, link and iframe tags
+		$html = \preg_replace( '/<(script|style|iframe|link)[^>]*?>/si', '', $html );
+		return $html;
+	}
+
 	// ARRAY
 	public static function array_get ( $arr, $key, $default = false ) {
 		// usage #1: `h::array_get( $arr, 'x' ); // $arr['x']`
@@ -145,12 +153,12 @@ abstract class Helpers {
 	}
 
 	public static function str_starts_with ( $string, $search ) {
-        return h::str_after( $string, $search ) !== $string;
-    }
+		return h::str_after( $string, $search ) !== $string;
+	}
 
 	public static function str_ends_with ( $string, $search ) {
-        return h::str_before( $string, $search ) !== $string;
-    }
+		return h::str_before( $string, $search ) !== $string;
+	}
 
 	public static function str_mask ( $string, $mask, $symbol = 'X' ) {
 		// usage: `h::str_mask( 'XXX.XXX.XXX-XX', '83699642062' ); // outputs 836.996.420-62`
@@ -164,6 +172,21 @@ abstract class Helpers {
 			}
 		}
 		return $result;
+	}
+
+	// TEMPLATE RENDERER
+	public static function get_template ( $path, $args ) {
+		$path .= ! h::str_ends_with( $path, '.php' ) ? '.php' : '';
+		$dir = \rtrim( h::config_get( 'TEMPLATES_DIR', 'templates' ), '/' );
+		$path = h::config_get( 'DIR' ) . "/{$dir}/$path";
+		try {
+			\extract( $args );
+			\ob_start();
+			include $path;
+			return \ob_get_clean();
+		} catch ( \Throwable $e ) {
+			throw new \Exception( "Error while rendering template \"$path\": " . $e->getMessage() );
+		}
 	}
 
 	// YOUR CUSTOM HELPERS (ALWAYS STATIC)
