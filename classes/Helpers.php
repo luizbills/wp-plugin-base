@@ -175,8 +175,8 @@ abstract class Helpers {
 	}
 
 	// TEMPLATE RENDERER
-	public static function get_template ( $path, $args ) {
-		$path .= ! h::str_ends_with( $path, '.php' ) ? '.php' : '';
+	public static function get_template ( $path, $args = [] ) {
+		$args = \apply_filters( h::prefix( 'template_args' ), $args, $path );
 		$dir = \rtrim( h::config_get( 'TEMPLATES_DIR', 'templates' ), '/' );
 		$path = h::config_get( 'DIR' ) . "/{$dir}/$path";
 		try {
