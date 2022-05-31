@@ -1,5 +1,7 @@
 ## WP Plugin Base
 
+Powerful Boilerplate for WordPress Plugins ― Successor of https://github.com/luizbills/wp-plugin-skeleton
+
 ## Requirements
 
 - [PHP](http://php.net/) v7.4+
