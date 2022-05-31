@@ -1,6 +1,6 @@
 ## WP Plugin Base
 
-Powerful Boilerplate for WordPress Plugins ― Lightweight successor of https://github.com/luizbills/wp-plugin-skeleton
+Powerful Boilerplate for WordPress Plugins ― Lightweight successor of [luizbills/wp-plugin-skeleton](https://github.com/luizbills/wp-plugin-skeleton)
 
 ## Requirements
 
