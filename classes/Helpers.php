@@ -7,6 +7,11 @@ use Your_Namespace\Core\Config;
 use Your_Namespace\Core\Debug;
 
 abstract class Helpers {
+	// Get the value if set, otherwise return a default value or false. Prevents notices when data is not set.
+	public static function get ( &$var, $default = false ) {
+		return isset( $var ) ? $var : $default;
+	}
+
 	// CONFIG SETTER AND GETTER
 	public static function config_get ( $key, $default = null ) {
 		return Config::get( $key, $default );
@@ -22,7 +27,7 @@ abstract class Helpers {
 	}
 
 	public static function prefix ( $appends = '', $sanitize = true ) {
-		$appends = $sanitize && $appends ? h::sanitize_slug( $appends, '_' ) : $appends;  
+		$appends = $sanitize && $appends ? h::sanitize_slug( $appends, '_' ) : $appends;
 		return h::config_get( 'PREFIX' ) . $appends;
 	}
 
@@ -102,7 +107,7 @@ abstract class Helpers {
 	public static function get_wp_error_message ( $wp_error, $code = '' ) {
 		return \is_wp_error( $wp_error ) ? $wp_error->get_error_message( $code ) : '';
 	}
-	
+
 	// SECURITY
 	public static function sanitize_slug ( $string, $sep = '-' ) {
 		return Config::sanitize_slug( $string, $sep );
@@ -114,21 +119,6 @@ abstract class Helpers {
 		// remove any script, style, link and iframe tags
 		$html = \preg_replace( '/<(script|style|iframe|link)[^>]*?>/si', '', $html );
 		return $html;
-	}
-
-	// ARRAY
-	public static function array_get ( $arr, $key, $default = false ) {
-		// usage #1: `h::array_get( $arr, 'x' ); // $arr['x']`
-		// usage #2: `h::array_get( $arr, [ 'x', 'y' ] ); // $arr['x']['y']`
-		$keys = is_array( $key ) ? $key : [ $key ];
-		foreach ( $keys as $k ) {
-			if ( is_array( $arr ) && isset( $arr[ $k ] ) ) {
-				$arr = $arr[ $k ];
-			} else {
-				return $default;
-			}
-		}
-		return $arr;
 	}
 
 	// STRING
@@ -177,8 +167,10 @@ abstract class Helpers {
 	// TEMPLATE RENDERER
 	public static function get_template ( $path, $args = [] ) {
 		$args = \apply_filters( h::prefix( 'template_args' ), $args, $path );
+		$path .= ! h::str_ends_with( $path, '.php' ) ? '.php' : '';
 		$dir = \rtrim( h::config_get( 'TEMPLATES_DIR', 'templates' ), '/' );
 		$path = h::config_get( 'DIR' ) . "/{$dir}/$path";
+
 		try {
 			\extract( $args );
 			\ob_start();
