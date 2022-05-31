@@ -21,13 +21,13 @@ abstract class Debug {
 		if ( ! defined( 'WP_DEBUG_LOG' ) || ! WP_DEBUG_LOG ) return;
 		$output = [];
 		foreach ( \func_get_args() as $arg ) {
-			$output[] = self::format( $arg );
+			$output[] = self::format_value( $arg );
 		}
 		$slug = Config::get( 'SLUG' );
 		\error_log( "[$slug] " . \implode( ' ', $output ) );
 	}
 
-	public static function format ( $value ) {
+	public static function format_value ( $value ) {
 		if ( \is_object( $value ) || \is_array( $value ) ) {
 			$value = \print_r( $value, true );
 		}
