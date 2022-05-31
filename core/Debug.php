@@ -31,7 +31,7 @@ abstract class Debug {
 		if ( \is_object( $value ) || \is_array( $value ) ) {
 			$value = \print_r( $value, true );
 		}
-		elseif ( \is_bool( $arg ) ) {
+		elseif ( \is_bool( $value ) ) {
 			$value = $value ? 'BOOL(TRUE)' : 'BOOL(FALSE)';
 		}
 		elseif ( '' === $value ) {
