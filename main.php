@@ -34,7 +34,7 @@ try {
 	\add_action( 'admin_notices', function () use ( $e ) {
 		list( $plugin_name ) = \get_file_data( __FILE__, [ 'plugin name' ] );
 		$message = \sprintf(
-			'Error on plugin %s activation: %s',
+			esc_html__( 'Error on plugin %s activation: %s', 'your_text_domain' ),
 			"<strong>$plugin_name</strong>",
 			'<br><code>' . \esc_html( $e->getMessage() ) . '</code>'
 		);
