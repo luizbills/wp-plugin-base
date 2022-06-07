@@ -25,9 +25,10 @@ git clone \
 
 ## Contributing
 
-- For features or bug fixes, follow the [CONTRIBUTING guide](CONTRIBUTING.md).
-- Or create an issue for suggestions and other reports.
+- [Create an issue](https://github.com/luizbills/wp-plugin-base/issues/new) for suggestions and other reports.
 
 ## LICENSE
 
-GPL v3
+This repository is licensed under [MIT](https://choosealicense.com/licenses/mit/).
+
+The generated plugin source code will have [GPLv3](/LICENSE) by default (feel free to change).
