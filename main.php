@@ -17,12 +17,18 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 // prevents your PHP files from being executed via direct browser access
 defined( 'WPINC' ) || exit();
 
+// uncomment to load your plugin translations
+// \load_plugin_textdomain( 'your_text_domain', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+
 try {
+	// check composer autoload
 	$composer_autoload = __DIR__ . '/vendor/autoload.php';
 	if ( ! file_exists( $composer_autoload ) ) {
 		throw new \Exception ( $composer_autoload . ' does not exist' );
 	}
 	include_once $composer_autoload;
+
+	// run the plugin
 	\Your_Namespace\Core\Main::start_plugin( __FILE__ );
 } catch ( \Throwable $e ) {
 	\add_action( 'admin_notices', function () use ( $e ) {

@@ -19,17 +19,7 @@ abstract class Main {
 		}
 
 		Config::init( $main_file );
-		self::load_plugin_textdomain( $main_file, 'your_text_domain' );
 		Dependencies::init( $main_file );
 		Loader::init( $main_file );
-	}
-
-	public static function load_plugin_textdomain ( $main_file, $text_domain ) {
-		$dir = Config::get( 'LANGUAGES_DIR', 'languages' );
-		\load_plugin_textdomain(
-			$text_domain,
-			false,
-			\dirname( \plugin_basename( $main_file ) ) . "/$dir/"
-		);
 	}
 }
