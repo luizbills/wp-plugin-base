@@ -14,6 +14,9 @@ License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 */
 
+// prevents your PHP files from being executed via direct browser access
+defined( 'WPINC' ) || exit();
+
 try {
 	$composer_autoload = __DIR__ . '/vendor/autoload.php';
 	if ( ! file_exists( $composer_autoload ) ) {

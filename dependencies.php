@@ -2,6 +2,8 @@
 
 use Your_Namespace\Helpers as h;
 
+defined( 'WPINC' ) || exit();
+
 return [
 	'php' => [
 		'message' => function () {
