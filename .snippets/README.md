@@ -63,4 +63,3 @@ $only_numbers = preg_replace( '/[^0-9]/, '', $str ); // => 1234
 $str = 'olá Посетитель #4321';
 echo preg_replace( "/[^\pL]/u", '', $str ); // => oláПосетитель
 ```
-
