@@ -52,6 +52,14 @@ function date_convert_format ( $date, $to, $from = 'Y-m-d' ) {
 echo date_convert_format( '2022-03-04', 'd/m/Y' ); // => 04/03/2022
 ```
 
+## Convert array in object
+
+```php 
+$arr = [ 'name' => 'Luiz' ];
+$obj = (object) $arr;
+echo $obj->name; // => Luiz
+```
+
 ## Get the current WordPress page URL
 
 ```php
