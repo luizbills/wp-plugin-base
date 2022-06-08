@@ -64,4 +64,4 @@ $str = 'olá Посетитель #4321';
 echo preg_replace( "/[^\pL]/u", '', $str ); // => oláПосетитель
 ```
 
-*Note: `\pL` is a Unicode property shortcut. It can also be written as `\p{L}` or `\p{Letter}`. It matches any kind of letter from any language. [reference](https://www.regular-expressions.info/unicode.html#category)*
+*Note: `\pL` is a Unicode property shortcut. It can also be written as `\p{L}` or `\p{Letter}`. It matches any kind of letter (case insensitive) from any language. [reference](https://www.regular-expressions.info/unicode.html#category)*
