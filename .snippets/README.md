@@ -56,7 +56,7 @@ echo date_convert_format( '2022-03-04', 'd/m/Y' ); // => 04/03/2022
 
 ```php
 $str = '1a-2b-3c-4d';
-$only_numbers = preg_replace( '/[^0-9]/, '', $str ); // => 1234 
+echo preg_replace( '/[^0-9]/', '', $str ); // => 1234 
 ```
 
 ## Regex: remove anything from a string except letters
