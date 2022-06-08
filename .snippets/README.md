@@ -102,13 +102,13 @@ function get_current_url ( $query_args = false ) {
 function build_tag_atts ( $arr ) {
 	$atts = [];
 	foreach ( $arr as $key => $value) {
-		$atts[] = esc_html( $key ) . '="' . esc_attr( $value ) . '"';
+		$atts[] = sanitize_title_with_dashes( $key ) . '="' . esc_attr( $value ) . '"';
 	}
 	return \implode( ' ', $atts );
 }
 
 // usage
-echo build_tag_atts( [ 'id' => 'a', 'class' => 'b' ] ); // id="a" class="b"
+echo build_tag_atts( [ 'id' => 'a', 'data xyz' => 'b' ] ); // id="a" data-xyz="b"
 ```
 
 ## Regex: remove anything from a string except numbers
