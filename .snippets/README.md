@@ -7,18 +7,18 @@ $screen_id = 'edit-shop-order'; // WooCommerce Orders
 
 add_filter( 'bulk_actions-' . $screen_id, 'prefix_register_actions' );
 function prefix_register_actions ( $actions ) {
-  $actions[ 'YOUR_ACTION_ID' ] = __( 'Gerar Etiquetas do Correios' );
-  return $actions;
+	$actions[ 'YOUR_ACTION_ID' ] = __( 'Gerar Etiquetas do Correios' );
+	return $actions;
 }
 
 add_filter( 'handle_bulk_actions-edit-post', 'prefix_handle_actions', 10, 3 );
 function prefix_handle_actions ( $redirect_to, $action, $post_ids ) {
-  if ( $action !== 'YOUR_ACTION_ID' ) {
-    foreach ( $post_ids as $postid ) {
-    	// do something
-    }
-  }
-  return $redirect_to;
+	if ( $action !== 'YOUR_ACTION_ID' ) {
+		foreach ( $post_ids as $postid ) {
+			// do something
+		}
+	}
+	return $redirect_to;
 }
 ```
 
