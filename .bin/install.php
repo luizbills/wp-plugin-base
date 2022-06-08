@@ -80,6 +80,7 @@ $ignores = [
 	'/.git/',
 	'/vendor/',
 	'/.bin/',
+	'/.snippets/',
 	'/README.md',
 	'/composer.lock',
 ];
