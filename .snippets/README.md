@@ -32,6 +32,7 @@ Uses [date_convert_format](#convert-date-format)
 function is_date ( $date, $format = 'Y-m-d' ) {
 	return $date === date_convert_format( $date, $format, $format );
 }
+
 // usage
 is_date( '2022-03-04' ); // => true
 is_date( '2022-03-33' ); // => false (invalid day: 33)
@@ -46,6 +47,7 @@ function date_convert_format ( $date, $to, $from = 'Y-m-d' ) {
 	// h::throw_if( ! $datetime, "$date is not a valid date in format $from" );
 	return $datetime->format( $to );
 }
+
 // usage
 echo date_convert_format( '2022-03-04', 'd/m/Y' ); // => 04/03/2022
 ```
