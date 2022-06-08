@@ -60,8 +60,8 @@ $only_numbers = preg_replace( '/[^0-9]/, '', $str ); // => 1234
 ## Regex: remove anything from a string except letters
 
 ```php
-$str = 'olá Посетитель #4321';
-echo preg_replace( "/[^\pL]/u", '', $str ); // => oláПосетитель
+$str = 'Olá Посетитель #4321';
+echo preg_replace( "/[^\pL]/u", '', $str ); // => OláПосетитель
 ```
 
 *Note: `\pL` is a Unicode property shortcut. It can also be written as `\p{L}` or `\p{Letter}`. It matches any kind of letter (case insensitive) from any language. [reference](https://www.regular-expressions.info/unicode.html#category)*
