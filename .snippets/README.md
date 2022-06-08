@@ -45,7 +45,7 @@ is_date( '2022-03', 'Y-m' ); // => true
 function date_convert_format ( $date, $to, $from = 'Y-m-d' ) {
 	$datetime = DateTime::createFromFormat( $from, $date );
 	// h::throw_if( ! $datetime, "$date is not a valid date in format $from" );
-	return $datetime->format( $to );
+	return $datetime ? $datetime->format( $to ) : false;
 }
 
 // usage
