@@ -1,17 +1,39 @@
 # PHP & WordPress Snippets
 
+## Add an bulk action
+
+```php
+$screen_id = 'edit-shop-order'; // WooCommerce Orders
+
+add_filter( 'bulk_actions-' . $screen_id, 'prefix_register_actions' );
+function prefix_register_actions ( $actions ) {
+  $actions[ 'YOUR_ACTION_ID' ] = __( 'Gerar Etiquetas do Correios' );
+  return $actions;
+}
+
+add_filter( 'handle_bulk_actions-edit-post', 'prefix_handle_actions', 10, 3 );
+function prefix_handle_actions ( $redirect_to, $action, $post_ids ) {
+  if ( $action !== 'YOUR_ACTION_ID' ) {
+    foreach ( $post_ids as $postid ) {
+    	// do something
+    }
+  }
+  return $redirect_to;
+}
+```
+
+See: [https://make.wordpress.org/core/2016/10/04/custom-bulk-actions/](https://make.wordpress.org/core/2016/10/04/custom-bulk-actions/)
+
 ## Add an plugin action link
 
 ```php
 // __FILE__ is the plugin main file
-add_filter(
-	'plugin_action_links_' . plugin_basename( __FILE__ ),
-	function ( $actions ) {
-		$label = 'Settings';
-		$dest_url = esc_url( 'your_url' );
-		return array_merge( [ "<a href=\"$dest_url\">$label</a>" ], $actions );
-	}
-);
+add_filter( 'plugin_action_links_' . plugin_basename( __FILE__ ), 'prefix_add_plugin_action_link' );
+function prefix_add_plugin_action_link ( $actions ) {
+	$label = 'Settings';
+	$dest_url = esc_url( 'your_url' );
+	return array_merge( [ "<a href=\"$dest_url\">$label</a>" ], $actions );
+}
 ```
 
 See: [plugin_action_links_{$plugin_file}](https://developer.wordpress.org/reference/hooks/plugin_action_links_plugin_file/)
