@@ -52,6 +52,33 @@ function date_convert_format ( $date, $to, $from = 'Y-m-d' ) {
 echo date_convert_format( '2022-03-04', 'd/m/Y' ); // => 04/03/2022
 ```
 
+## Get the current WordPress page URL
+
+```php
+function get_current_url ( $query_args = false ) {
+	global $wp;
+	$host = $_SERVER['HTTP_HOST'];
+	$path = isset( $wp->request ) ? $wp->request : '';
+	$protocol = isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
+	$url = "{$protocol}://{$host}/{$path}";
+	return $query_args ? \add_query_arg( $_REQUEST, $url ) : $url;
+}
+```
+
+## Parse tag attributes from an array
+
+```php
+function build_tag_atts ( $arr ) {
+	$atts = [];
+	foreach ( $arr as $key => $value) {
+		$atts[] = esc_html( $key ) . '="' . esc_attr( $value ) . '"';
+	}
+	return \implode( ' ', $atts );
+}
+
+// usage
+echo build_tag_atts( [ 'id' => 'a', 'class' => 'b' ] ); // id="a" class="b"
+
 ## Regex: remove anything from a string except numbers
 
 ```php
