@@ -44,6 +44,7 @@ See: [plugin_action_links_{$plugin_file}](https://developer.wordpress.org/refere
 user_can( $user_id, 'editor' ); // role
 user_can( $user_id, 'install_plugins' ); // capability
 ```
+
 See: [user_can](https://developer.wordpress.org/reference/functions/user_can/), [current_user_can](https://developer.wordpress.org/reference/functions/current_user_can/)
 
 ## Check a date string
@@ -108,6 +109,7 @@ function build_tag_atts ( $arr ) {
 
 // usage
 echo build_tag_atts( [ 'id' => 'a', 'class' => 'b' ] ); // id="a" class="b"
+```
 
 ## Regex: remove anything from a string except numbers
 
