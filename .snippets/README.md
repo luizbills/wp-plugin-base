@@ -1,4 +1,4 @@
-# PHP & WordPress Snippets
+# WordPress Plugins Snippets
 
 ## Add an bulk action
 
