@@ -98,10 +98,13 @@ abstract class Helpers {
 	}
 
 	// DEBUG
-	public static function dd ( $value, $pre = true ) {
-		if ( $pre ) echo '<pre>';
-		var_dump( $value );
-		if ( $pre ) echo '</pre>';
+	public static function dd ( ...$value ) {
+		if ( ! WP_DEBUG ) return;
+		foreach ( $value as $v ) {
+			echo '<pre>';
+			var_dump( $v );
+			echo '</pre>';
+		}
 		die;
 	}
 
