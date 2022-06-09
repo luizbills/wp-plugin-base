@@ -113,12 +113,13 @@ abstract class Helpers {
 		);
 	}
 
-	public static function throw_if ( $condition, $message, $error_code = -1, $exception_class = null ) {
-		return Debug::throw_if( $condition, $message, $error_code, $exception_class );
+	public static function throw_if ( $condition, $message, $exception_class = null ) {
+		return Debug::throw_if( $condition, $message, $exception_class );
 	}
 
-	public static function throw_wp_error ( $wp_error, $code = null ) {
-		if ( \is_wp_error( $wp_error ) ) throw new \RuntimeException( $wp_error->get_error_message( $code ) );
+	public static function throw_wp_error ( $wp_error, $code = null, $exception_class = null ) {
+		$exception_class = $exception_class ? $exception_class : \RuntimeException::class;
+		if ( \is_wp_error( $wp_error ) ) throw new $exception_class( $wp_error->get_error_message( $code ) );
 	}
 
 	public static function nothrow ( $callback, $default = null ) {

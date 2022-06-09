@@ -5,15 +5,13 @@ namespace Your_Namespace\Core;
 use Your_Namespace\Core\Config;
 
 abstract class Debug {
-	public static function throw_if ( $condition, $message, $error_code = -1, $exception_class = null ) {
+	public static function throw_if ( $condition, $message, $exception_class = null ) {
 		if ( $condition ) {
-			if ( \is_callable( $message ) ) {
+			if ( ! is_string( $message ) && \is_callable( $message ) ) {
 				$message = $message();
 			}
-			if ( ! $exception_class ) {
-				$exception_class = \RuntimeException::class;
-			}
-			throw new $exception_class( $message, (int) $error_code );
+			$exception_class = $exception_class ? $exception_class : \RuntimeException::class;
+			throw new $exception_class( $message );
 		}
 	}
 
