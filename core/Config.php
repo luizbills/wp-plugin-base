@@ -26,9 +26,9 @@ abstract class Config {
 				}
 				self::set( $k, $v );
 			}
-			$slug = self::get( 'slug' );
-			if ( ! self::get( 'prefix', false ) ) {
-				self::set( 'prefix', str_replace( '-', '_', $slug ) . '_' );
+			$slug = self::get( 'SLUG' );
+			if ( ! self::get( 'PREFIX', false ) ) {
+				self::set( 'PREFIX', str_replace( '-', '_', $slug ) . '_' );
 			}
 		}
 
