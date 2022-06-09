@@ -21,11 +21,6 @@ abstract class Helpers {
 		return true;
 	}
 
-	// returns FALSE if $var is null ou false
-	public static function nof ( $var ) {
-		return null === $var || false === $var;
-	}
-
 	// CONFIG SETTER AND GETTER
 	public static function config_get ( $key, $default = null ) {
 		return Config::get( $key, $default );
@@ -58,7 +53,7 @@ abstract class Helpers {
 
 	// WP OPTIONS PREFIXED
 	public static function update_option ( $key, $value ) {
-		if ( h::nof( $value ) ) {
+		if ( ! h::filled( $value ) ) {
 			return \delete_option( h::prefix( $key ) );
 		}
 		return \update_option( h::prefix( $key ), $value );
@@ -72,7 +67,7 @@ abstract class Helpers {
 	public static function set_transient ( $transient, $value, $expiration = 0 ) {
 		if ( ! WP_DEBUG ) {
 			$key = h::get_transient_key( $transient );
-			if ( h::nof( $value ) ) {
+			if ( ! h::filled( $value ) ) {
 				return \delete_transient( $key );
 			}
 			if ( is_callable( $value ) ) {
@@ -86,12 +81,12 @@ abstract class Helpers {
 	public static function get_transient ( $transient, $default = null ) {
 		$key = h::get_transient_key( $transient );
 		$value = \get_transient( $key );
-		return h::nof( $value ) ? $default : $value;
+		return ! h::filled( $value ) ? $default : $value;
 	}
 
 	public static function remember ( $transient, $expiration, $callback ) {
 		$value = ! WP_DEBUG ? h::get_transient( $transient ) : null;
-		if ( h::nof( $value ) ) {
+		if ( ! h::filled( $value ) ) {
 			$value = call_user_func( $callback );
 			if ( ! WP_DEBUG ) h::set_transient( $transient, $value, $expiration );
 		}
