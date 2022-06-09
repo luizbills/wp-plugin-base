@@ -18,7 +18,7 @@ abstract class Helpers {
 		if ( is_string( $var ) && '' === trim( $var ) ) return false;
 		if ( is_array( $var ) && 0 === count( $var ) ) return false;
 		if ( is_object( $var ) && 0 === count( (array) $var ) ) return false;
-		return true;
+		return \apply_filters( h::prefix( 'is_value_filled' ), true, $var );
 	}
 
 	// CONFIG SETTER AND GETTER
