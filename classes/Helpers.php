@@ -117,8 +117,8 @@ abstract class Helpers {
 		return Debug::throw_if( $condition, $message, $error_code, $exception_class );
 	}
 
-	public static function get_wp_error_message ( $wp_error, $code = '' ) {
-		return \is_wp_error( $wp_error ) ? $wp_error->get_error_message( $code ) : '';
+	public static function throw_wp_error ( $wp_error, $code = null ) {
+		if ( \is_wp_error( $wp_error ) ) throw new \RuntimeException( $wp_error->get_error_message( $code ) );
 	}
 
 	// SECURITY
