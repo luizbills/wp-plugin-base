@@ -110,8 +110,8 @@ abstract class Helpers {
 		die;
 	}
 
-	public static function log () {
-		return call_user_func_array( [ Debug::class, 'log' ], func_get_args() );
+	public static function log ( $message = null, $context = [] ) {
+		return call_user_func( [ Debug::class, 'log' ], $message, $context );
 	}
 
 	public static function throw_if ( $condition, $message, $error_code = -1, $exception_class = null ) {

@@ -17,14 +17,24 @@ abstract class Debug {
 		}
 	}
 
-	public static function log () {
-		if ( ! defined( 'WP_DEBUG_LOG' ) || ! WP_DEBUG_LOG ) return;
-		$output = [];
-		foreach ( \func_get_args() as $arg ) {
-			$output[] = self::format_value( $arg );
+	public static function log ( $message = null, $context = [] ) {
+		$args = \func_get_args();
+		$handled = \apply_filter( Config::get( 'PREFIX' ) . 'debug_log', null, $message, $context );
+		if ( $handled ) {
+			return $handled;
 		}
-		$slug = Config::get( 'SLUG' );
-		\error_log( "[$slug] " . \implode( ' ', $output ) );
+		elseif ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
+			$slug = Config::get( 'SLUG' );
+			$message = "[$slug] " . self::format_value( $message );
+			if ( $context ) {
+				$message .= "\r\nContext {";
+				foreach ( $context as $k => $v ) {
+					$message .= \PHP_EOL . "    {$k} => ". self::format_value( $arg );
+				}
+				$message .= \PHP_EOL . "\r\nContext {";
+			}
+			\error_log( $message );
+		}
 	}
 
 	public static function format_value ( $value ) {
