@@ -121,6 +121,14 @@ abstract class Helpers {
 		if ( \is_wp_error( $wp_error ) ) throw new \RuntimeException( $wp_error->get_error_message( $code ) );
 	}
 
+	public static function nothrow ( $callback, $default = null ) {
+		try {
+			return $callback();
+		} catch ( \Throwable $e ) {
+			return $default;
+		}
+	}
+
 	// SECURITY
 	public static function sanitize_slug ( $string, $sep = '-' ) {
 		return Config::sanitize_slug( $string, $sep );
