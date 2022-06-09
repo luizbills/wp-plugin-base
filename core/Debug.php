@@ -18,8 +18,7 @@ abstract class Debug {
 	}
 
 	public static function log ( $message = null, $context = [] ) {
-		$args = \func_get_args();
-		$handled = \apply_filter( Config::get( 'PREFIX' ) . 'debug_log', null, $message, $context );
+		$handled = \apply_filters( Config::get( 'PREFIX' ) . 'debug_log', null, $message, $context );
 		if ( $handled ) {
 			return $handled;
 		}
@@ -27,11 +26,12 @@ abstract class Debug {
 			$slug = Config::get( 'SLUG' );
 			$message = "[$slug] " . self::format_value( $message );
 			if ( $context ) {
-				$message .= "\r\nContext {";
+				$spaces = '    '; // 4 spaces
+				$message .= \PHP_EOL . "{$spaces}Context {";
 				foreach ( $context as $k => $v ) {
-					$message .= \PHP_EOL . "    {$k} => ". self::format_value( $arg );
+					$message .= \PHP_EOL . "{$spaces}{$spaces}{$k}: ". self::format_value( $v );
 				}
-				$message .= \PHP_EOL . "\r\nContext {";
+				$message .= \PHP_EOL . "{$spaces}}";
 			}
 			\error_log( $message );
 		}

@@ -111,7 +111,11 @@ abstract class Helpers {
 	}
 
 	public static function log ( $message = null, $context = [] ) {
-		return call_user_func( [ Debug::class, 'log' ], $message, $context );
+		return call_user_func(
+			[ Debug::class, 'log' ],
+			$message,
+			is_array( $context ) ? $context : [ $context ]
+		);
 	}
 
 	public static function throw_if ( $condition, $message, $error_code = -1, $exception_class = null ) {
