@@ -184,15 +184,14 @@ abstract class Helpers {
 
 	// TEMPLATE RENDERER
 	public static function get_template ( $path, $args = [] ) {
-		$args = \apply_filters( h::prefix( 'template_args' ), $args, $path );
-		$path .= ! h::str_ends_with( $path, '.php' ) ? '.php' : '';
+		$args = \apply_filters( h::prefix( 'get_template_args' ), $args, $path );
 		$dir = \rtrim( h::config_get( 'TEMPLATES_DIR', 'templates' ), '/' );
-		$path = h::config_get( 'DIR' ) . "/{$dir}/$path";
+		$absolute_path = h::config_get( 'DIR' ) . "/{$dir}/$path" . ( ! h::str_ends_with( $path, '.php' ) ? '.php' : '' );
 
 		try {
 			\extract( $args );
 			\ob_start();
-			include $path;
+			include $absolute_path;
 			return \ob_get_clean();
 		} catch ( \Throwable $e ) {
 			throw new \Exception( "Error while rendering template \"$path\": " . $e->getMessage() );
