@@ -88,14 +88,20 @@ echo $obj->name; // => Luiz
 ## Get the current WordPress page URL
 
 ```php
-function get_current_url ( $query_args = false ) {
+function get_current_url ( $query_args = null ) {
 	global $wp;
-	$host = $_SERVER['HTTP_HOST'];
-	$path = isset( $wp->request ) ? $wp->request : '';
+	if ( ! $wp ) {
+		error_log( 'WARNING `' . __FUNCTION__ . '` should not be called before "parse_request" hook' );
+		return null;
+	}
 	$protocol = isset( $_SERVER['HTTPS'] ) && $_SERVER['HTTPS'] === 'on' ? "https" : "http";
-	$url = "{$protocol}://{$host}/{$path}";
-	return $query_args ? \add_query_arg( $_REQUEST, $url ) : $url;
+	$url = "{$protocol}://{$_SERVER['HTTP_HOST']}/{$wp->request}";
+	return $query_args ? \add_query_arg( $query_args, $url ) : $url;
 }
+
+// usage
+echo get_current_url(); // the current page url
+echo get_current_url( $_GET ); // the current page url with query arguments
 ```
 
 ## Parse tag attributes from an array
