@@ -12,6 +12,15 @@ abstract class Helpers {
 		return isset( $var ) ? $var : $default;
 	}
 
+	// returns FALSE if $var is null, empty array or empty string
+	public static function filled ( $var ) {
+		if ( null === $var ) return false;
+		if ( is_string( $var ) && '' === trim( $var ) ) return false;
+		if ( is_array( $var ) && 0 === count( $var ) ) return false;
+		if ( is_object( $var ) && 0 === count( (array) $var ) ) return false;
+		return true;
+	}
+
 	// CONFIG SETTER AND GETTER
 	public static function config_get ( $key, $default = null ) {
 		return Config::get( $key, $default );
