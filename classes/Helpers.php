@@ -8,7 +8,7 @@ use Your_Namespace\Core\Debug;
 
 abstract class Helpers {
 	// Get the value if set, otherwise return a default value or false. Prevents notices when data is not set.
-	public static function get ( &$var, $default = false ) {
+	public static function get ( &$var, $default = null ) {
 		return isset( $var ) ? $var : $default;
 	}
 
@@ -19,6 +19,11 @@ abstract class Helpers {
 		if ( is_array( $var ) && 0 === count( $var ) ) return false;
 		if ( is_object( $var ) && 0 === count( (array) $var ) ) return false;
 		return true;
+	}
+
+	// returns FALSE if $var is null ou false
+	public static function nof ( $var ) {
+		return null === $var || false === $var;
 	}
 
 	// CONFIG SETTER AND GETTER
@@ -53,7 +58,7 @@ abstract class Helpers {
 
 	// WP OPTIONS PREFIXED
 	public static function update_option ( $key, $value ) {
-		if ( null === $value ) {
+		if ( h::nof( $value ) ) {
 			return \delete_option( h::prefix( $key ) );
 		}
 		return \update_option( h::prefix( $key ), $value );
@@ -67,7 +72,7 @@ abstract class Helpers {
 	public static function set_transient ( $transient, $value, $expiration = 0 ) {
 		if ( ! WP_DEBUG ) {
 			$key = h::get_transient_key( $transient );
-			if ( null === $value ) {
+			if ( h::nof( $value ) ) {
 				return \delete_transient( $key );
 			}
 			if ( is_callable( $value ) ) {
@@ -78,15 +83,15 @@ abstract class Helpers {
 		return $value;
 	}
 
-	public static function get_transient ( $transient, $default = false ) {
+	public static function get_transient ( $transient, $default = null ) {
 		$key = h::get_transient_key( $transient );
 		$value = \get_transient( $key );
-		return null === $value || false === $value ? $default : $value;
+		return h::nof( $value ) ? $default : $value;
 	}
 
 	public static function remember ( $transient, $expiration, $callback ) {
 		$value = ! WP_DEBUG ? h::get_transient( $transient ) : null;
-		if ( null === $value || false === $value ) {
+		if ( h::nof( $value ) ) {
 			$value = call_user_func( $callback );
 			if ( ! WP_DEBUG ) h::set_transient( $transient, $value, $expiration );
 		}
