@@ -112,6 +112,7 @@ $pages = get_pages();
 $titles = wp_list_pluck( $pages, 'post_title' ); // returns an array of page titles
 ```
 
+See: (wp_list_pluck)[https://developer.wordpress.org/reference/functions/wp_list_pluck/]
 	
 ## Get the current WordPress page URL
 
