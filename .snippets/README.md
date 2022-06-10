@@ -86,6 +86,20 @@ $obj = (object) $arr;
 echo $obj->name; // => Luiz
 ```
 
+## Extract a slice of an array, given a list of keys.
+
+```php
+$arr = [
+	'a' => 1,
+	'b' => 2,
+	'c' => 3,
+];
+
+$only_bc = wp_array_slice_assoc( $arr, [ 'b', 'c' ] ); // => [ 'b' => 2, 'c' => 3 ]
+```
+
+See: [wp_array_slice_assoc](https://developer.wordpress.org/reference/functions/wp_array_slice_assoc/)
+
 ## Get the current WordPress page URL
 
 ```php
@@ -104,6 +118,26 @@ function get_current_url ( $query_args = null ) {
 echo get_current_url(); // the current page url
 echo get_current_url( $_GET ); // the current page url with query arguments
 ```
+
+## Human-readable file size
+
+```php
+$size_in_bytes = 4567;
+$decimals = 1; // default is 2
+echo size_format( $size_in_bytes, $decimals ); // => 4,5 KB
+```
+
+See: [size_format](https://developer.wordpress.org/reference/functions/size_format/)
+
+## Human-readable file size
+
+```php
+$size_in_bytes = 4567;
+$decimals = 1; // default is 2
+echo size_format( $size_in_bytes, $decimals ); // => 4,5 KB
+```
+
+See: [size_format](https://developer.wordpress.org/reference/functions/size_format/)
 
 ## Parse tag attributes from an array
 
