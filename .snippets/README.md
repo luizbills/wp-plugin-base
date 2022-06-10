@@ -75,6 +75,7 @@ function date_convert_format ( $date, $to, $from = 'Y-m-d' ) {
 
 // usage
 echo date_convert_format( '2022-03-04', 'd/m/Y' ); // => 04/03/2022
+echo date_convert_format( '2022-03-04', 'U' ); // => the timestamp
 ```
 
 ## Convert array in object
