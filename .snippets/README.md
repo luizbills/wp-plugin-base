@@ -89,17 +89,30 @@ echo $obj->name; // => Luiz
 ## Extract a slice of an array, given a list of keys.
 
 ```php
+// data example
 $arr = [
 	'a' => 1,
 	'b' => 2,
 	'c' => 3,
 ];
 
+// usage
 $only_bc = wp_array_slice_assoc( $arr, [ 'b', 'c' ] ); // => [ 'b' => 2, 'c' => 3 ]
 ```
 
 See: [wp_array_slice_assoc](https://developer.wordpress.org/reference/functions/wp_array_slice_assoc/)
 
+## Extract (plucks) a certain field out of each object or array in an array.
+
+```php
+// data example
+$pages = get_pages();
+
+// usage
+$titles = wp_list_pluck( $pages, 'post_title' ); // returns an array of page titles
+```
+
+	
 ## Get the current WordPress page URL
 
 ```php
