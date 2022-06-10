@@ -10,7 +10,7 @@ abstract class Debug {
 			if ( ! is_string( $message ) && \is_callable( $message ) ) {
 				$message = $message();
 			}
-			$exception_class = $exception_class ? $exception_class : \RuntimeException::class;
+			$exception_class = $exception_class ? $exception_class : \Error::class;
 			throw new $exception_class( $message );
 		}
 	}

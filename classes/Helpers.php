@@ -120,9 +120,8 @@ abstract class Helpers {
 		return Debug::throw_if( $condition, $message, $exception_class );
 	}
 
-	public static function throw_wp_error ( $wp_error, $code = null, $exception_class = null ) {
-		$exception_class = $exception_class ? $exception_class : \RuntimeException::class;
-		if ( \is_wp_error( $wp_error ) ) throw new $exception_class( $wp_error->get_error_message( $code ) );
+	public static function throw_wp_error ( $var, $code = null, $exception_class = null ) {
+		if ( \is_wp_error( $var ) ) h::throw_if( true, $var->get_error_message( $code ), $exception_class );
 	}
 
 	public static function nothrow ( $callback, $default = null ) {
