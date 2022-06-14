@@ -185,6 +185,16 @@ abstract class Helpers {
 		return $result;
 	}
 
+	// Combines n functions. Like a pipe flowing left-to-right, calling each function with the output of the last one.
+	// usage: `h::pipe( '<h1>hello world</h1>', 'strtoupper', 'strip_tags' ); // => HELLO WORLD`
+	public static function pipe ( $value, ...$fn ) {
+		$result = $value;
+		foreach ( $fn as $f ) {
+			$result = $f( $result );
+		}
+		return $result;
+	}
+	
 	// TEMPLATE RENDERER
 	public static function get_template ( $path, $args = [] ) {
 		$args = \apply_filters( h::prefix( 'get_template_args' ), $args, $path );
