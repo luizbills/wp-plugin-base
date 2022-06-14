@@ -55,16 +55,18 @@ abstract class Config {
 		return $value;
 	}
 
-	public static function get ( $key = false, $default = null ) {
-		if ( ! $key ) {
-			return self::$values; // return all keys
-		}
+	public static function get ( $key = null, $default = null ) {
 		$key = mb_strtoupper( $key );
-		if ( isset( self::$values[ $key ] ) ) return self::$values[ $key ];
+		$value = $default;
+		if ( isset( self::$values[ $key ] ) ) {
+			$value = self::$values[ $key ];
+		} 
 		if ( null === $default ) {
 			throw new \Exception( __CLASS__ . ": Undefined config key: $key" );
 		}
-		return $default;
+		$value = \apply_filters( self::get( 'PREFIX' ) . 'config_get', $value, $key );
+		$value = \apply_filters( self::get( 'PREFIX' ) . 'config_get_' . $key, $value, $key );
+		return $value;
 	}
 	
 	public static function sanitize_slug ( $string, $sep = '-' ) {
