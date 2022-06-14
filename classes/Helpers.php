@@ -95,9 +95,9 @@ abstract class Helpers {
 	}
 
 	// DEBUG
-	public static function dd ( ...$value ) {
+	public static function dd ( ...$values ) {
 		if ( ! WP_DEBUG ) return;
-		foreach ( $value as $v ) {
+		foreach ( $values as $v ) {
 			echo '<pre>';
 			var_dump( $v );
 			echo '</pre>';
