@@ -55,7 +55,7 @@ abstract class Config {
 		return $value;
 	}
 
-	public static function get ( $key = null, $default = null ) {
+	public static function get ( $key, $default = null ) {
 		$key = mb_strtoupper( $key );
 		$value = $default;
 		if ( isset( self::$values[ $key ] ) ) {
