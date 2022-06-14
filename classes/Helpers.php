@@ -64,8 +64,9 @@ abstract class Helpers {
 	}
 
 	// CACHE/TRANSIENTS (DISABLED IF WP_DEBUG = TRUE)
-	public static function set_transient ( $transient, $value, $expiration = 0 ) {
-		if ( ! WP_DEBUG ) {
+	public static function set_transient ( $transient, $value, $duration = 0 ) {
+		$enabled = h::config_get( 'CACHE_ENABLED', true );
+		if ( $enabled ) {
 			$key = h::get_transient_key( $transient );
 			if ( ! h::filled( $value ) ) {
 				return \delete_transient( $key );
@@ -73,7 +74,12 @@ abstract class Helpers {
 			if ( is_callable( $value ) ) {
 				$value = \call_user_func( $value );
 			}
-			\set_transient( $key, $value, $expiration );
+			$duration = $duration > 0 ? $duration : \apply_filters(
+				h::prefix( 'transient_max_duration' ),
+				3 * MONTH_IN_SECONDS,
+				$transient
+			);
+			\set_transient( $key, $value, $duration );
 		}
 		return $value;
 	}
@@ -82,15 +88,6 @@ abstract class Helpers {
 		$key = h::get_transient_key( $transient );
 		$value = \get_transient( $key );
 		return ! h::filled( $value ) ? $default : $value;
-	}
-
-	public static function remember ( $transient, $expiration, $callback ) {
-		$value = ! WP_DEBUG ? h::get_transient( $transient ) : null;
-		if ( ! h::filled( $value ) ) {
-			$value = call_user_func( $callback );
-			if ( ! WP_DEBUG ) h::set_transient( $transient, $value, $expiration );
-		}
-		return $value;
 	}
 
 	public static function get_transient_key ( $transient ) {
