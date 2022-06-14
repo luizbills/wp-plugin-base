@@ -7,7 +7,7 @@ abstract class Config {
 
 	public static function init ( $main_file ) {
 		if ( count( self::$values ) > 0 ) {
-			throw new \Exception( __CLASS__ . ' already initialized' );
+			throw new \Error( __CLASS__ . ' already initialized' );
 		}
 
 		$root = dirname( $main_file );
@@ -49,7 +49,7 @@ abstract class Config {
 	public static function set ( $key, $value ) {
 		$key = mb_strtoupper( $key );
 		if ( isset( self::$values[ $key ] ) ) {
-			throw new \Exception( __CLASS__ . ": Key \"$key\" has already been assigned. No key can be assigned more than once." );
+			throw new \Error( __CLASS__ . ": Key \"$key\" has already been assigned. No key can be assigned more than once." );
 		}
 		self::$values[ $key ] = $value;
 		return $value;
@@ -62,7 +62,7 @@ abstract class Config {
 			$value = self::$values[ $key ];
 		} 
 		if ( null === $default ) {
-			throw new \Exception( __CLASS__ . ": Undefined config key: $key" );
+			throw new \Error( __CLASS__ . ": Undefined config key: $key" );
 		}
 		$value = \apply_filters( self::get( 'PREFIX' ) . 'config_get', $value, $key );
 		$value = \apply_filters( self::get( 'PREFIX' ) . 'config_get_' . $key, $value, $key );

@@ -208,7 +208,7 @@ abstract class Helpers {
 			include $absolute_path;
 			return \ob_get_clean();
 		} catch ( \Throwable $e ) {
-			throw new \Exception( "ERROR while rendering template \"$path\": " . $e->getMessage() );
+			throw new \Error( "ERROR while rendering template \"$path\": " . $e->getMessage() );
 		}
 	}
 

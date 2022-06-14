@@ -24,7 +24,7 @@ try {
 	// check composer autoload
 	$composer_autoload = __DIR__ . '/vendor/autoload.php';
 	if ( ! file_exists( $composer_autoload ) ) {
-		throw new \Exception ( $composer_autoload . ' does not exist' );
+		throw new \Error( $composer_autoload . ' does not exist' );
 	}
 	include_once $composer_autoload;
 
