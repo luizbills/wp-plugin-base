@@ -42,7 +42,7 @@ abstract class Helpers {
 
 	// PLUGIN DIR URL PREPENDER
 	public static function plugin_url ( $path = '' ) {
-		// usage: `echo h::plugin_url( 'assets/js/app.js' );`
+		// usage: `$script_url = h::plugin_url( 'assets/js/app.js' );`
 		return \plugins_url( $path, h::config_get( 'FILE' ) );
 	}
 
@@ -51,7 +51,7 @@ abstract class Helpers {
 		return preg_replace( '/[^0-9.]/', '',  h::config_get( 'VERSION', '' ) );
 	}
 
-	// WP OPTIONS PREFIXED
+	// WP OPTIONS (AUTO-PREFIXED)
 	public static function update_option ( $key, $value ) {
 		if ( ! h::filled( $value ) ) {
 			return \delete_option( h::prefix( $key ) );
@@ -63,7 +63,7 @@ abstract class Helpers {
 		return \get_option( h::prefix( $key ), $default );
 	}
 
-	// CACHE/TRANSIENTS (DISABLED IF WP_DEBUG = TRUE)
+	// CACHE/TRANSIENTS (AUTO-PREFIXED)
 	public static function set_transient ( $transient, $value, $duration = 0 ) {
 		$enabled = h::config_get( 'CACHE_ENABLED', true );
 		if ( $enabled ) {
@@ -113,6 +113,7 @@ abstract class Helpers {
 		);
 	}
 
+	// EXCEPTIONS
 	public static function throw_if ( $condition, $message, $exception_class = null ) {
 		return Debug::throw_if( $condition, $message, $exception_class );
 	}
@@ -207,7 +208,7 @@ abstract class Helpers {
 			include $absolute_path;
 			return \ob_get_clean();
 		} catch ( \Throwable $e ) {
-			throw new \Exception( "Error while rendering template \"$path\": " . $e->getMessage() );
+			throw new \Exception( "ERROR while rendering template \"$path\": " . $e->getMessage() );
 		}
 	}
 
