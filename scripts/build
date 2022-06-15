@@ -10,7 +10,7 @@ clear >$(tty) # clear the terminal
 
 mkdir -p "$(dirname $TMP_DIR)"
 rm -rf $TMP_DIR
-echo "Copying plugin files to $TMP_DIR..."
+echo "Copying plugin files from $DIR ..."
 cp -R $DIR $TMP_DIR
 cd $TMP_DIR
 
@@ -31,7 +31,7 @@ then
 fi
 
 # composer install
-if ! command -v composer &> /dev/null
+if command -v composer &> /dev/null
 then
 	if [ -f 'composer.json' ];
 	then
@@ -42,7 +42,7 @@ then
 fi
 
 # npm install
-if ! command -v npm &> /dev/null
+if command -v npm &> /dev/null
 then
 	if [ -f 'package.json' ];
 	then
