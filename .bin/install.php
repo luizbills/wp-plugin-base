@@ -142,4 +142,5 @@ echo PHP_EOL . "The plugin was successfully created in $dest_dir" . PHP_EOL . PH
 
 chdir( $dest_dir );
 echo shell_exec( 'ls -Apl' );
-file_put_contents( $src_dir . '/' . '.newplugin', $dest_dir );
+unlink( $src_dir . '/install.log' );
+file_put_contents( $src_dir . '/install.log', $dest_dir );
