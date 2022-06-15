@@ -1,6 +1,7 @@
 {
     "require": {
-        "php": "^7.4"
+        "php": "^7.4",
+        "ext-mbstring": "*"
     },
     "require-dev": {},
     "autoload": {
@@ -13,7 +14,8 @@
             ]
         }
     },
-    "suggest": {
-        "ext-mbstring": "Needed for some string helpers"
+    "scripts": {
+        "build": "/usr/bin/env bash ./scripts/build",
+        "deploy": "/usr/bin/env bash ./scripts/deploy"
     }
 }
