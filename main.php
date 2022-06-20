@@ -18,7 +18,7 @@ License URI: http://www.gnu.org/licenses/gpl-3.0.html
 defined( 'WPINC' ) || exit();
 
 // uncomment to load your plugin translations
-// \load_plugin_textdomain( 'your_text_domain', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
+// load_plugin_textdomain( 'your_text_domain', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 try {
 	// check composer autoload
@@ -27,13 +27,13 @@ try {
 		throw new \Error( $composer_autoload . ' does not exist' );
 	}
 	include_once $composer_autoload;
-} catch ( \Throwable $e ) {
-	\add_action( 'admin_notices', function () use ( $e ) {
-		list( $plugin_name ) = \get_file_data( __FILE__, [ 'plugin name' ] );
-		$message = \sprintf(
+} catch ( Throwable $e ) {
+	add_action( 'admin_notices', function () use ( $e ) {
+		list( $plugin_name ) = get_file_data( __FILE__, [ 'plugin name' ] );
+		$message = sprintf(
 			esc_html__( 'Error on plugin %s activation: %s', 'your_text_domain' ),
 			'<strong>' . esc_html( $plugin_name ) . '</strong>',
-			'<br><code>' . \esc_html( $e->getMessage() ) . '</code>'
+			'<br><code>' . esc_html( $e->getMessage() ) . '</code>'
 		);
 		echo "<div class='notice notice-error'><p>$message</p></div>";
 	} );
