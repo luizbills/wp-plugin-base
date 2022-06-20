@@ -10,10 +10,6 @@ abstract class Main {
 
 	// == CORE HELPERS ==
 	public static function start_plugin ( $main_file ) {
-		if ( Config::get( 'FILE', '' ) ) {
-			throw new \Error( __CLASS__ . ' already initialized' );
-		}
-
 		if ( ! file_exists( $main_file ) ) {
 			throw new \Error( 'Invalid plugin main file path in ' . __CLASS__ );
 		}

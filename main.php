@@ -27,17 +27,17 @@ try {
 		throw new \Error( $composer_autoload . ' does not exist' );
 	}
 	include_once $composer_autoload;
-
-	// run the plugin
-	\Your_Namespace\Core\Main::start_plugin( __FILE__ );
 } catch ( \Throwable $e ) {
 	\add_action( 'admin_notices', function () use ( $e ) {
 		list( $plugin_name ) = \get_file_data( __FILE__, [ 'plugin name' ] );
 		$message = \sprintf(
 			esc_html__( 'Error on plugin %s activation: %s', 'your_text_domain' ),
-			"<strong>$plugin_name</strong>",
+			'<strong>' . esc_html( $plugin_name ) . '</strong>',
 			'<br><code>' . \esc_html( $e->getMessage() ) . '</code>'
 		);
 		echo "<div class='notice notice-error'><p>$message</p></div>";
 	} );
 }
+
+// run the plugin
+\Your_Namespace\Core\Main::start_plugin( __FILE__ );
