@@ -2,16 +2,13 @@
 
 namespace Your_Namespace\Core;
 
-use Your_Namespace\Core\Debug;
-
 abstract class Config {
 	protected static $values = [];
 
 	public static function init ( $main_file ) {
-		Debug::throw_if(
-			self::get_size() > 0,
-			__CLASS__ . ' already initialized'
-		);
+		if ( self::get_size() > 0 ) {
+			throw new \Error( __CLASS__ . ' already initialized' );
+		}
 
 		$root = dirname( $main_file );
 
@@ -51,10 +48,9 @@ abstract class Config {
 
 	public static function set ( $key, $value ) {
 		$key = mb_strtoupper( $key );
-		Debug::throw_if(
-			isset( self::$values[ $key ] ),
-			__METHOD__ . ": Key \"$key\" has already been assigned. No key can be assigned more than once."
-		);
+		if ( isset( self::$values[ $key ] ) ) {
+			throw new \Error( __METHOD__ . ": Key \"$key\" has already been assigned. No key can be assigned more than once." );
+		}
 		self::$values[ $key ] = $value;
 		return $value;
 	}
@@ -62,10 +58,9 @@ abstract class Config {
 	public static function get ( $key, $default = null ) {
 		$key = \mb_strtoupper( $key );
 		$value = isset( self::$values[ $key ] ) ? self::$values[ $key ] : $default;
-		Debug::throw_if(
-			null === $value,
-			__METHOD__ . ": Undefined key $key"
-		);
+		if ( null === $value ) {
+			throw new \Error( __METHOD__ . ": Undefined key $key" );
+		}
 		return $value;
 	}
 

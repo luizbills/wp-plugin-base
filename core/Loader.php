@@ -3,25 +3,21 @@
 namespace Your_Namespace\Core;
 
 use Your_Namespace\Core\Config;
-use Your_Namespace\Core\Debug;
 
 abstract class Loader {
 	protected static $classes;
 
 	public static function init ( $main_file ) {
-		Debug::throw_if(
-			'' !== Config::get( 'PLUGIN_STARTED', '' ),
-			__CLASS__ . ' already initialized'
-		);
-
+		if ( '' !== Config::get( 'PLUGIN_STARTED', '' ) ) {
+			throw new \Error( __CLASS__ . ' already initialized' );
+		}
 		self::load_classes();
 	}
 
 	public static function start () {
-		Debug::throw_if(
-			false === Config::get( 'PLUGIN_STARTED', '' ),
-			__CLASS__ . ' can not start'
-		);
+		if ( false === Config::get( 'PLUGIN_STARTED', '' ) ) {
+			throw new \Error( __CLASS__ . ' can not start' );
+		}
 		\do_action( self::get_hook() );
 	}
 
@@ -34,10 +30,9 @@ abstract class Loader {
 		$root = Config::get( 'DIR' );
 		self::$classes = include_once $root . '/loader.php';
 
-		Debug::throw_if(
-			! is_array( self::$classes ),
-			$root . '/loader.php must return an Array'
-		);
+		if ( ! is_array( self::$classes ) ) {
+			throw new \Error( $root . '/loader.php must return an Array' );
+		}
 
 		foreach ( self::$classes as $index => $class ) {
 			if ( ! is_array( $class ) ) {
@@ -57,10 +52,9 @@ abstract class Loader {
 			$class_name = $item[0];
 			$priority = $item[1];
 
-			Debug::throw_if(
-				! \class_exists( $class_name ),
-				'class ' . $class_name . ' does not exist'
-			);
+			if ( ! \class_exists( $class_name ) ) {
+				throw new \Error( 'class ' . $class_name . ' does not exist' );
+			}
 
 			$instance = new $class_name();
 			\add_action( self::get_hook(), [ $instance, '__start' ], $priority );

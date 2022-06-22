@@ -3,25 +3,22 @@
 namespace Your_Namespace\Core;
 
 use Your_Namespace\Core\Config;
-use Your_Namespace\Core\Debug;
 use Your_Namespace\Core\Loader;
 
 abstract class Dependencies {
 	protected static $dependencies;
 
 	public static function init ( $main_file ) {
-		Debug::throw_if(
-			'' !== Config::get( 'PLUGIN_STARTED', '' ),
-			__CLASS__ . ' already initialized'
-		);
+		if ( '' !== Config::get( 'PLUGIN_STARTED', '' ) ) {
+			throw new \Error( __CLASS__ . ' already initialized' );
+		}
 
 		$root = Config::get( 'DIR' );
 		self::$dependencies = include_once $root . '/dependencies.php';
 
-		Debug::throw_if(
-			! is_array( self::$dependencies ),
-			$root . '/dependencies.php must return an Array'
-		);
+		if ( ! is_array( self::$dependencies ) ) {
+			throw new \Error( $root . '/dependencies.php must return an Array' );
+		}
 
 		\add_action( 'plugins_loaded', [ __CLASS__, 'check_dependencies' ], 0 );
 	}
@@ -33,7 +30,7 @@ abstract class Dependencies {
 		foreach ( self::$dependencies as $key => $dep ) {
 			$check = is_callable( $dep['check'] ) ? call_user_func( $dep['check'] ) : $dep['check'];
 			$message = is_callable( $dep['message'] ) ? call_user_func( $dep['message'] ) : $dep['message'];
-			
+
 			if ( ! $check ) {
 				$errors[ $key ] = $message;
 			} else {
