@@ -40,6 +40,40 @@ abstract class Helpers {
 		return h::config_get( 'PREFIX' ) . $appends;
 	}
 
+	// DEBUG
+	public static function dd ( ...$values ) {
+		if ( ! WP_DEBUG ) return;
+		foreach ( $values as $v ) {
+			echo '<pre>';
+			var_dump( $v );
+			echo '</pre>';
+		}
+		die;
+	}
+
+	public static function log ( ...$values ) {
+		if ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
+			$slug = Config::get( 'SLUG' );
+			$message = "[$slug] ";
+			foreach ( $values as $value ) {
+				if ( \is_object( $value ) || \is_array( $value ) ) {
+					$value = \print_r( $value, true );
+				}
+				elseif ( \is_bool( $value ) ) {
+					$value = $value ? '<TRUE>' : '<FALSE>';
+				}
+				elseif ( '' === $value ) {
+					$value = '<EMPTY STRING>';
+				}
+				elseif ( null === $value ) {
+					$value = '<NULL>';
+				}
+				$message .= $value;
+			}
+			\error_log( $message );
+		}
+	}
+
 	// PLUGIN DIR URL PREPENDER
 	public static function plugin_url ( $path = '' ) {
 		// usage: `$script_url = h::plugin_url( 'assets/js/app.js' );`
@@ -94,28 +128,15 @@ abstract class Helpers {
 		return h::prefix( $transient ) . '_' . h::get_plugin_version();
 	}
 
-	// DEBUG
-	public static function dd ( ...$values ) {
-		if ( ! WP_DEBUG ) return;
-		foreach ( $values as $v ) {
-			echo '<pre>';
-			var_dump( $v );
-			echo '</pre>';
-		}
-		die;
-	}
-
-	public static function log ( $message = null, $context = [] ) {
-		return call_user_func(
-			[ Debug::class, 'log' ],
-			$message,
-			is_array( $context ) ? $context : [ $context ]
-		);
-	}
-
 	// EXCEPTIONS
 	public static function throw_if ( $condition, $message, $exception_class = null ) {
-		return Debug::throw_if( $condition, $message, $exception_class );
+		if ( $condition ) {
+			if ( ! is_string( $message ) && \is_callable( $message ) ) {
+				$message = $message();
+			}
+			$exception_class = $exception_class ? $exception_class : \Error::class;
+			throw new $exception_class( $message );
+		}
 	}
 
 	public static function throw_wp_error ( $var, $code = null, $exception_class = null ) {
@@ -125,9 +146,8 @@ abstract class Helpers {
 	public static function nothrow ( $callback, $default = null ) {
 		try {
 			return $callback();
-		} catch ( \Throwable $e ) {
-			return $default;
-		}
+		} catch ( \Throwable $e ) {}
+		return $default;
 	}
 
 	// SECURITY
@@ -195,7 +215,7 @@ abstract class Helpers {
 		}
 		return $result;
 	}
-	
+
 	// TEMPLATE RENDERER
 	public static function get_template ( $path, $args = [] ) {
 		$args = \apply_filters( h::prefix( 'get_template_args' ), $args, $path );
