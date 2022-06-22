@@ -74,6 +74,11 @@ abstract class Helpers {
 		}
 	}
 
+	// CUSTOM LOG HANDLER GETTER
+	public static function logger ( $args = [] ) {
+		return \apply_filters( h::config_get( 'PREFIX' ) . 'get_logger', null, $args );
+	}
+
 	// PLUGIN DIR URL PREPENDER
 	public static function plugin_url ( $path = '' ) {
 		// usage: `$script_url = h::plugin_url( 'assets/js/app.js' );`
