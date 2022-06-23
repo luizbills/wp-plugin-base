@@ -14,6 +14,8 @@ final class Sample_Class {
 	}
 
 	public function init () {
-		h::log( 'Running plugin "' . h::config_get( 'NAME' ) . '" v' . h::get_plugin_version() );
+		$plugin_name = h::config_get( 'NAME' );
+		$version = h::get_plugin_version();
+		h::log( "INFO Running plugin \"$plugin_name\" v$version"  );
 	}
 }
