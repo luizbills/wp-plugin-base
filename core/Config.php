@@ -11,17 +11,28 @@ abstract class Config {
 		}
 
 		$root = dirname( $main_file );
+		$config = require $root . '/config.php';
 
-		if ( file_exists( $root . '/config.php' ) ) {
-			$values = include $root . '/config.php';
+		if ( ! is_array( $config ) ) {
+			throw new \Error( $root . '/config.php must return an Array' );
+		}
 
-			foreach ( $values as $k => $v ) {
-				$k = \mb_strtoupper( $k );
-				if ( 'SLUG' === $k ) {
-					$v = self::sanitize_slug( $v );
-				}
-				self::$values[ $k ] = $v;
+		foreach ( $config as $key => $value ) {
+			$key = \mb_strtoupper( $key );
+			if ( 'SLUG' === $key ) {
+				$value = self::sanitize_slug( $value );
 			}
+			self::$values[ $key ] = $value;
+		}
+
+		$slug = isset( self::$values[ 'SLUG' ] ) ? self::$values[ 'SLUG' ] : false;
+		if ( ! $slug || ! is_string( $slug ) ) {
+			throw new \Error( $root . '/config.php must define a SLUG (only alphanumeric and dashes)' );
+		}
+
+		$prefix = isset( self::$values[ 'PREFIX' ] ) ? self::$values[ 'PREFIX' ] : false;
+		if ( ! $prefix || ! is_string( $prefix ) ) {
+			self::$values[ 'PREFIX' ] = \str_replace( '-', '_', $slug ) . '_';
 		}
 
 		self::$values[ 'FILE'] = $main_file;
