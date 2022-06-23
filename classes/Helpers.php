@@ -48,7 +48,7 @@ abstract class Helpers {
 			var_dump( $v );
 			echo '</pre>';
 		}
-		die;
+		exit( 1 );
 	}
 
 	public static function log ( ...$values ) {

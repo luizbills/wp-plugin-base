@@ -14,7 +14,7 @@ Update URI: false
 */
 
 // prevents your PHP files from being executed via direct browser access
-defined( 'WPINC' ) || exit();
+defined( 'WPINC' ) || exit( 1 );
 
 // uncomment to load your plugin translations
 // load_plugin_textdomain( 'your_text_domain', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
