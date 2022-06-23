@@ -2,7 +2,7 @@
 
 use Your_Namespace\Helpers as h;
 
-defined( 'WPINC' ) || exit();
+defined( 'WPINC' ) || exit( 1 );
 
 return [
 	'php' => [
