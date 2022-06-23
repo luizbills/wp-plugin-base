@@ -1,17 +1,16 @@
 <?php
 /*
 Plugin Name: your_plugin_name
+Plugin URI: https://github.com/your/repo
 Version: 1.0.0
 Description: your_plugin_description
 Author: your_author_name
 Author URI: your_author_uri
-Update URI: false
-
-Text Domain: your_text_domain
-Domain Path: /languages
-
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
+Text Domain: your_text_domain
+Domain Path: /languages
+Update URI: false
 */
 
 // prevents your PHP files from being executed via direct browser access
