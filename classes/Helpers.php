@@ -53,25 +53,35 @@ abstract class Helpers {
 	}
 
 	public static function log ( ...$values ) {
-		if ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG ) {
-			$slug = Config::get( 'SLUG' );
-			$message = "[$slug] ";
-			foreach ( $values as $value ) {
-				if ( \is_object( $value ) || \is_array( $value ) ) {
-					$value = \print_r( $value, true );
-				}
-				elseif ( \is_bool( $value ) ) {
-					$value = $value ? '<TRUE>' : '<FALSE>';
-				}
-				elseif ( '' === $value ) {
-					$value = '<EMPTY STRING>';
-				}
-				elseif ( null === $value ) {
-					$value = '<NULL>';
-				}
-				$message .= $value;
+		if ( ! defined( 'WP_DEBUG_LOG' ) || ! WP_DEBUG_LOG ) return;
+		$slug = Config::get( 'SLUG' );
+		$message = '';
+		foreach ( $values as $value ) {
+			if ( \is_object( $value ) || \is_array( $value ) ) {
+				$value = \print_r( $value, true );
 			}
-			\error_log( $message );
+			elseif ( \is_bool( $value ) ) {
+				$value = $value ? '<TRUE>' : '<FALSE>';
+			}
+			elseif ( '' === $value ) {
+				$value = '<EMPTY STRING>';
+			}
+			elseif ( null === $value ) {
+				$value = '<NULL>';
+			}
+			$message .= $value;
+		}
+		$logger = h::logger();
+		if ( $logger && \method_exists( $logger, 'debug' ) ) {
+			$logger->debug( $message );
+		} else {
+			\error_log( "[$slug] $message" );
+		}
+	}
+	
+	public static function log_wp_error ( $var, $code = null ) {
+		if ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG && \is_wp_error( $var ) ) {
+			h::log( 'WordPress ERROR: ' . $var->get_error_message( $code ) );
 		}
 	}
 
