@@ -12,7 +12,7 @@ abstract class Helpers {
 		return isset( $var ) ? $var : $default;
 	}
 
-	// returns `false` ONLY IF $var is null, empty array or empty string
+	// returns `false` ONLY IF $var is null, empty array/object or empty string
 	// note: `$var = false` returns `true` (because $var is filled with a boolean)
 	public static function filled ( $var ) {
 		if ( null === $var ) return false;
