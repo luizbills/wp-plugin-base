@@ -6,7 +6,7 @@ The constant is NOT defined when uninstall is performed by `register_uninstall_h
 Reference: https://developer.wordpress.org/plugins/plugin-basics/uninstall-methods/#method-2-uninstall-php
 */
 if ( ! defined( 'WP_UNINSTALL_PLUGIN' ) ) {
-    exit( 1 );
+	exit( 1 );
 }
 
 // $option_name = 'your_plugin_option';
