@@ -105,21 +105,23 @@ abstract class Helpers {
 
 	// CACHE/TRANSIENTS (AUTO-PREFIXED)
 	public static function set_transient ( $transient, $value, $duration = 0 ) {
-		$enabled = h::config_get( 'CACHE_ENABLED', true );
-		if ( $enabled ) {
+		if ( is_callable( $value ) ) {
+			$value = \call_user_func( $value );
+		}
+		if ( h::config_get( 'CACHE_ENABLED', true ) ) {
 			$key = h::get_transient_key( $transient );
 			if ( ! h::filled( $value ) ) {
 				return \delete_transient( $key );
 			}
-			if ( is_callable( $value ) ) {
-				$value = \call_user_func( $value );
+			else {
+				$duration = \absint( $duration );
+				$duration = $duration !== 0 ? $duration : \apply_filters(
+					h::prefix( 'transient_max_duration' ),
+					3 * MONTH_IN_SECONDS, // by default, max is 3 months 
+					$transient
+				);
+				\set_transient( $key, $value, $duration );
 			}
-			$duration = $duration > 0 ? $duration : \apply_filters(
-				h::prefix( 'transient_max_duration' ),
-				3 * MONTH_IN_SECONDS,
-				$transient
-			);
-			\set_transient( $key, $value, $duration );
 		}
 		return $value;
 	}
