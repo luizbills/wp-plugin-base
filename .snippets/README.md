@@ -153,7 +153,7 @@ echo size_format( $size_in_bytes, $decimals ); // => 4,5 KB
 
 See: [size_format](https://developer.wordpress.org/reference/functions/size_format/)
 
-## Interpolates context values into the message placeholders.
+## Interpolates an array of values into a string/message placeholders.
 
 ```php
 function str_interpolate ( $message, $context = [] ) {
