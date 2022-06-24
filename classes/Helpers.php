@@ -7,12 +7,13 @@ use Your_Namespace\Core\Config;
 use Your_Namespace\Core\Debug;
 
 abstract class Helpers {
-	// Get the value if set, otherwise return a default value or false. Prevents notices when data is not set.
+	// Get the value if set, otherwise return a default value or `null`. Prevents notices when data is not set.
 	public static function get ( &$var, $default = null ) {
 		return isset( $var ) ? $var : $default;
 	}
 
 	// returns `false` ONLY IF $var is null, empty array or empty string
+	// note: `$var = false` returns `true` (because $var is filled with a boolean)
 	public static function filled ( $var ) {
 		if ( null === $var ) return false;
 		if ( is_string( $var ) && '' === trim( $var ) ) return false;
