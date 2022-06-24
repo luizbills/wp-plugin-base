@@ -210,8 +210,8 @@ abstract class Helpers {
 		return h::str_before( $string, $search ) !== $string;
 	}
 
+	// usage: `h::str_mask( 'XXX.XXX.XXX-XX', '83699642062' ); // outputs 836.996.420-62`
 	public static function str_mask ( $string, $mask, $symbol = 'X' ) {
-		// usage: `h::str_mask( 'XXX.XXX.XXX-XX', '83699642062' ); // outputs 836.996.420-62`
 		$result = '';
 		$k = 0;
 		for ( $i = 0; $i < \strlen( $mask ); ++$i ) {
