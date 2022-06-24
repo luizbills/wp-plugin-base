@@ -160,7 +160,7 @@ abstract class Helpers {
 		return Config::sanitize_slug( $string, $sep );
 	}
 
-	public static function esc_unsafe_html ( $html ) {
+	public static function safe_html ( $html ) {
 		// remove all script and style tags with code
 		$html = \preg_replace( '/<(script|style)[^>]*?>.*?<\/\\1>/si', '', $html );
 		// remove any script, style, link and iframe tags
