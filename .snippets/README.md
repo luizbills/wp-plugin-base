@@ -153,6 +153,29 @@ echo size_format( $size_in_bytes, $decimals ); // => 4,5 KB
 
 See: [size_format](https://developer.wordpress.org/reference/functions/size_format/)
 
+## Interpolates context values into the message placeholders.
+
+```php
+function str_interpolate ( $message, $context = [] ) {
+	// build a replacement array with braces around the context keys
+	$replace = [];
+	foreach ($context as $key => $val) {
+		// check that the value can be cast to string
+		if ( ! is_array( $val ) && ( ! is_object( $val ) || method_exists( $val, '__toString' ) ) ) {
+			$replace['{' . $key . '}'] = $val;
+		}
+	}
+	// interpolate replacement values into the message and return
+	return \strtr( $message, $replace );
+}
+
+// usage
+echo str_interpolate( "User {username} created", [ 'username' => 'bolivar' ] );
+// => User bolivar created
+```
+
+Credits: [PSR-3: Logger Interface ](https://www.php-fig.org/psr/psr-3/#12-message)
+
 ## Parse tag attributes from an array
 
 ```php
@@ -165,7 +188,7 @@ function build_tag_atts ( $arr ) {
 }
 
 // usage
-echo build_tag_atts( [ 'id' => 'a', 'data xyz' => 'b' ] ); // id="a" data-xyz="b"
+echo build_tag_atts( [ 'id' => 'a', 'data xyz' => 'b' ] ); // => id="a" data-xyz="b"
 ```
 
 ## Regex: remove anything from a string except numbers
