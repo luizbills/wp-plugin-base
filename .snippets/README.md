@@ -38,6 +38,29 @@ function prefix_add_plugin_action_link ( $actions ) {
 
 See: [plugin_action_links_{$plugin_file}](https://developer.wordpress.org/reference/hooks/plugin_action_links_plugin_file/)
 
+## Add a notice in the admin panel
+
+```php
+add_action( 'admin_notices', 'prefix_admin_notice_error' );
+function prefix_admin_notice_error () {
+	?>
+	<div class="notice notice-error is-dismissible">
+		<p><?= esc_html__( 'Error!', 'your-text-domain' ); ?></p>
+	</div>
+	<?php
+}
+```
+
+In order to display a notice, echo a div with the class `notice` and one of the following classes:
+
+* `notice-error` – will display the message with a white background and a red left border.
+* `notice-warning` – will display the message with a white background and a yellow/orange left border.
+* `notice-success` – will display the message with a white background and a green left border.
+* `notice-info` – will display the message with a white background a blue left border.
+* Optionally use `is-dismissible` to add a closing icon to your message via JavaScript. Its behavior, however, applies only on the current screen. It will not prevent a message from re-appearing once the page re-loads, or another page is loaded.
+
+See: [admin_notices](https://developer.wordpress.org/reference/hooks/admin_notices/)
+
 ## Check user capability or role
 
 ```php
