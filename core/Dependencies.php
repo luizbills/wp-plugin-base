@@ -59,7 +59,7 @@ abstract class Dependencies {
 		\add_action( 'admin_notices', function () use ( $errors, $passed ) {
 			$allowed_html = [
 				'a' => [ 'href' => [], 'title' => [] ],
-				'span' => [ 'style' => [] ],
+				'span' => [ 'class' => [], 'style' => [] ],
 				'br' => [],
 				'em' => [],
 				'strong' => [],
@@ -73,7 +73,7 @@ abstract class Dependencies {
 
 			foreach ( $errors as $error_message ) {
 				$line = \sprintf(
-					'<br>%s <span style="color:#e03131">✖ %s</span>',
+					'<br>%s <span style="color:#e03131"><span class="dashicons dashicons-no-alt"></span> %s</span>',
 					\str_repeat( '&nbsp;', 4 ),
 					$error_message
 				);
@@ -82,7 +82,7 @@ abstract class Dependencies {
 
 			foreach ( $passed as $error_message ) {
 				$line = \sprintf(
-					'<br>%s <span style="color:#2b8a3e">✔ %s</span>',
+					'<br>%s <span style="color:#2b8a3e"><span class="dashicons dashicons-yes"></span> %s</span>',
 					\str_repeat( '&nbsp;', 4 ),
 					$error_message
 				);
@@ -92,4 +92,3 @@ abstract class Dependencies {
 		} );
 	}
 }
-
