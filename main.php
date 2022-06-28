@@ -38,7 +38,8 @@ try {
 	}
 	include_once $composer_autoload;
 } catch ( Throwable $e ) {
-	add_action( 'admin_notices', function () use ( $e ) {
+	return add_action( 'admin_notices', function () use ( $e ) {
+		if ( ! current_user_can( 'install_plugins' ) ) return;
 		list( $plugin_name ) = get_file_data( __FILE__, [ 'plugin name' ] );
 		$message = sprintf(
 			esc_html__( 'Error on plugin %s activation: %s', 'your_text_domain' ),

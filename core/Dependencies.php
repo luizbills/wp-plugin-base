@@ -57,6 +57,7 @@ abstract class Dependencies {
 		if ( ! \is_admin() ) return;
 
 		\add_action( 'admin_notices', function () use ( $errors, $passed ) {
+			if ( ! \current_user_can( 'install_plugins' ) ) return;
 			$allowed_html = [
 				'a' => [ 'href' => [], 'title' => [] ],
 				'span' => [ 'class' => [], 'style' => [] ],
