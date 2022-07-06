@@ -88,17 +88,18 @@ is_date( '2022-03', 'Y-m' ); // => true
 ## Convert date format
 
 ```php
-function date_convert_format ( $date, $to, $from = 'Y-m-d' ) {
-	$datetime = \DateTime::createFromFormat( $from, $date );
-	if ( $datetime ) {
+function date_convert_format ( $datestring, $to, $from = 'Y-m-d' ) {
+	$datetime = \DateTime::createFromFormat( $from, $datestring );
+	if ( $datetime && $datetime->format( $from ) === $datestring ) {
 		return $datetime->format( $to );
 	}
 	return null;
 }
 
 // usage
-echo date_convert_format( '2022-03-04', 'd/m/Y' ); // => 04/03/2022
 echo date_convert_format( '2022-03-04', 'U' ); // => the timestamp
+echo date_convert_format( '2022-03-04', 'd/m/Y' ); // => 04/03/2022
+echo date_convert_format( '2022-13-04', 'd/m/Y' ); // => null (month 13 does not exists)
 ```
 
 ## Convert array in object
