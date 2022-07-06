@@ -167,16 +167,6 @@ echo size_format( $size_in_bytes, $decimals ); // => 4,5 KB
 
 See: [size_format](https://developer.wordpress.org/reference/functions/size_format/)
 
-## Human-readable file size
-
-```php
-$size_in_bytes = 4567;
-$decimals = 1; // default is 2
-echo size_format( $size_in_bytes, $decimals ); // => 4,5 KB
-```
-
-See: [size_format](https://developer.wordpress.org/reference/functions/size_format/)
-
 ## Interpolates an array of values into the string/message placeholders.
 
 ```php
