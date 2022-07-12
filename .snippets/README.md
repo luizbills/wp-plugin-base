@@ -3,7 +3,7 @@
 ## Add an bulk action
 
 ```php
-$screen_id = 'edit-shop-order'; // WooCommerce Orders
+$screen_id = 'edit-shop_order'; // WooCommerce Orders
 
 add_filter( 'bulk_actions-' . $screen_id, 'prefix_register_actions' );
 function prefix_register_actions ( $actions ) {
