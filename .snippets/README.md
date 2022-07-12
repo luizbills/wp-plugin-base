@@ -7,7 +7,7 @@ $screen_id = 'edit-shop_order'; // WooCommerce Orders
 
 add_filter( 'bulk_actions-' . $screen_id, 'prefix_register_actions' );
 function prefix_register_actions ( $actions ) {
-	$actions[ 'YOUR_ACTION_ID' ] = __( 'Gerar Etiquetas do Correios' );
+	$actions[ 'YOUR_ACTION_ID' ] = __( 'Do something' );
 	return $actions;
 }
 
