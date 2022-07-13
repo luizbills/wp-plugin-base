@@ -4,7 +4,6 @@ namespace Your_Namespace;
 
 use Your_Namespace\Helpers as h;
 use Your_Namespace\Core\Config;
-use Your_Namespace\Core\Debug;
 
 abstract class Helpers {
 	// Get the value if set, otherwise return a default value or `null`. Prevents notices when data is not set.
