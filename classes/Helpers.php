@@ -11,6 +11,11 @@ abstract class Helpers {
 		return isset( $var ) ? $var : $default;
 	}
 
+	// Get the constant if set, otherwise return a default value or `null`.
+	public static function get_defined ( $name, $default = null ) {
+		return defined( $name ) ? constant( $name ) : $default;
+	}
+
 	// returns `false` ONLY IF $var is null, empty array/object or empty string
 	// note: `$var = false` returns `true` (because $var is filled with a boolean)
 	public static function filled ( $var ) {
