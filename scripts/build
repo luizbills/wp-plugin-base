@@ -1,5 +1,9 @@
 #!/usr/bin/env bash
 
+# This script zips your plugin to make it easy for you to install or share it.
+# By Luiz Bills
+# License: GPL v3
+
 CURRENT_DIR="."
 DIR="$(realpath $CURRENT_DIR)"
 PLUGIN_NAME="$(basename $DIR)"
