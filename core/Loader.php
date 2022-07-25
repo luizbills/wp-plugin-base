@@ -35,6 +35,7 @@ abstract class Loader {
 		}
 
 		foreach ( self::$classes as $index => $class ) {
+			if ( ! $class ) continue;
 			if ( ! is_array( $class ) ) {
 				$class = [ $class, 10 ];
 			} else {
@@ -47,7 +48,6 @@ abstract class Loader {
 			return $a[1] <=> $b[1];
 		} );
 
-		$main_file = Config::get( 'FILE' );
 		foreach ( self::$classes as $item ) {
 			$class_name = $item[0];
 			$priority = $item[1];
