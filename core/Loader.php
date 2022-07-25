@@ -44,7 +44,7 @@ abstract class Loader {
 		}
 
 		\usort( self::$classes, function ( $a, $b ) {
-			return $a[1] > $b[1];
+			return $a[1] <=> $b[1];
 		} );
 
 		$main_file = Config::get( 'FILE' );
