@@ -25,7 +25,7 @@ git clone \
 
 ## Contributing
 
-- [Create an issue](https://github.com/luizbills/wp-plugin-base/issues/new) for suggestions and other reports.
+- [Create an issue](https://github.com/luizbills/wp-plugin-base/issues/new) for questions, suggestions or bugs.
 
 ## LICENSE
 
