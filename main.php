@@ -42,7 +42,8 @@ try {
 		if ( ! current_user_can( 'install_plugins' ) ) return;
 		list( $plugin_name ) = get_file_data( __FILE__, [ 'plugin name' ] );
 		$message = sprintf(
-			esc_html__( 'Error on plugin %s activation: %s', 'your_text_domain' ),
+			/* translators: %1$s is replaced with plugin name and %2$s with an error message */
+			esc_html__( 'Error on %1$s plugin  activation: %2$s', 'your_text_domain' ),
 			'<strong>' . esc_html( $plugin_name ) . '</strong>',
 			'<br><code>' . esc_html( $e->getMessage() ) . '</code>'
 		);

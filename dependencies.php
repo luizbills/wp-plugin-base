@@ -9,6 +9,7 @@ return [
 		'message' => function () {
 			$req_version = h::config_get( 'REQUIRED_PHP_VERSION', false );
 			return sprintf(
+				/* translators: %s is replaced with <strong>PHP</strong> */
 				__( "Update your %s version to $req_version or later.", 'your_text_domain' ),
 				'<strong>PHP</strong>'
 			);
@@ -22,6 +23,7 @@ return [
 
 	// 'woocommerce' => [
 	// 	'message' => sprintf(
+	// 		/* translators: %s is replaced with a required plugin name */
 	// 		__( 'Install and activate the %s plugin.', 'your_text_domain' ),
 	// 		'<strong>WooCommerce</strong>'
 	// 	),

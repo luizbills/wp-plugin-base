@@ -68,6 +68,7 @@ abstract class Dependencies {
 
 			echo "<div class='notice notice-error'><p>";
 			echo sprintf(
+				/* translators: %s is replaced with plugin name */
 				__( 'Missing dependencies for %s:', 'your_text_domain' ),
 				"<strong>" . Config::get( 'NAME' ) . "</strong>",
 			);
