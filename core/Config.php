@@ -39,7 +39,7 @@ abstract class Config {
 		self::$values[ 'DIR' ] = $root;
 
 		$data = \get_file_data( $main_file, [ 'Plugin Name', 'Version' ] );
-		self::$values[ 'NAME' ] = $data[0];
+		self::$values[ 'NAME' ] = __( $data[0], 'your_text_domain' );
 		self::$values[ 'VERSION' ] = $data[1];
 
 		if ( \file_exists( $root . '/composer.json' ) ) {
