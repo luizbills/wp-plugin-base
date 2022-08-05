@@ -20,11 +20,11 @@
 
 # The slug of your WordPress.org plugin
 # You need publish your plugin first: https://wordpress.org/plugins/developers/add/
-WP_PLUGIN_SLUG="your_plugin_slug"
+WP_PLUGIN_SLUG="your_wp_plugin_slug"
 
 # The GITHUB repository
-# format: username/repository (example: luizbills/wp-tweaks) 
-GITHUB_REPO_SLUG="your_gh_username/your_gh_repo" 
+# format: username/repository (example: luizbills/wp-tweaks)
+GITHUB_REPO_SLUG="your_gh_username/your_gh_repo"
 
 # The main Github repository branch
 MAIN_BRANCH="master";

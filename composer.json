@@ -15,8 +15,9 @@
         }
     },
     "scripts": {
-        "build": "/usr/bin/env bash ./scripts/build",
-        "deploy": "/usr/bin/env bash ./scripts/deploy",
+        "build": "./scripts/build",
+        "deploy": "./scripts/deploy",
+        "update-trunk": "./scripts/deploy --only-trunk",
         "make-pot": "wp i18n make-pot . your_text_domain.pot"
     }
 }
