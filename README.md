@@ -20,8 +20,28 @@ git clone \
 && cd .wp_plugin_base && php .bin/install.php && sleep .1 \
 && cd $(cat install.log) \
 && rm -rf ../.wp_plugin_base/
-
 ```
+
+## How to use
+
+- Declare the plugin dependencies in the [`/dependencies.php`](/dependencies.php) file.
+- Develop plugin features in `/classes` directory.
+- To automatically initialize a class, declare the `__start` method on the class and add it to the `/loader.php` file. See [`classes/Sample_Class.php`](classes/Sample_Class.php) to learn more.
+- Use the `h::config_get` method to get the values declared in the [`/config.php`](/config.php) file. You can also use it to get these other values:
+    - `h::config_get( 'FILE' )` returns the plugin main file path (absolute path)
+    - `h::config_get( 'DIR' )` returns the plugin directory (absolute path)
+    - `h::config_get( 'NAME' )` returns the plugin name (from your plugin header in [`/main.php`](main.php#L3))
+    - `h::config_get( 'VERSION' )` returns the plugin current version (from your plugin header in [`/main.php`](main.php#L5))
+- Use the helpers already declared in the [`/classes/Helpers.php`](/classes/Helpers.php) or declare others there.
+
+*Check out our [snippets](/.snippets) for tips and tricks.*
+
+### Shell scripts
+
+- `composer run make-pot` creates a `.pot` file inside of `/languages` directory.
+- `composer run build` creates a `.zip` file inside of `/wp-build` directory. Easy way to share or install your plugin on other WordPress.
+- `composer run deploy` updates your SVN repository and release a new version on https://wordpress.org (you need setup the [`/scripts/svn-push`](/scripts/svn-push) file first). This script also update your plugin assets (icon, banner and screenshot) when necessary in the `/.wordpress-org` directory.
+- `composer run update-trunk` updates the `/trunk` of your SVN repository on https://wordpress.org (you need setup the [`/scripts/svn-push`](/scripts/svn-push) file first). This script also update your plugin assets (icon, banner and screenshot) when necessary in the `/.wordpress-org` directory.
 
 ## Contributing
 
