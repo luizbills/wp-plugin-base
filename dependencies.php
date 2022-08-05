@@ -5,6 +5,7 @@ use Your_Namespace\Helpers as h;
 defined( 'WPINC' ) || exit( 1 );
 
 return [
+	// Check the PHP version
 	'php' => [
 		'message' => function () {
 			$req_version = h::config_get( 'REQUIRED_PHP_VERSION', false );
@@ -21,14 +22,17 @@ return [
 		}
 	],
 
-	// 'woocommerce' => [
-	// 	'message' => sprintf(
-	// 		/* translators: %s is replaced with a required plugin name */
-	// 		__( 'Install and activate the %s plugin.', 'your_text_domain' ),
-	// 		'<strong>WooCommerce</strong>'
-	// 	),
-	// 	'check' => function () {
-	// 		return \function_exists( 'WC' );
-	// 	}
-	// ],
+	/*
+	// Check if WooCommerce is activated
+	'woocommerce' => [
+		'message' => sprintf(
+			// translators: %s is replaced with a required plugin name
+			__( 'Install and activate the %s plugin.', 'your_text_domain' ),
+			'<strong>WooCommerce</strong>'
+		),
+		'check' => function () {
+			return \function_exists( 'WC' );
+		}
+	],
+	*/
 ];
