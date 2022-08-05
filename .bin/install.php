@@ -78,6 +78,7 @@ if ( file_exists( $dest_dir ) && is_dir( $dest_dir ) ) {
 $all_files = rscandir( $src_dir );
 $ignores = [
 	'/.git/',
+	'/.github/',
 	'/vendor/',
 	'/.bin/',
 	'/.snippets/',
