@@ -30,7 +30,7 @@ git clone \
 
 - Declare the plugin dependencies in the [`/dependencies.php`](/dependencies.php) file.
 - Develop plugin features in `/classes` directory.
-- To automatically initialize a class, declare the `__start` method on the class and add it to the `/loader.php` file. See [`classes/Sample_Class.php`](classes/Sample_Class.php) to learn more.
+- To automatically initialize a class, declare the `__start` method on the class and add it to the [`/loader.php`](/loader.php) file. See [`classes/Sample_Class.php`](classes/Sample_Class.php) to learn more.
 - Use the `h::config_get` method to get the values declared in the [`/config.php`](/config.php) file. You can also use it to get these other values:
     - `h::config_get( 'FILE' )` returns the plugin main file path (absolute path)
     - `h::config_get( 'DIR' )` returns the plugin directory (absolute path)
