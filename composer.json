@@ -16,8 +16,8 @@
     },
     "scripts": {
         "build": "./scripts/build",
-        "deploy": "./scripts/deploy",
-        "update-trunk": "./scripts/deploy --only-trunk",
+        "deploy": "./scripts/svn-push",
+        "update-trunk": "./scripts/svn-push --only-trunk",
         "make-pot": "wp i18n make-pot . your_text_domain.pot"
     }
 }
