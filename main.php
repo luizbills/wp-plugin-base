@@ -2,15 +2,16 @@
 /*
 Plugin Name: your_plugin_name
 Plugin URI: https://github.com/your/repo
-Version: 1.0.0
 Description: your_plugin_description
+Version: 1.0.0
+Requires PHP: 7.4
+Requires at least: 5.0
 Author: your_author_name
 Author URI: your_author_uri
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Text Domain: your_text_domain
 Domain Path: /languages
-Update URI: false
 
 your_plugin_name is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
@@ -27,7 +28,7 @@ along with your_plugin_name. If not, see http://www.gnu.org/licenses/gpl-3.0.htm
 // prevents your PHP files from being executed via direct browser access
 defined( 'WPINC' ) || exit( 1 );
 
-// uncomment to load your plugin translations
+// uncomment below to load your plugin translations
 // load_plugin_textdomain( 'your_text_domain', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 try {
