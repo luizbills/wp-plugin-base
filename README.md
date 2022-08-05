@@ -33,6 +33,7 @@ git clone \
     - `h::config_get( 'NAME' )` returns the plugin name (from your plugin header in [`/main.php`](main.php#L3))
     - `h::config_get( 'VERSION' )` returns the plugin current version (from your plugin header in [`/main.php`](main.php#L5))
 - Use the helpers already declared in the [`/classes/Helpers.php`](/classes/Helpers.php) or declare others there.
+- Put your view files in the `/templates` directory and use the `echo h::get_template( 'your_template', [ 'foo' => 'bar' ] );` to display their. *Example: create a file `/templates/title.php` with the content `<h1><?= esc_html( $args['text'] ) ?></h1>` and when you need to show that html, call `echo h::get_template( 'title.php', [ 'text' => 'My Title' ] );`*.
 
 *Check out our [snippets](/.snippets) for tips and tricks.*
 
