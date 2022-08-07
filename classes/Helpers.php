@@ -251,7 +251,7 @@ abstract class Helpers {
 			require $full_path;
 			$html = \ob_get_clean();
 		} catch ( \Throwable $e ) {
-			if ( h::user_is_admin() ) {
+			if ( h::get_defined( 'WP_DEBUG' ) && current_user_can( 'administrator' ) ) {
 				$error = wp_slash( "Error while rendering template '$path': " . $e->getMessage() );
 				$html = '<script>alert("' . esc_js( $error ) . '")</script>';
 			} else {
