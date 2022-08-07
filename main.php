@@ -4,10 +4,10 @@ Plugin Name: your_plugin_name
 Plugin URI: https://github.com/your/repo
 Description: your_plugin_description
 Version: 1.0.0
-Requires PHP: 7.4
-Requires at least: 5.0
 Author: your_author_name
 Author URI: your_author_uri
+Requires PHP: 7.4
+Requires at least: 5.0
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 Text Domain: your_text_domain
