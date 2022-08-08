@@ -27,7 +27,7 @@ WP_PLUGIN_SLUG="your_wp_plugin_slug"
 GITHUB_REPO_SLUG="your_gh_username/your_gh_repo"
 
 # The main Github repository branch
-MAIN_BRANCH="master";
+MAIN_BRANCH="main";
 
 # directory with plugin icon, banner and screenshots used in https://wordpress.org
 PLUGIN_ASSETS_DIR=".wordpress-org"
