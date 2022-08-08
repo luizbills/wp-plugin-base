@@ -2,6 +2,7 @@
 
 include_once __DIR__ . '/helpers.php';
 
+// $debug = in_array( '--debug', $argv );
 $values = null;
 $ready = false;
 $prompts = [
@@ -10,12 +11,15 @@ $prompts = [
 ];
 $defaults = [];
 
-// FOR DEBUG ONLY
-// $ready = true;
-// $values = [
-// 	'Plugin Name' => 'Test',
-// 	'PHP Namespace' => 'Test\Plugin',
-// ];
+/*
+if ( $debug ) {
+	$ready = true;
+	$values = [
+		'Plugin Name' => 'Test',
+		'PHP Namespace' => 'Test\Plugin',
+	];
+}
+*/
 
 // get some plugin informations
 while ( ! $ready ) {
@@ -143,5 +147,4 @@ echo PHP_EOL . "The plugin was successfully created in $dest_dir" . PHP_EOL . PH
 
 chdir( $dest_dir );
 echo shell_exec( 'ls -Apl' );
-unlink( $src_dir . '/install.log' );
 file_put_contents( $src_dir . '/install.log', $dest_dir );
