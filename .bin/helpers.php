@@ -77,3 +77,15 @@ function mv ( $origin, $destination ) {
 	$destination = escapeshellarg( $destination );
 	return shell_exec( "mv $origin $destination" );
 }
+
+function success ( $str ) {
+	return "\033[1;32m$str\033[0m";
+}
+
+function alert ( $str ) {
+	return "\033[1;31m$str\033[0m";
+}
+
+function info ( $str ) {
+	return "\033[36m$str\033[0m";
+}

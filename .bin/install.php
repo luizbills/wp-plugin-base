@@ -2,7 +2,7 @@
 
 include_once __DIR__ . '/helpers.php';
 
-// $debug = in_array( '--debug', $argv );
+$debug = in_array( '--debug', $argv );
 $values = null;
 $ready = false;
 $prompts = [
@@ -11,7 +11,6 @@ $prompts = [
 ];
 $defaults = [];
 
-/*
 if ( $debug ) {
 	$ready = true;
 	$values = [
@@ -19,7 +18,6 @@ if ( $debug ) {
 		'PHP Namespace' => 'Test\Plugin',
 	];
 }
-*/
 
 // get some plugin informations
 while ( ! $ready ) {
@@ -40,7 +38,7 @@ while ( ! $ready ) {
 	cls();
 
 	foreach ( $values as $key => $value ) {
-		echo "$key: $value\n\r";
+		echo "$key: " . info( $value ) . "\n\r";
 	}
 
 	// give the user a chance to fix the informations
@@ -67,7 +65,7 @@ $dest_dir = dirname( $src_dir ) . '/' . $slug;
 
 // remove old plugin
 if ( file_exists( $dest_dir ) && is_dir( $dest_dir ) ) {
-	echo "Warning: $dest_dir already exists." . PHP_EOL;
+	echo alert( 'CAUTION' ) . ' ' . info( $dest_dir ) . ' directory already exists.' . PHP_EOL . PHP_EOL;
 	// exit( 1 );
 	$confirm = strtolower( readline( 'Do you want to delete this directory and all its files? [y/N] ' ) );
 
@@ -77,6 +75,9 @@ if ( file_exists( $dest_dir ) && is_dir( $dest_dir ) ) {
 		exit(1);
 	}
 }
+
+cls();
+echo info( 'Copying files ...' ) . PHP_EOL;
 
 // list of files and folders
 $all_files = rscandir( $src_dir );
@@ -138,13 +139,12 @@ foreach ( $files as $file ) {
 
 // install dependencies via composer
 if ( ! file_exists( "$dest_dir/vendor" ) ) {
-	echo 'Installing composer packages ...' . PHP_EOL;
+	echo info( 'Installing composer packages ...' ) . PHP_EOL;
 	chdir( $dest_dir );
 	echo shell_exec( 'composer update' );
 }
 
-echo PHP_EOL . "The plugin was successfully created in $dest_dir" . PHP_EOL . PHP_EOL;
+echo PHP_EOL . success( "Your plugin was successfully created in $dest_dir" ) . PHP_EOL . PHP_EOL;
 
-chdir( $dest_dir );
-echo shell_exec( 'ls -Apl' );
+if ( $debug ) echo shell_exec( 'ls -Apl' );
 file_put_contents( $src_dir . '/install.log', $dest_dir );
