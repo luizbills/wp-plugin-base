@@ -26,7 +26,7 @@ git clone \
 
 ## Getting started
 
-This boilerplace has is organized into several files and folders. It is essential that you understand each of them.
+This boilerplace is organized into several files and folders. It is essential that you understand each of them.
 
 ### `/main.php`
 
