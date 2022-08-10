@@ -62,7 +62,7 @@ Each dependency is an array that must contain the following keys:
 - `check`: a function that should check if any requirements have been met.
 - `message`: a string (or function that returns a string) that will be displayed if the requirement is not met.
 
-Example: use the following code below so that your plugin depends on the WooCommerce plugin to work.
+Example: use the following code below to indicate that your plugin depends on the WooCommerce plugin to work.
 
 ```php
 $deps[] = [
