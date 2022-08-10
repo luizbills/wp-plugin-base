@@ -21,6 +21,7 @@ git clone \
   https://github.com/luizbills/wp-plugin-base.git .wp_plugin_base \
 && cd .wp_plugin_base && php .bin/install.php && sleep .1 \
 && cd $(cat install.log) \
+&& chmod +x scripts/* \
 && rm -rf ../.wp_plugin_base/
 ```
 
