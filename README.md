@@ -121,9 +121,9 @@ If you put a class in the `/loader.php` file, its `__start` method will be execu
 
 **NOTE:** You don't need to add all your classes in `/loader.php`. Only add the classes that need to run some code automatically or to listen WordPress actions and filters hooks.
 
-### The `classes/Helpers` class
+### The `Helpers` class
 
-The `classes/Helpers.php` file contains several static methods that can be very useful in developing your plugin. To make it easier, I recommend that at the beginning of each class file you include `use Your_Namespace\Helpers as h;` to work as a shortcut `h` for the `Helpers` class.
+The [`classes/Helpers.php`](/classes/Helpers.php) file contains several static methods that can be very useful in developing your plugin. To make it easier, I recommend that at the beginning of each class file you include `use Your_Namespace\Helpers as h;` to work as a shortcut `h` for the `Helpers` class.
 
 **NOTE:** The `Helpers` class is not used in the boilerplace core, so you can modify or even delete it without any problem.
 
