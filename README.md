@@ -24,9 +24,7 @@ git clone \
 && rm -rf ../.wp_plugin_base/
 ```
 
-Start coding now!
-
-## How to use
+## Getting started
 
 This boilerplace has is organized into several files and folders. It is essential that you understand each of them.
 
