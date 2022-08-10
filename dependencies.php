@@ -36,3 +36,6 @@ $deps[] = [
 	),
 ];
 */
+
+// always returns the dependencies
+return $deps;
