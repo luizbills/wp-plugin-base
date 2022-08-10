@@ -105,7 +105,7 @@ This file is automatically executed when your plugin is deleted. Use it to clean
 
 ### `/.prettierrc.json` and `/.editorconfig`
 
-These are optional files that help formatting . However, you will need to install their extensions in your code editor.
+These are optional files that help formatting your code. However, you will need to install their extensions in your code editor.
 
 ### `/core` folder
 
