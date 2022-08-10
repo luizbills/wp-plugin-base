@@ -27,14 +27,14 @@ abstract class Dependencies {
 		$errors = [];
 		$passed = [];
 
-		foreach ( self::$dependencies as $key => $dep ) {
+		foreach ( self::$dependencies as $dep ) {
 			$check = is_callable( $dep['check'] ) ? call_user_func( $dep['check'] ) : $dep['check'];
 			$message = is_callable( $dep['message'] ) ? call_user_func( $dep['message'] ) : $dep['message'];
 
 			if ( ! $check ) {
-				$errors[ $key ] = $message;
+				$errors[] = $message;
 			} else {
-				$passed[ $key ] = $message;
+				$passed[] = $message;
 			}
 		}
 
