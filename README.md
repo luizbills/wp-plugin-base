@@ -9,20 +9,22 @@ Powerful Boilerplate for WordPress Plugins.
 - [PHP](http://php.net/) v7.4+
 - [Git](https://git-scm.com/)
 - [Composer](https://getcomposer.org/) (globally installed as `composer`)
+- Terminal with bash (use `Git Bash` on Windows)
 
 ## Install
 
 Execute this script below in your `wp-content/plugins` to generate a new plugin:
 
 ```bash
-git clone \
+wp_plugin_base_clone_dir=".wp_plugin_base_$(date +%s)" \
+&& git clone \
   --branch main \
   --single-branch --no-tags \
-  https://github.com/luizbills/wp-plugin-base.git .wp_plugin_base \
-&& cd .wp_plugin_base && php .bin/install.php && sleep .1 \
+  https://github.com/luizbills/wp-plugin-base.git $wp_plugin_base_clone_dir \
+&& cd $wp_plugin_base_clone_dir && php .bin/install.php && sleep .1 \
 && cd $(cat install.log) \
 && chmod +x scripts/* \
-&& rm -rf ../.wp_plugin_base/
+&& rm -rf "../$wp_plugin_base_clone_dir"
 ```
 
 ## Getting started
