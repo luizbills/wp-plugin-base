@@ -141,13 +141,15 @@ chdir( $dest_dir );
 
 if ( shell_cmd_exists( 'wp' ) ) {
 	echo info( "Generating languages/{$find_replace['your_text_domain']}.pot file ..." ) . PHP_EOL;
-	if ( $debug ) echo shell_exec( 'composer run make-pot' );
+	$output = shell_exec( 'composer run make-pot' );
+	if ( $debug ) echo $output;
 }
 
 // install dependencies via composer
 if ( shell_cmd_exists( 'composer' ) && ! file_exists( "$dest_dir/vendor" ) ) {
 	echo info( 'Installing composer autoloader ...' ) . PHP_EOL;
-	if ( $debug ) echo shell_exec( 'composer update' );
+	$output = shell_exec( 'composer update' );
+	if ( $debug ) echo $output;
 }
 
 if ( $debug ) {
