@@ -7,8 +7,9 @@ Powerful Boilerplate for WordPress Plugins.
 ## Requirements
 
 - [PHP](http://php.net/) v7.4+
-- [Git](https://git-scm.com/)
-- [Composer](https://getcomposer.org/) (globally installed as `composer`)
+- [Git](https://git-scm.com/downloads)
+- [Composer](https://getcomposer.org/download/) (globally installed as `composer`)
+- [WP-CLI](https://wp-cli.org/#installing) (optional; only needed to generate the `.pot` file)
 - Terminal with `bash` (use `Git Bash` on Windows)
 
 ## Install
