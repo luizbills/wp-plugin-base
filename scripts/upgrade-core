@@ -2,13 +2,13 @@
 <?php
 
 if ( ! function_exists( 'curl_init' ) ) {
-    echo alert( "Error: 'curl' module not found in PHP" );
-    die( 1 );
+	echo alert( "Error: 'curl' module not found in PHP" );
+	die( 1 );
 }
 
 if ( ! shell_cmd_exists( 'git' ) ) {
-    echo alert( "Error: 'git' command not found" );
-    die( 1 );
+	echo alert( "Error: 'git' command not found" );
+	die( 1 );
 }
 
 $root = dirname( __DIR__ ) . '/';
@@ -16,8 +16,8 @@ $plugin_folder = basename( $root );
 $data = get_plugin_data( $root );
 
 if ( ! $data ) {
-    echo alert( "Error: Not found 'wp-plugin-base' object in $plugin_folder/composer.json" );
-    die( 1 );
+	echo alert( "Error: Not found 'wp-plugin-base' object in $plugin_folder/composer.json" );
+	die( 1 );
 }
 
 echo info( 'The plugin informations' ) . PHP_EOL;
@@ -29,7 +29,7 @@ echo PHP_EOL;
 $res = strtolower( readline( "Do you want to continue? [Y/n]" ) );
 $res = $res ? $res : 'y';
 if ( 'y' !== $res ) {
-    die( 1 );
+	die( 1 );
 }
 
 cls();
@@ -41,7 +41,7 @@ $local_file = $root . $file_path;
 $current_version = null;
 
 if ( file_exists( $local_file ) ) {
-    $current_version = sanitize_version( file_get_contents( $local_file ) );
+	$current_version = sanitize_version( file_get_contents( $local_file ) );
 }
 
 $current_version = $current_version ? $current_version : '1.0.0';
@@ -54,24 +54,24 @@ $request = remote_get( $remote_file );
 $github_repo_url = "https://github.com/{$github_repo}";
 
 if ( 200 !== $request['status'] ) {
-    echo alert( "Request failed: $remote_file_url returned {$request['status']}" );
-    die( 1 );
+	echo alert( "Request failed: $remote_file_url returned {$request['status']}" );
+	die( 1 );
 }
 $remote_version = sanitize_version( $request['body'] );
 
 if ( version_compare( $remote_version, $current_version, '>' ) ) {
-    echo info( "The plugin core can be upgraded to $remote_version" ) . PHP_EOL;
-    echo infob("Tip: ") . "See the changelog in $github_repo_url/compare/$current_version...$remote_version" . PHP_EOL;
-    echo PHP_EOL;
-    echo "The $plugin_folder/core folder will be replaced (any other file will remain untouched)." . PHP_EOL;
-    $res = strtolower( readline( "Do you want to continue? [Y/n]" ) );
-    $res = $res ? $res : 'y';
-    if ( 'y' !== $res ) {
-        die();
-    }
+	echo info( "The plugin core can be upgraded to $remote_version" ) . PHP_EOL;
+	echo infob("Tip: ") . "See the changelog in $github_repo_url/compare/$current_version...$remote_version" . PHP_EOL;
+	echo PHP_EOL;
+	echo "The $plugin_folder/core folder will be replaced (any other file will remain untouched)." . PHP_EOL;
+	$res = strtolower( readline( "Do you want to continue? [Y/n]" ) );
+	$res = $res ? $res : 'y';
+	if ( 'y' !== $res ) {
+		die();
+	}
 } else {
-    echo "The $plugin_folder/core is up to date.";
-    die();
+	echo "The $plugin_folder/core is up to date.";
+	die();
 }
 
 cls();
@@ -89,32 +89,32 @@ shell_exec( "rm -rf $tmp_repo" );
 $error = shell_exec( "$git_cmd $github_repo_url.git $tmp_name > /dev/null" );
 
 if ( $error ) {
-    echo $error;
-    die( 1 );
+	echo $error;
+	die( 1 );
 }
 
 $core_files = [
-    'Config.php',
-    'Dependencies.php',
-    'Loader.php',
-    'Main.php',
-    'VERSION'
+	'Config.php',
+	'Dependencies.php',
+	'Loader.php',
+	'Main.php',
+	'VERSION'
 ];
 $find_replace = [
-    'Your_Namespace' => $data['namespace'],
-    'your_text_domain' => $data['text-domain']
+	'Your_Namespace' => $data['namespace'],
+	'your_text_domain' => $data['text-domain']
 ];
 
 foreach ( $core_files as $file ) {
-    $content = file_get_contents( "$tmp_repo/core/$file" );
+	$content = file_get_contents( "$tmp_repo/core/$file" );
 	$content = str_replace(
 		array_keys( $find_replace ),
 		array_values( $find_replace ),
 		$content
 	);
-    echo "Upgrading $plugin_folder/core/$file ... ";
-    file_put_contents( "$root/core/$file", $content );
-    echo "Done!" . PHP_EOL;
+	echo "Upgrading $plugin_folder/core/$file ... ";
+	file_put_contents( "$root/core/$file", $content );
+	echo "Done!" . PHP_EOL;
 }
 
 echo PHP_EOL;
@@ -129,41 +129,41 @@ function cls () {
 }
 
 function remote_get ( $url ) {
-    $ch = curl_init();
-    curl_setopt_array( $ch, [
-        CURLOPT_URL => $url,
-        CURLOPT_CONNECTTIMEOUT => 3,
-        CURLOPT_RETURNTRANSFER => 1,
-    ] );
-    $body = curl_exec( $ch );
-    $status = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
-    curl_close( $ch );
-    return [
-        'status' => $status,
-        'body' => $body,
-    ];
+	$ch = curl_init();
+	curl_setopt_array( $ch, [
+		CURLOPT_URL => $url,
+		CURLOPT_CONNECTTIMEOUT => 3,
+		CURLOPT_RETURNTRANSFER => 1,
+	] );
+	$body = curl_exec( $ch );
+	$status = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
+	curl_close( $ch );
+	return [
+		'status' => $status,
+		'body' => $body,
+	];
 }
 
 // check if an shell command exists
 function shell_cmd_exists ( $cmd ) {
-    $return = shell_exec( sprintf("which %s", escapeshellarg( $cmd ) ) );
-    return ! empty( $return );
+	$return = shell_exec( sprintf("which %s", escapeshellarg( $cmd ) ) );
+	return ! empty( $return );
 }
 
 function get_plugin_data ( $root ) {
-    $composer = file_get_contents( $root . 'composer.json' );
-    $json = json_decode( $composer, true );
-    if ( isset( $json['wp-plugin-base'] ) ) {
-        return [
-            'namespace' => $json['wp-plugin-base']['namespace'],
-            'text-domain' => $json['wp-plugin-base']['text-domain'],
-        ];
-    }
-    return null;
+	$composer = file_get_contents( $root . 'composer.json' );
+	$json = json_decode( $composer, true );
+	if ( isset( $json['wp-plugin-base'] ) ) {
+		return [
+			'namespace' => $json['wp-plugin-base']['namespace'],
+			'text-domain' => $json['wp-plugin-base']['text-domain'],
+		];
+	}
+	return null;
 }
 
 function sanitize_version ( $string ) {
-    return ltrim( preg_replace( '/[^0-9.]/', '', $string ), '0' );
+	return ltrim( preg_replace( '/[^0-9.]/', '', $string ), '0' );
 }
 
 // terminal text with color red
