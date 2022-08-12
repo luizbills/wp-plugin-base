@@ -22,12 +22,12 @@ final class Sample_Class {
 	public static function __activation () {
 		// This STATIC method is called automatically on plugin activation.
 		$plugin_name = h::config_get( 'NAME' );
-		h::log( "INFO plugin \"$plugin_name\" activated"  );
+		h::log( "INFO plugin \"$plugin_name\" activated" );
 	}
 
 	public static function __deactivation () {
 		// This STATIC method is called automatically on plugin deactivation (not uninstall/deletation).
 		$plugin_name = h::config_get( 'NAME' );
-		h::log( "INFO plugin \"$plugin_name\" deactivated"  );
+		h::log( "INFO plugin \"$plugin_name\" deactivated" );
 	}
 }
