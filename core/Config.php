@@ -41,20 +41,6 @@ abstract class Config {
 		$data = \get_file_data( $main_file, [ 'Plugin Name', 'Version' ] );
 		self::$values[ 'NAME' ] = __( $data[0], 'your_text_domain' );
 		self::$values[ 'VERSION' ] = $data[1];
-
-		if ( \file_exists( $root . '/composer.json' ) ) {
-			$json_raw = \file_get_contents( $root . '/composer.json' );
-			$composer = \json_decode( $json_raw );
-			$php_version = null;
-			try {
-				$php_version = $composer ? $composer->require->php : false;
-			} catch ( \Throwable $e ) {
-			}
-			if ( $php_version ) {
-				$php_version = \preg_replace( '/[^0-9\.]/', '', $php_version );
-				self::$values[ 'REQUIRED_PHP_VERSION' ] = $php_version;
-			}
-		}
 	}
 
 	public static function set ( $key, $value ) {

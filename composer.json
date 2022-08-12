@@ -1,6 +1,5 @@
 {
     "require": {
-        "php": ">=7.4",
         "ext-mbstring": "*"
     },
     "require-dev": {},
