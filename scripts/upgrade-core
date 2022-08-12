@@ -20,6 +20,8 @@ if ( ! $data ) {
 	die( 1 );
 }
 
+cls();
+
 echo info( 'The plugin informations' ) . PHP_EOL;
 echo 'Namespace: ' . $data['namespace'] . PHP_EOL;
 echo 'Text domain: ' . $data['text-domain'] . PHP_EOL;
@@ -82,7 +84,7 @@ echo PHP_EOL;
 $tmp = sys_get_temp_dir() . '/';
 $tmp_name = $plugin_folder . '-upgrade-wp-plugin-base';
 $tmp_repo = $tmp . $tmp_name;
-$git_cmd = "git clone --branch $git_branch --single-branch --no-tags";
+$git_cmd = "git clone --branch $git_branch --single-branch --no-tags --quiet";
 
 chdir( $tmp );
 shell_exec( "rm -rf $tmp_repo" );
