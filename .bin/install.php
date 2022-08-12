@@ -14,8 +14,8 @@ $defaults = [];
 if ( $debug ) {
 	$ready = true;
 	$values = [
-		'Plugin Name' => 'Test',
-		'PHP Namespace' => 'Test\Plugin',
+		'Plugin Name' => '__WP_PLUGIN_BASE_TEST__',
+		'PHP Namespace' => 'Test\WP_Plugin_Base',
 	];
 }
 
