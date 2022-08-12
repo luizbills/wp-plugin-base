@@ -14,8 +14,8 @@ $defaults = [];
 if ( $debug ) {
 	$ready = true;
 	$values = [
-		'Plugin Name' => 'Test',
-		'PHP Namespace' => 'Test\Plugin',
+		'Plugin Name' => '_WP_PLUGIN_BASE_DEBUG_',
+		'PHP Namespace' => "WP_Plugin_Base\Debug",
 	];
 }
 
@@ -110,29 +110,30 @@ mkdir( $dest_dir, 0755 );
 foreach ( $files as $file ) {
 	$target = str_replace( $src_dir, $dest_dir, $file );
 	$target_dir = dirname( $target );
-	$filename = basename( $file );
+	$content = file_get_contents( $file );
 
 	if ( ! file_exists( $target_dir ) ) {
 		mkdir( $target_dir, 0755, true );
 	}
 
+	// don not change any script (only copy them)
+	if ( 'scripts' === basename( $target_dir ) ) {
+		file_put_contents( $target, $content );
+		continue;
+	};
+
+	$filename = basename( $file );
+	$context = $find_replace;
+
 	if ( 'composer.json' === $filename ) {
-		$find_replace['Your_Namespace'] = str_replace( "\\", "\\\\", $find_replace['Your_Namespace'] );
+		$context['Your_Namespace'] = str_replace( "\\", "\\\\", $find_replace['Your_Namespace'] );
 	}
 
-	$content = file_get_contents( $file );
 	$content = str_replace(
-		array_keys( $find_replace ),
-		array_values( $find_replace ),
+		array_keys( $context ),
+		array_values( $context ),
 		$content
 	);
-
-	if ( 'composer.json' === $filename ) {
-		$find_replace['Your_Namespace'] = str_replace( "\\\\", "\\", $find_replace['Your_Namespace'] );
-	}
-	elseif ( '.gitignore' === $filename ) {
-		$content = str_replace( "\n/.newplugin", '', $content );
-	}
 
 	file_put_contents( $target, $content );
 }
