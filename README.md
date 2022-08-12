@@ -111,6 +111,8 @@ These are optional files that help formatting your code. However, you will need 
 
 This folder has the core of our boilerplace (classes that initialize the plugin, check dependencies, load classes from `/loader.php`, etc). You don't need to understand the core classes, but you can take a look, it's all pretty simple.
 
+The `/core/VERSION` file stores the boilerplate version. So you can update the files in the core folder using the `composer run upgrade-core` command (without having to do it manually). See the [scripts](#scripts-folder) sections.
+
 ### `/classes` folder
 
 In this folder you will put the classes that control the functionality of your plugin: custom post types, settings pages, shortcodes, etc.
@@ -236,6 +238,7 @@ This folder contains some scripts that are used in the commands explained below:
 
 - `composer run make-pot` creates a `.pot` file inside of `/languages` directory.
 - `composer run build` creates a `.zip` file inside of `/wp-build` directory. Easy way to share or install your plugin on other WordPress.
+- `composer run upgrade-core` will update the `/core` folder of your plugin, pulling the latest changes from this Github repository.
 - `composer run deploy` updates your SVN repository and release a new version on https://wordpress.org (you need setup the [`/scripts/svn-push`](/scripts/svn-push) file first). This script also update your plugin assets (icon, banner and screenshot) when necessary in the `/.wordpress-org` directory.
 - `composer run update-trunk` updates the `/trunk` of your SVN repository on https://wordpress.org (you need setup the [`/scripts/svn-push`](/scripts/svn-push) file first). This script also update your plugin assets (icon, banner and screenshot) when necessary in the `/.wordpress-org` directory.
 
