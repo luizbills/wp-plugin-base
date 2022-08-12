@@ -18,7 +18,8 @@
         "build": "./scripts/build",
         "deploy": "./scripts/svn-push",
         "update-trunk": "./scripts/svn-push --only-trunk",
-        "make-pot": "wp i18n make-pot . languages/your_text_domain.pot"
+        "make-pot": "wp i18n make-pot . languages/your_text_domain.pot",
+        "upgrade-core": "./scripts/upgrade-core"
     },
     "wp-plugin-base": {
         "namespace": "Your_Namespace",
