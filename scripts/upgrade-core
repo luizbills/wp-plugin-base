@@ -132,7 +132,7 @@ function remote_get ( $url ) {
 	$ch = curl_init();
 	curl_setopt_array( $ch, [
 		CURLOPT_URL => $url,
-		CURLOPT_CONNECTTIMEOUT => 3,
+		CURLOPT_CONNECTTIMEOUT => 10,
 		CURLOPT_RETURNTRANSFER => 1,
 	] );
 	$body = curl_exec( $ch );
