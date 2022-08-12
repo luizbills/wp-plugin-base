@@ -111,7 +111,7 @@ These are optional files that help formatting your code. However, you will need 
 
 This folder has the core of our boilerplace (classes that initialize the plugin, check dependencies, load classes from `/loader.php`, etc). You don't need to understand the core classes, but you can take a look, it's all pretty simple.
 
-The `/core/VERSION` file stores the boilerplate version. So you can update the files in the core folder using the `composer run upgrade-core` command (without having to do it manually). See the [scripts](/README.md/#scripts-folder) section.
+The `/core/VERSION` file stores the boilerplate version. So you can update the files in the core folder using the `composer run upgrade-core` command (without having to do it manually).
 
 ### `/classes` folder
 
