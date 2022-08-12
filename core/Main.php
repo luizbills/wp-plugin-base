@@ -14,7 +14,7 @@ abstract class Main {
 		}
 
 		Config::init( $main_file );
-		Dependencies::init( $main_file );
-		Loader::init( $main_file );
+		Loader::init();
+		Dependencies::init();
 	}
 }
