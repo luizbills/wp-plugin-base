@@ -89,3 +89,8 @@ function alert ( $str ) {
 function info ( $str ) {
 	return "\033[36m$str\033[0m";
 }
+
+function shell_cmd_exists ( $cmd ) {
+    $return = shell_exec( sprintf("which %s", escapeshellarg( $cmd ) ) );
+    return ! empty( $return );
+}

@@ -7,28 +7,28 @@ Powerful Boilerplate for WordPress Plugins.
 ## Requirements
 
 - [PHP](http://php.net/) v7.4+
-- [Git](https://git-scm.com/)
-- [Composer](https://getcomposer.org/) (globally installed as `composer`)
+- [Git](https://git-scm.com/downloads)
+- [Composer](https://getcomposer.org/download/) (globally installed as `composer`)
+- [WP-CLI](https://wp-cli.org/#installing) (optional; only needed to generate the `.pot` file)
+- Terminal with `bash` (use `Git Bash` on Windows)
 
 ## Install
 
-Execute this script below in your `wp-content/plugins` to generate a new plugin:
+Open your terminal and execute the script below in your `wp-content/plugins` to generate a new plugin:
 
 ```bash
-git clone \
-  --branch main \
-  --single-branch --no-tags \
-  https://github.com/luizbills/wp-plugin-base.git .wp_plugin_base \
-&& cd .wp_plugin_base && php .bin/install.php && sleep .1 \
+wp_plugin_base_clone_dir=".wp_plugin_base_$(date +%s)" \
+&& git clone --branch main --single-branch --no-tags \
+  https://github.com/luizbills/wp-plugin-base.git $wp_plugin_base_clone_dir \
+&& cd $wp_plugin_base_clone_dir && php .bin/install.php && sleep .1 \
 && cd $(cat install.log) \
-&& rm -rf ../.wp_plugin_base/
+&& chmod +x scripts/* \
+&& rm -rf "../$wp_plugin_base_clone_dir"
 ```
 
-Start coding now!
+## Getting started
 
-## How to use
-
-This boilerplace has is organized into several files and folders. It is essential that you understand each of them.
+This boilerplace is organized into several files and folders. It is essential that you understand each of them.
 
 ### `/main.php`
 
@@ -63,7 +63,7 @@ Each dependency is an array that must contain the following keys:
 - `check`: a function that should check if any requirements have been met.
 - `message`: a string (or function that returns a string) that will be displayed if the requirement is not met.
 
-Example: use the following code below so that your plugin depends on the WooCommerce plugin to work.
+Example: use the following code below to indicate that your plugin depends on the WooCommerce plugin to work.
 
 ```php
 $deps[] = [
@@ -105,7 +105,7 @@ This file is automatically executed when your plugin is deleted. Use it to clean
 
 ### `/.prettierrc.json` and `/.editorconfig`
 
-These are optional files that help formatting . However, you will need to install their extensions in your code editor.
+These are optional files that help formatting your code. However, you will need to install their extensions in your code editor.
 
 ### `/core` folder
 

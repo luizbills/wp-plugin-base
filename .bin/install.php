@@ -137,14 +137,26 @@ foreach ( $files as $file ) {
 	file_put_contents( $target, $content );
 }
 
-// install dependencies via composer
-if ( ! file_exists( "$dest_dir/vendor" ) ) {
-	echo info( 'Installing composer packages ...' ) . PHP_EOL;
-	chdir( $dest_dir );
-	echo shell_exec( 'composer update' );
+chdir( $dest_dir );
+
+if ( shell_cmd_exists( 'wp' ) ) {
+	echo info( "Generating languages/{$find_replace['your_text_domain']}.pot file ..." ) . PHP_EOL;
+	$output = shell_exec( 'composer run make-pot' );
+	if ( $debug ) echo $output;
 }
 
-echo PHP_EOL . success( "Your plugin was successfully created in $dest_dir" ) . PHP_EOL . PHP_EOL;
+// install dependencies via composer
+if ( shell_cmd_exists( 'composer' ) && ! file_exists( "$dest_dir/vendor" ) ) {
+	echo info( 'Installing composer autoloader ...' ) . PHP_EOL;
+	$output = shell_exec( 'composer update' );
+	if ( $debug ) echo $output;
+}
 
-if ( $debug ) echo shell_exec( 'ls -Apl' );
+if ( $debug ) {
+	echo info( "Files generated:" ) . PHP_EOL;
+	echo shell_exec( 'ls -Apl' );
+}
+
+echo PHP_EOL . success( "Your plugin was successfully created in $dest_dir" ) . PHP_EOL;
+
 file_put_contents( $src_dir . '/install.log', $dest_dir );
