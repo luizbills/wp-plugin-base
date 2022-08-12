@@ -57,7 +57,7 @@ abstract class Helpers {
 	}
 
 	public static function log ( ...$values ) {
-		if ( ! defined( 'WP_DEBUG_LOG' ) || ! WP_DEBUG_LOG ) return;
+		if ( ! WP_DEBUG && ! h::get_defined( 'WP_DEBUG_LOG' ) ) return;
 		$slug = Config::get( 'SLUG' );
 		$message = '';
 		foreach ( $values as $value ) {
@@ -80,12 +80,6 @@ abstract class Helpers {
 			$logger->debug( $message );
 		} else {
 			\error_log( "[$slug] $message" );
-		}
-	}
-	
-	public static function log_wp_error ( $var, $code = null ) {
-		if ( defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG && \is_wp_error( $var ) ) {
-			h::log( 'WordPress ERROR: ' . $var->get_error_message( $code ) );
 		}
 	}
 
@@ -131,7 +125,7 @@ abstract class Helpers {
 				$duration = \absint( $duration );
 				$duration = $duration !== 0 ? $duration : \apply_filters(
 					h::prefix( 'transient_max_duration' ),
-					3 * MONTH_IN_SECONDS, // by default, max is 3 months 
+					3 * MONTH_IN_SECONDS, // by default, max is 3 months
 					$transient
 				);
 				\set_transient( $key, $value, $duration );
@@ -224,16 +218,6 @@ abstract class Helpers {
 			} else {
 				$result .= $mask[ $i ];
 			}
-		}
-		return $result;
-	}
-
-	// Combines n functions. Like a pipe flowing left-to-right, calling each function with the output of the last one.
-	// usage: `h::pipe( '<h1>hello world</h1>', 'strtoupper', 'strip_tags' ); // => HELLO WORLD`
-	public static function pipe ( $value, ...$fn ) {
-		$result = $value;
-		foreach ( $fn as $f ) {
-			$result = $f( $result );
 		}
 		return $result;
 	}
