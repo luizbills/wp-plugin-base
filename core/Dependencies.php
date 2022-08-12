@@ -28,8 +28,6 @@ abstract class Dependencies {
 	public static function maybe_start_plugin () {
 		$result = self::check_dependencies();
 
-		//var_dump( $result ); die;
-
 		if ( $result['success'] ) {
 			do_action( Loader::get_hook_start_plugin() );
 		} else {
