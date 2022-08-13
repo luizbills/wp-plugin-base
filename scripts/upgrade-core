@@ -1,5 +1,10 @@
 #!/usr/bin/env php
 <?php
+/**
+ * Script to upgrade the core folder
+ *
+ * @version 1.1.0
+*/
 
 if ( ! function_exists( 'curl_init' ) ) {
 	echo alert( "Error: 'curl' module not found in PHP" );
@@ -17,20 +22,6 @@ $data = get_plugin_data( $root );
 
 if ( ! $data ) {
 	echo alert( "Error: Not found 'wp-plugin-base' object in $plugin_folder/composer.json" );
-	die( 1 );
-}
-
-cls();
-
-echo info( 'The plugin informations' ) . PHP_EOL;
-echo 'Namespace: ' . $data['namespace'] . PHP_EOL;
-echo 'Text domain: ' . $data['text-domain'] . PHP_EOL;
-echo PHP_EOL;
-echo "If the above informations are not correct, update them in $plugin_folder/composer.json";
-echo PHP_EOL;
-$res = strtolower( readline( "Do you want to continue? [Y/n]" ) );
-$res = $res ? $res : 'y';
-if ( 'y' !== $res ) {
 	die( 1 );
 }
 
@@ -72,8 +63,22 @@ if ( version_compare( $remote_version, $current_version, '>' ) ) {
 		die();
 	}
 } else {
-	echo "The $plugin_folder/core is up to date.";
+	echo "The $plugin_folder/core is already up to date.";
 	die();
+}
+
+cls();
+
+echo info( 'Check the plugin informations' ) . PHP_EOL;
+echo 'Namespace: ' . $data['namespace'] . PHP_EOL;
+echo 'Text domain: ' . $data['text-domain'] . PHP_EOL;
+echo PHP_EOL;
+echo "If the above informations are not correct, update them in $plugin_folder/composer.json";
+echo PHP_EOL;
+$res = strtolower( readline( "Do you want to continue? [Y/n]" ) );
+$res = $res ? $res : 'y';
+if ( 'y' !== $res ) {
+	die( 1 );
 }
 
 cls();
@@ -95,29 +100,39 @@ if ( $error ) {
 	die( 1 );
 }
 
-$core_files = [
-	'Config.php',
-	'Dependencies.php',
-	'Loader.php',
-	'Main.php',
-	'VERSION'
+$upgrade_files = [
+	'core/Config.php',
+	'core/Dependencies.php',
+	'core/Loader.php',
+	'core/Main.php',
+	'core/VERSION',
+	'scripts/upgrade-core'
+];
+// dont replace any string, just copy theses files
+$just_copy = [
+	'scripts/upgrade-core'
 ];
 $find_replace = [
 	'Your_Namespace' => $data['namespace'],
 	'your_text_domain' => $data['text-domain']
 ];
 
-foreach ( $core_files as $file ) {
-	$content = file_get_contents( "$tmp_repo/core/$file" );
-	$content = str_replace(
-		array_keys( $find_replace ),
-		array_values( $find_replace ),
-		$content
-	);
-	echo "Upgrading $plugin_folder/core/$file ... ";
-	file_put_contents( "$root/core/$file", $content );
+foreach ( $upgrade_files as $file ) {
+	$content = file_get_contents( "$tmp_repo/$file" );
+	if ( ! in_array( $file, $just_copy ) ) {
+		$content = str_replace(
+			array_keys( $find_replace ),
+			array_values( $find_replace ),
+			$content
+		);
+	}
+	echo "Upgrading $plugin_folder/$file ... ";
+	file_put_contents( "$root/$file", $content );
 	echo "Done!" . PHP_EOL;
 }
+
+// also update the upgrade-core script
+
 
 echo PHP_EOL;
 echo infob( 'Success!' ) . " The $plugin_folder/core is now up to date.";
