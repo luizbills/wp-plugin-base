@@ -116,7 +116,7 @@ The `/core/VERSION` file stores the boilerplate version. So you can update the f
 
 ### `/classes` folder
 
-In this folder you will put the classes that control the functionality of your plugin: custom post types, settings pages, shortcodes, etc.
+In this folder you will put the classes that control all features of your plugin: custom post types, settings pages, shortcodes, etc.
 
 If you put a class in the `/loader.php` file, its `__start` method will be executed automatically when the plugin is ready to work. See the [`classes/Sample_Class.php`](classes/Sample_Class.php) to more details.
 
