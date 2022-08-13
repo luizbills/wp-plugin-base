@@ -59,8 +59,6 @@ abstract class Dependencies {
 				$found = self::handle_shortcut( $check );
 			} elseif ( is_callable( $check ) ) {
 				$found = call_user_func( $check );
-			} else {
-				$found = $check;
 			}
 
 			$result['messages'][] = [
@@ -98,6 +96,8 @@ abstract class Dependencies {
 			case 'wp': // alias for 'wordpress'
 			case 'wordpress':
 				return version_compare( get_bloginfo( 'version' ), $value, '>=' );
+			default:
+				return false;
 		}
 	}
 
