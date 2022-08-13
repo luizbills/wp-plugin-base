@@ -100,8 +100,6 @@ return [
 
 In the example above, the classes will run in the following order: `My_Class_2` then `My_Class_1` and finally `My_Class_3`. Classes with higher priority are executed first.
 
-**NOTE:** You can also use the `/loader.php` file to run `include` or `require` and load more files as needed.
-
 ### `/uninstall.php`
 
 This file is automatically executed when your plugin is deleted. Use it to clean the database (if your plugin saved anything).
