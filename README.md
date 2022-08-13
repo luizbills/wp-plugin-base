@@ -69,7 +69,7 @@ Example: use the following code below to indicate that your plugin depends on th
 $deps[] = [
 	'check' => function () {
 		// checks if the `WooCommerce` class exists
-		// that class only exists when the WooCommerce plugin isactive.
+		// that class only exists when the WooCommerce plugin is active.
 		return class_exists( 'WooCommerce' );
 	},
 
@@ -78,7 +78,9 @@ $deps[] = [
 ];
 ```
 
-If any dependencies are missing, the plugin will not work and a notice will be shown in the admin panel informing the reason (with the messages you declared). Open the [/dependencies.php](/dependencies.php) to learn more.
+If any dependencies are missing, the plugin will not work and a notice will be shown in the admin panel informing the reason (with the messages you declared).
+
+Open the [/dependencies.php](/dependencies.php) to learn more.
  
 ### `/loader.php`
 
