@@ -57,7 +57,7 @@ echo h::config_get( 'NAME' );
 
 ### `/dependencies.php`
 
-In this file you must inform what your plugin needs to work. By default, the plugin will already check the server's PHP version, based on the plugin's `/composer.json`.
+In this file you must inform what your plugin needs to work. By default, the plugin will already check the server's PHP version (v7.4 or later).
 
 Each dependency is an array that must contain the following keys:
 - `check`: a function that should check if any requirements have been met.
@@ -68,8 +68,9 @@ Example: use the following code below to indicate that your plugin depends on th
 ```php
 $deps[] = [
 	'check' => function () {
-		// checks if the `WC()` function exists (this function only exists when the WooCommerce plugin is activate
-		return function_exists( 'WC' );
+		// checks if the `WooCommerce` class exists
+		// that class only exists when the WooCommerce plugin isactive.
+		return class_exists( 'WooCommerce' );
 	},
 
 	// the message that will be shown if WooCommerce plugin is not activated.
@@ -77,8 +78,8 @@ $deps[] = [
 ];
 ```
 
-If any dependencies are missing, the plugin will not work and a notice will be shown in the admin panel informing the reason (with the messages you declared).
-
+If any dependencies are missing, the plugin will not work and a notice will be shown in the admin panel informing the reason (with the messages you declared). Open the [/dependencies.php](/dependencies.php) to learn more.
+ 
 ### `/loader.php`
 
 This file should return a array of classes that you want to run automatically, when the plugin is ready to work (if all dependencies in the `/dependencies.php` file are satisfied).
