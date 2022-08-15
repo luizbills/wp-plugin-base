@@ -3,7 +3,7 @@
 /**
  * Script to upgrade the core folder
  *
- * @version 1.1.0
+ * @version 1.2.0
 */
 
 if ( ! function_exists( 'curl_init' ) ) {
@@ -54,7 +54,7 @@ $remote_version = sanitize_version( $request['body'] );
 
 if ( version_compare( $remote_version, $current_version, '>' ) ) {
 	echo info( "The plugin core can be upgraded to $remote_version" ) . PHP_EOL;
-	echo infob("Tip: ") . "See the changelog in $github_repo_url/compare/$current_version...$remote_version" . PHP_EOL;
+	echo infob("Tip: ") . "See the changelog in $github_repo_url/blob/main/changelog.md" . PHP_EOL;
 	echo PHP_EOL;
 	echo "The $plugin_folder/core folder will be replaced (any other file will remain untouched)." . PHP_EOL;
 	$res = strtolower( readline( "Do you want to continue? [Y/n]" ) );
