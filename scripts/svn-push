@@ -84,7 +84,7 @@ else
 
 	echo "--------------------------------------------"
 	echo ""
-	echo "Before continuing, confirm that you have done the following ..."
+	echo "Before continuing, confirm that you have done the following:"
 	echo ""
 	read -p " - Added a changelog for "${VERSION}"?"
 	read -p " - Set version in the main file to "${VERSION}"?"
@@ -201,7 +201,7 @@ cp -a "${TEMP_GITHUB_REPO}/." trunk/
 
 if [[ -d "trunk/${PLUGIN_ASSETS_DIR}" ]];
 then
-	echo "Checking Plugin icon, banner and screenshots ..."
+	echo "Checking Plugin icon, banner and screenshots..."
 	rm -Rf assets/
 	mv trunk/$PLUGIN_ASSETS_DIR assets
 fi
@@ -262,7 +262,7 @@ fi
 svn commit -m "$COMMIT_MESSAGE" || { echo "Unable to commit."; exit 1; }
 
 # REMOVE THE TEMP DIRS
-echo "CLEANING UP ..."
+echo "CLEANING UP..."
 rm -Rf "$TEMP_GITHUB_REPO"
 rm -Rf "$TEMP_SVN_REPO"
 

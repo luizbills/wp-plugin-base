@@ -27,7 +27,7 @@ if ( ! $data ) {
 
 cls();
 
-echo info( "Checking the $plugin_folder/core version ..." ) . PHP_EOL;
+echo info( "Checking the $plugin_folder/core version..." ) . PHP_EOL;
 
 $file_path = 'core/VERSION';
 $local_file = $root . $file_path;
@@ -83,7 +83,7 @@ if ( 'y' !== $res ) {
 
 cls();
 
-echo info( "Downloading lastest core version from $github_repo_url ..." );
+echo info( "Downloading lastest core version from $github_repo_url..." );
 echo PHP_EOL;
 
 $tmp = sys_get_temp_dir() . '/';
@@ -126,7 +126,7 @@ foreach ( $upgrade_files as $file ) {
 			$content
 		);
 	}
-	echo "Upgrading $plugin_folder/$file ... ";
+	echo "Upgrading $plugin_folder/$file... ";
 	file_put_contents( "$root/$file", $content );
 	echo "Done!" . PHP_EOL;
 }

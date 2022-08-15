@@ -14,7 +14,7 @@ clear >$(tty) # clear the terminal
 
 mkdir -p "$(dirname $TMP_DIR)"
 rm -rf $TMP_DIR
-echo "Copying plugin files from $DIR ..."
+echo "Copying plugin files from $DIR..."
 cp -R $DIR $TMP_DIR
 cd $TMP_DIR
 
