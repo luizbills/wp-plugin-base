@@ -130,14 +130,14 @@ git checkout ${BRANCH} || { echo "Unable to checkout branch."; exit 1; }
 
 if [[ -f "composer.json" ]];
 then
-	echo "Installing composer packages"
-	composer install --no-dev || { echo "Unable to install composer packages."; exit 1; }
+	echo "Installing composer packages..."
+	composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader || { echo "Unable to install composer packages."; exit 1; }
 fi
 
 if [[ -f "package.json" ]];
 then
-	echo "Installing composer packages"
-	npm install || { echo "Unable to install npm packages."; exit 1; }
+	echo "Installing NPM packages..."
+	npm ci --no-progress || { echo "Unable to install npm packages."; exit 1; }
 fi
 
 echo "Looking for PHP syntax errors"

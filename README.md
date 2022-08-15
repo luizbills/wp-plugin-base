@@ -18,7 +18,7 @@ Open your terminal and execute the script below in your `wp-content/plugins` to 
 
 ```bash
 wp_plugin_base_clone_dir=".wp_plugin_base_$(date +%s)" \
-&& git clone --branch main --single-branch --no-tags \
+&& git clone --branch main --single-branch --no-tags --quiet \
   https://github.com/luizbills/wp-plugin-base.git $wp_plugin_base_clone_dir \
 && cd $wp_plugin_base_clone_dir && php .bin/install.php && sleep .1 \
 && cd $(cat install.log) \
@@ -57,7 +57,7 @@ echo h::config_get( 'NAME' );
 
 ### `/dependencies.php`
 
-In this file you must inform what your plugin needs to work. By default, the plugin will already check the server's PHP version, based on the plugin's `/composer.json`.
+In this file you must inform what your plugin needs to work. By default, the plugin will already check the server's PHP version (v7.4 or later).
 
 Each dependency is an array that must contain the following keys:
 - `check`: a function that should check if any requirements have been met.
@@ -68,8 +68,9 @@ Example: use the following code below to indicate that your plugin depends on th
 ```php
 $deps[] = [
 	'check' => function () {
-		// checks if the `WC()` function exists (this function only exists when the WooCommerce plugin is activate
-		return function_exists( 'WC' );
+		// checks if the `WooCommerce` class exists
+		// that class only exists when the WooCommerce plugin is active.
+		return class_exists( 'WooCommerce' );
 	},
 
 	// the message that will be shown if WooCommerce plugin is not activated.
@@ -79,6 +80,8 @@ $deps[] = [
 
 If any dependencies are missing, the plugin will not work and a notice will be shown in the admin panel informing the reason (with the messages you declared).
 
+Open the [/dependencies.php](/dependencies.php) to learn more.
+ 
 ### `/loader.php`
 
 This file should return a array of classes that you want to run automatically, when the plugin is ready to work (if all dependencies in the `/dependencies.php` file are satisfied).
@@ -97,8 +100,6 @@ return [
 
 In the example above, the classes will run in the following order: `My_Class_2` then `My_Class_1` and finally `My_Class_3`. Classes with higher priority are executed first.
 
-**NOTE:** You can also use the `/loader.php` file to run `include` or `require` and load more files as needed.
-
 ### `/uninstall.php`
 
 This file is automatically executed when your plugin is deleted. Use it to clean the database (if your plugin saved anything).
@@ -111,9 +112,11 @@ These are optional files that help formatting your code. However, you will need 
 
 This folder has the core of our boilerplace (classes that initialize the plugin, check dependencies, load classes from `/loader.php`, etc). You don't need to understand the core classes, but you can take a look, it's all pretty simple.
 
+The `/core/VERSION` file stores the boilerplate version. So you can update the files in the core folder using the `composer run upgrade-core` command (without having to do it manually).
+
 ### `/classes` folder
 
-In this folder you will put the classes that control the functionality of your plugin: custom post types, settings pages, shortcodes, etc.
+In this folder you will put the classes that control all features of your plugin: custom post types, settings pages, shortcodes, etc.
 
 If you put a class in the `/loader.php` file, its `__start` method will be executed automatically when the plugin is ready to work. See the [`classes/Sample_Class.php`](classes/Sample_Class.php) to more details.
 
@@ -236,6 +239,7 @@ This folder contains some scripts that are used in the commands explained below:
 
 - `composer run make-pot` creates a `.pot` file inside of `/languages` directory.
 - `composer run build` creates a `.zip` file inside of `/wp-build` directory. Easy way to share or install your plugin on other WordPress.
+- `composer run upgrade-core` will update the `/core` folder of your plugin, pulling the latest changes from this Github repository.
 - `composer run deploy` updates your SVN repository and release a new version on https://wordpress.org (you need setup the [`/scripts/svn-push`](/scripts/svn-push) file first). This script also update your plugin assets (icon, banner and screenshot) when necessary in the `/.wordpress-org` directory.
 - `composer run update-trunk` updates the `/trunk` of your SVN repository on https://wordpress.org (you need setup the [`/scripts/svn-push`](/scripts/svn-push) file first). This script also update your plugin assets (icon, banner and screenshot) when necessary in the `/.wordpress-org` directory.
 
