@@ -32,12 +32,31 @@ defined( 'WPINC' ) || exit( 1 );
 // load_plugin_textdomain( 'your_text_domain', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );
 
 try {
-	// check composer autoload
-	$composer_autoload = __DIR__ . '/vendor/autoload.php';
-	if ( ! file_exists( $composer_autoload ) ) {
-		throw new \Error( $composer_autoload . ' does not exist' );
+	// Check PHP Version
+	$php_expected = '7.4';
+	$php_current = PHP_VERSION;
+	if ( version_compare( $php_current, $php_expected, '<' ) ) {
+		throw new Error(
+			sprintf(
+				// translators: the %s are PHP versions
+				esc_html__( "This plugin requires PHP version %s or later (your server PHP version is %s)", 'your_text_domain' ),
+				$php_expected, esc_html( $php_current )
+			)
+		);
 	}
-	include_once $composer_autoload;
+
+	// check composer autoload
+	$autoload = __DIR__ . '/vendor/autoload.php';
+	if ( ! file_exists( $autoload ) ) {
+		throw new Error(
+			sprintf(
+				// translators: %s is the `composer install` command
+				esc_html__( 'Missing Composer autoload. You need run %s.', 'your_text_domain' ),
+				'<code>composer install</code>'
+			)
+		);
+	}
+	include_once $autoload;
 } catch ( Throwable $e ) {
 	return add_action( 'admin_notices', function () use ( $e ) {
 		if ( ! current_user_can( 'install_plugins' ) ) return;

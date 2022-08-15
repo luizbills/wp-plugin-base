@@ -2,28 +2,24 @@
 
 namespace Your_Namespace\Core;
 
-use Your_Namespace\Core\Config;
-
 abstract class Loader {
 	protected static $classes;
+	protected static $initialized = false;
+	protected static $main_file;
 
-	public static function init ( $main_file ) {
-		if ( '' !== Config::get( 'PLUGIN_STARTED', '' ) ) {
+	public static function init () {
+		if ( self::$initialized ) {
 			throw new \Error( __CLASS__ . ' already initialized' );
 		}
+
+		self::$main_file = Config::get( 'FILE' );
 		self::load_classes();
+
+		self::$initialized = true;
 	}
 
-	public static function start () {
-		if ( false === Config::get( 'PLUGIN_STARTED', '' ) ) {
-			throw new \Error( __CLASS__ . ' can not start' );
-		}
-		\do_action( self::get_hook() );
-	}
-
-	public static function get_hook () {
-		$main_file = Config::get( 'FILE' );
-		return 'start_' . $main_file;
+	public static function get_hook_start_plugin () {
+		return 'start_plugin_' . self::$main_file;
 	}
 
 	public static function load_classes () {
@@ -48,6 +44,7 @@ abstract class Loader {
 			return $a[1] <=> $b[1];
 		} );
 
+		$hook_start = self::get_hook_start_plugin();
 		foreach ( self::$classes as $item ) {
 			$class_name = $item[0];
 			$priority = $item[1];
@@ -57,7 +54,17 @@ abstract class Loader {
 			}
 
 			$instance = new $class_name();
-			\add_action( self::get_hook(), [ $instance, '__start' ], $priority );
+			if ( \method_exists( $instance, '__start' ) ) {
+				\add_action( $hook_start, [ $instance, '__start' ], $priority );
+			}
+
+			if ( \method_exists( $class_name, '__activation' ) ) {
+				\register_activation_hook( self::$main_file, [ $class_name, '__activation' ] );
+			}
+
+			if ( \method_exists( $class_name, '__deactivation' ) ) {
+				\register_deactivation_hook( self::$main_file, [ $class_name, '__deactivation' ] );
+			}
 		}
 	}
 }
