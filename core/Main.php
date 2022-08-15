@@ -2,8 +2,6 @@
 
 namespace Your_Namespace\Core;
 
-use Your_Namespace\Core\Config;
-
 abstract class Main {
 	protected static $classes_to_load = [];
 	protected static $dependencies = [];

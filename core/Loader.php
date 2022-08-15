@@ -2,8 +2,6 @@
 
 namespace Your_Namespace\Core;
 
-use Your_Namespace\Core\Config;
-
 abstract class Loader {
 	protected static $classes;
 	protected static $initialized = false;
@@ -61,20 +59,12 @@ abstract class Loader {
 			}
 
 			if ( \method_exists( $class_name, '__activation' ) ) {
-				register_activation_hook( self::$main_file, [ $class_name, '__activation' ] );
+				\register_activation_hook( self::$main_file, [ $class_name, '__activation' ] );
 			}
 
 			if ( \method_exists( $class_name, '__deactivation' ) ) {
-				register_deactivation_hook( self::$main_file, [ $class_name, '__deactivation' ] );
+				\register_deactivation_hook( self::$main_file, [ $class_name, '__deactivation' ] );
 			}
 		}
-	}
-
-	public static function activation () {
-		Config::set( 'PLUGIN_ACTIVATION', true );
-	}
-
-	public static function deactivation () {
-		Config::set( 'PLUGIN_DEACTIVATION', true );
 	}
 }
