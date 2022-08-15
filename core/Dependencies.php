@@ -2,9 +2,6 @@
 
 namespace Your_Namespace\Core;
 
-use Your_Namespace\Core\Config;
-use Your_Namespace\Core\Loader;
-
 abstract class Dependencies {
 	protected static $dependencies;
 	protected static $initialized = false;
@@ -74,10 +71,14 @@ abstract class Dependencies {
 		return $result;
 	}
 
-	protected static function handle_shortcut ( $string ) {
-		$parts = explode( ':', $string );
+	protected static function handle_shortcut ( $shortcut ) {
+		$parts = explode( ':', $shortcut );
 		$value = implode( ':', array_slice( $parts, 1 ) );
-		switch ( $parts[0] ) {
+		$type = trim( $parts[0] );
+		if ( ! $value || ! $type ) {
+			throw new \Error( "Invalid shortcut syntax: $shortcut" );
+		}
+		switch ( $type ) {
 			case 'class':
 				return class_exists( $value );
 			case 'function':
@@ -95,10 +96,11 @@ abstract class Dependencies {
 				return defined( $value );
 			case 'wp': // alias for 'wordpress'
 			case 'wordpress':
-				return version_compare( get_bloginfo( 'version' ), $value, '>=' );
+				return version_compare( \get_bloginfo( 'version' ), $value, '>=' );
 			default:
-				return false;
+				throw new \Error( "Unexpected shortcut: $shortcut" );
 		}
+		return false;
 	}
 
 	protected static function display_notice_missing_deps ( $messages ) {
