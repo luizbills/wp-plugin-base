@@ -22,7 +22,7 @@ wp_plugin_base_clone_dir=".wp_plugin_base_$(date +%s)" \
   https://github.com/luizbills/wp-plugin-base.git $wp_plugin_base_clone_dir \
 && cd $wp_plugin_base_clone_dir && php .bin/install.php && sleep .1 \
 && cd $(cat install.log) \
-&& chmod +x scripts/* \
+&& chmod -R +x ./scripts \
 && rm -rf "../$wp_plugin_base_clone_dir"
 ```
 
