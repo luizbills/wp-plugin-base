@@ -4,6 +4,17 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.3.0 - 2022-08-19
+
+[Source code changes](https://github.com/luizbills/wp-plugin-base/compare/1.2.0...1.3.0)
+
+-   Now [`/classes/Helpers.php`](/classes/Helpers.php) it's a bunch of Traits. This will allow helper methods to be improved and fixed when needed. See [/core/Traits](/core/Traits)
+-   Removed the following helpers: `h::logger`, `h::update_option`, `h::get_option`, `h::nothrow`.
+
+### ➞ Migration Guide
+
+-   If you are using the `classes/Helpers.php` file, replace your file with the [new version with Traits](/classes/Helpers.php).
+
 ## 1.2.0 - 2022-08-15
 
 [Source code changes](https://github.com/luizbills/wp-plugin-base/compare/1.1.0...1.2.0)
@@ -32,7 +43,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 [Source code changes](https://github.com/luizbills/wp-plugin-base/compare/1.0.1...1.0.2)
 
--   Fix: `composer run make-pot` don't create pot file in correct folder 
+-   Fix: `composer run make-pot` don't create pot file in correct folder
 
 ## 1.0.1 - 2022-08-07
 
