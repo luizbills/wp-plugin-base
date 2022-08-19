@@ -27,12 +27,12 @@ abstract class Config {
 
 		$slug = isset( self::$values[ 'SLUG' ] ) ? self::$values[ 'SLUG' ] : false;
 		if ( ! $slug || ! is_string( $slug ) ) {
-			throw new \Error( $root . '/config.php must define a SLUG (only alphanumeric and dashes)' );
+			throw new \Error( $root . '/config.php must define a string SLUG (Recommended: only alphanumeric and dashes)' );
 		}
 
 		$prefix = isset( self::$values[ 'PREFIX' ] ) ? self::$values[ 'PREFIX' ] : false;
 		if ( ! $prefix || ! is_string( $prefix ) ) {
-			self::$values[ 'PREFIX' ] = \str_replace( '-', '_', $slug ) . '_';
+			throw new \Error( $root . '/config.php must define a string PREFIX (only alphanumeric and underscores)' );
 		}
 
 		self::$values[ 'FILE'] = $main_file;
@@ -40,7 +40,7 @@ abstract class Config {
 
 		$data = \get_file_data( $main_file, [ 'Plugin Name', 'Version' ] );
 		self::$values[ 'NAME' ] = __( $data[0], 'your_text_domain' );
-		self::$values[ 'VERSION' ] = $data[1];
+		self::$values[ 'VERSION' ] = $data[1] ? $data[1] : '0.0.0';
 	}
 
 	public static function set ( $key, $value ) {
