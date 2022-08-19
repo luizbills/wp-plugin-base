@@ -51,7 +51,7 @@ function prefix_admin_notice_error () {
 }
 ```
 
-In order to display a notice, echo a div with the class `notice` and one of the following classes:
+	In order to display a notice, echo a div with the class `notice` and one of the following classes:
 
 * `notice-error` – will display the message with a white background and a red left border.
 * `notice-warning` – will display the message with a white background and a yellow/orange left border.
@@ -109,6 +109,17 @@ $arr = [ 'name' => 'Luiz' ];
 $obj = (object) $arr;
 echo $obj->name; // => Luiz
 ```
+
+## Display post date in "time ago" format
+
+```php
+add_filter( 'get_the_date', 'prefix_post_date_as_time_ago' );
+function prefix_post_date_as_time_ago () {
+	return sprintf( esc_html__( '%s ago' ), human_time_diff( get_the_time( 'U' ), time() ) );
+}
+```
+
+See: [human_time_diff](https://developer.wordpress.org/reference/functions/human_time_diff/)
 
 ## Extract a slice of an array, given a list of keys.
 
