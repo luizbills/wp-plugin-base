@@ -15,7 +15,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 [Source code changes](https://github.com/luizbills/wp-plugin-base/compare/1.2.0...1.3.0)
 
 -   Now [`/classes/Helpers.php`](/classes/Helpers.php) it's a bunch of Traits. This will allow helper methods to be improved and fixed when needed. See [/core/Traits](/core/Traits)
--   Removed the following helpers: `h::logger`, `h::update_option`, `h::get_option`, `h::nothrow`.
+-   Removed the following helpers: `h::get_slug`, `h::logger`, `h::update_option`, `h::get_option`, `h::nothrow`.
 
 ### ➞ Migration Guide
 
