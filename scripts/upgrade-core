@@ -3,7 +3,7 @@
 /**
  * Script to upgrade the core folder
  *
- * @version 1.3.0
+ * @version 1.3.1
 */
 
 if ( ! function_exists( 'curl_init' ) ) {
@@ -41,14 +41,16 @@ $current_version = $current_version ? $current_version : '1.0.0';
 echo "The $plugin_folder/core version is " . infob( $current_version ) . PHP_EOL;
 
 $github_repo = 'luizbills/wp-plugin-base';
+$github_repo_url = "https://github.com/$github_repo";
 $git_branch = 'main';
 $remote_file = "https://raw.githubusercontent.com/$github_repo/$git_branch/$file_path";
 $remote_version = trim( get_remote_content( $remote_file ) );
 
 if ( version_compare( $remote_version, $current_version, '>' ) ) {
 	echo info( "The plugin core can be upgraded to $remote_version" ) . PHP_EOL;
-	echo infob("TIP: ") . "See the changelog in $github_repo_url/blob/main/changelog.md and " . PHP_EOL;
-	echo alertb( 'WARNING: ' ) . "ONLY the $plugin_folder/core folder will be updated." . PHP_EOL;
+	echo infob("I: ") . "See the changelog in $github_repo_url/blob/main/changelog.md" . PHP_EOL;
+	echo infob( 'I: ' ) . 'Do not forget to backup your plugin.' . PHP_EOL;
+	echo alertb( 'W: ' ) . "ONLY the $plugin_folder/core folder will be updated." . PHP_EOL;
 	echo PHP_EOL;
 	$res = strtolower( readline( "Do you want to continue? [Y/n]" ) );
 	$res = $res ? $res : 'y';
@@ -84,8 +86,8 @@ $tmp_name = $plugin_folder . '-upgrade-wp-plugin-base';
 $tmp_repo = $tmp . $tmp_name;
 $git_cmd = "git clone --branch $git_branch --single-branch --no-tags --quiet";
 
-chdir( $tmp );
 shell_exec( "rm -rf $tmp_repo" );
+chdir( $tmp );
 $error = shell_exec( "$git_cmd $github_repo_url.git $tmp_name > /dev/null" );
 
 if ( $error ) {
@@ -93,39 +95,32 @@ if ( $error ) {
 	die( 1 );
 }
 
-$upgrade_files = [
-	'core/Config.php',
-	'core/Dependencies.php',
-	'core/Loader.php',
-	'core/Main.php',
-	'core/VERSION',
-	'scripts/upgrade-core'
-];
-// dont replace any string, just copy theses files
-$just_copy = [
-	'scripts/upgrade-core'
-];
+echo info( "Copying files..." ) . PHP_EOL;
+
+$upgrade_files = rscandir( $tmp_repo . '/core' );
 $find_replace = [
 	'Your_Namespace' => $data['namespace'],
 	'your_text_domain' => $data['text-domain']
 ];
 
 foreach ( $upgrade_files as $file ) {
-	$content = file_get_contents( "$tmp_repo/$file" );
-	if ( ! in_array( $file, $just_copy ) ) {
-		$content = str_replace(
-			array_keys( $find_replace ),
-			array_values( $find_replace ),
-			$content
-		);
+	$content = str_replace(
+		array_keys( $find_replace ),
+		array_values( $find_replace ),
+		file_get_contents( $file )
+	);
+	$target = str_replace( "$tmp_repo/", $root, $file );
+	$target_dir = dirname( $target );
+	if ( ! file_exists( $target_dir ) ) {
+		mkdir( $target_dir, 0755, true );
 	}
-	echo "Upgrading $plugin_folder/$file... ";
-	file_put_contents( "$root/$file", $content );
-	echo "Done!" . PHP_EOL;
+	file_put_contents( $target, $content );
 }
 
 // also update the upgrade-core script
-
+echo info( "Upgrading $plugin_folder/scripts/upgrade-core..." ) . PHP_EOL;
+$content = file_get_contents( "$tmp_repo/scripts/upgrade-core" );
+file_put_contents( "$root/scripts/upgrade-core", $content );
 
 echo PHP_EOL;
 echo infob( 'Success!' ) . " The $plugin_folder/core is now up to date.";
@@ -195,7 +190,7 @@ function alert ( $str ) {
 }
 
 function alertb ( $str ) {
-	return "\033[1; 31m$str\033[0m";
+	return "\033[1;31m$str\033[0m";
 }
 
 // terminal text with color blue
@@ -207,7 +202,25 @@ function infob ( $str ) {
 	return "\033[1;36m$str\033[0m";
 }
 
-function join_paths () {
-    $paths = array_filter(func_get_args());
-    return preg_replace( '#/+#','/', join( '/', $paths ) );
+function rscandir ( $dir ) {
+	$files = scandir( $dir );
+	$result = [];
+
+	unset( $files[ array_search( '.', $files, true ) ] );
+	unset( $files[ array_search( '..', $files, true ) ] );
+
+	if ( count( $files ) == 0) return;
+
+	foreach( $files as $entry ) {
+		$entry = "$dir/$entry";
+
+		if ( ! is_dir( $entry ) ) {
+			$result[] = $entry;
+		} else {
+			$scandir = rscandir( $entry );
+			$result = $scandir ? array_merge( $result, $scandir ) : $result;
+		}
+	}
+
+	return $result;
 }
