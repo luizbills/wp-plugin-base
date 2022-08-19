@@ -10,13 +10,16 @@ final class Sample_Class {
 		// But, you need put this class in your /loader.php first
 
 		// example: Use this method to add your actions and filters hooks
-		\add_action( 'plugins_loaded', [ $this, 'init' ], 10 );
+		\add_action( 'admin_notices', [ $this, 'sample_notice' ], 10 );
 	}
 
-	public function init () {
+	public function sample_notice () {
 		$plugin_name = h::config_get( 'NAME' );
-		$version = h::get_plugin_version();
-		h::log( "INFO Running plugin \"$plugin_name\" v$version"  );
+
+		// see /templates/sample-notice.php file
+		echo h::get_template( 'sample-notice', [
+			'text' => "Hello world from plugin $plugin_name plugin",
+		] );
 	}
 
 	public static function __activation () {
