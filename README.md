@@ -38,7 +38,7 @@ If you want to keep translation files inside your plugin, you should uncomment t
 
 ### `/config.php`
 
-In this file you can declare useful (and immutable) values that will be used in different places in the plugin. By default, values like the plugin's SLUG and PREFIX will already be declared (you can change them if you want, but you can't delete them).
+In this file you can declare useful (and immutable) values that will be used in different places in the plugin. By default, values like the plugin's **SLUG** and **PREFIX** will already be declared (you can change them if you want, but you can't delete them).
 
 Internally, the plugin will also declare the following keys:
 - `NAME`: The plugin name.
@@ -81,7 +81,7 @@ $deps[] = [
 If any dependencies are missing, the plugin will not work and a notice will be shown in the admin panel informing the reason (with the messages you declared).
 
 Open the [/dependencies.php](/dependencies.php) to learn more.
- 
+
 ### `/loader.php`
 
 This file should return a array of classes that you want to run automatically, when the plugin is ready to work (if all dependencies in the `/dependencies.php` file are satisfied).
@@ -103,10 +103,6 @@ In the example above, the classes will run in the following order: `My_Class_2` 
 ### `/uninstall.php`
 
 This file is automatically executed when your plugin is deleted. Use it to clean the database (if your plugin saved anything).
-
-### `/.prettierrc.json` and `/.editorconfig`
-
-These are optional files that help formatting your code. However, you will need to install their extensions in your code editor.
 
 ### `/core` folder
 
@@ -138,11 +134,7 @@ Returns the values ​​you declared in the `/config.php` file. The first argum
 
 Temporarily save values, an alternative to global variables (no need to worry about prefixes). To get the saved values, just use `h::config_get`.
 
-#### ➞ `h::get( $var, $default = null )`
-
-Useful to prevent PHP warnings. Instead of using `isset( $var ) ? $var : 'foo'`, use `h::get( $var, 'foo' )` (the second argument is a default value if the variable does not exist or is `null`). *Currently in PHP 7+ you can also use `$var ?? 'foo'` which will have the same result.*
-
-#### ➞ `h::get_defined( $value, $default = null )`
+#### ➞ `h::get_defined( $constant, $default = null )`
 
 Checks whether a constant (declared with `define` or `const` in a class) exists and returns its value. If it doesn't exist, returns a default value (the second argument, which is `null` by default).
 
@@ -187,11 +179,12 @@ h::dd( $var ) // print the $var content and exit
 
 #### ➞ `h::log( ...$vars )`
 
-Useful to quick logs something in `debug.log` (if your `WP_DEBUG` and `WP_DEBUG_LOG` is enabled) or logs in your `h::logger()` (you need implement yourself your plugin logger).
+Useful to quick logs something in `debug.log` (if your `WP_DEBUG` and `WP_DEBUG_LOG` are enabled).
 
 ```php
 use Your_Namespace\Helpers as h;
-h::log( $var ) // logs the $var
+
+h::log( $var ) // logs the $var in wp-content/debug.log by default
 ```
 
 #### ➞ `h::throw_if( $condition, $message, $class = \Error::class )`
@@ -221,7 +214,7 @@ h::throw_if(
 
 #### Other helpers
 
-See the [`/classes/Helpers.php`](/classes/Helpers.php) file to learn more helpers. They are all very simple codes to read and understand. If you think some that helpers could be even simpler, please [open an issue](https://github.com/luizbills/wp-plugin-base/issues/new).
+See the [`/core/Traits`](/core/Traits) folder to learn the helpers. They are all very simple codes to read and understand. If you think some that helpers could be even simpler, please [open an issue](https://github.com/luizbills/wp-plugin-base/issues/new).
 
 ### `/assets` folder
 
