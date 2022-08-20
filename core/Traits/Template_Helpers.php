@@ -5,10 +5,10 @@ namespace Your_Namespace\Core\Traits;
 use Your_Namespace\Core\Config;
 
 trait Template_Helpers {
-    use Config_Helpers;
+	use Config_Helpers;
 
-    // remove evil tags: script, style, link, iframe
-    public static function safe_html ( $html ) {
+	// remove evil tags: script, style, link, iframe
+	public static function safe_html ( $html ) {
 		// remove all script and style tags with code
 		$html = \preg_replace( '/<(script|style)[^>]*?>.*?<\/\\1>/si', '', $html );
 		// remove any script, style, link and iframe tags

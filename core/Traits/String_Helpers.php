@@ -3,7 +3,7 @@
 namespace Your_Namespace\Core\Traits;
 
 trait String_Helpers {
-    public static function str_length ( $string, $encoding = null ) {
+	public static function str_length ( $string, $encoding = null ) {
 		return \mb_strlen( $string, $encoding ? $encoding : 'UTF-8' );
 	}
 

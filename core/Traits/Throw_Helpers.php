@@ -7,7 +7,7 @@ trait Throw_Helpers {
 		return \Error::class;
 	}
 
-    public static function throw_if ( $condition, $message, $exception_class = null ) {
+	public static function throw_if ( $condition, $message, $exception_class = null ) {
 		if ( $condition ) {
 			if ( ! is_string( $message ) && \is_callable( $message ) ) {
 				$message = $message();

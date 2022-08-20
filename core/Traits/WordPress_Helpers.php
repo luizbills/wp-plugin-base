@@ -10,8 +10,8 @@ trait WordPress_Helpers {
 		return \plugins_url( $path, Config::get( 'FILE' ) );
 	}
 
-    public static function get_plugin_version ( $raw = false ) {
-        $version = Config::get( 'VERSION' );
+	public static function get_plugin_version ( $raw = false ) {
+		$version = Config::get( 'VERSION' );
 		return $raw ? $version : preg_replace( '/[^0-9.]/', '', $version );
 	}
 
