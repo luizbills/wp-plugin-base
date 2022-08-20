@@ -10,7 +10,6 @@ Powerful Boilerplate for WordPress Plugins.
 - [Git](https://git-scm.com/downloads)
 - [Composer](https://getcomposer.org/download/) (globally installed as `composer`)
 - [WP-CLI](https://wp-cli.org/#installing) (optional; only needed to generate the `.pot` file)
-- Terminal with `bash` (use `Git Bash` on Windows)
 
 ## Install
 
