@@ -29,5 +29,4 @@ abstract class Helpers {
 	// public static function foo () {
 	//     return 'bar';
 	// }
-
 }
