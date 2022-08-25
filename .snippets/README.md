@@ -51,7 +51,7 @@ function prefix_admin_notice_error () {
 }
 ```
 
-	In order to display a notice, echo a div with the class `notice` and one of the following classes:
+In order to display a notice, echo a div with the class `notice` and one of the following classes:
 
 * `notice-error` – will display the message with a white background and a red left border.
 * `notice-warning` – will display the message with a white background and a yellow/orange left border.
