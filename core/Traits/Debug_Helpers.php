@@ -21,7 +21,7 @@ trait Debug_Helpers {
 		$message = '';
 		foreach ( $values as $value ) {
 			if ( \is_string( $value ) ) {
-				$message .= $value . ' ';
+				$message .= $value;
 			} else {
 				ob_start();
 				var_dump( $value );
