@@ -30,14 +30,16 @@ abstract class Loader {
 			throw new \Error( $root . '/loader.php must return an Array' );
 		}
 
-		foreach ( self::$classes as $index => $class ) {
+		foreach ( self::$classes as $index => $item ) {
 			if ( ! $class ) continue;
 			if ( ! is_array( $class ) ) {
-				$class = [ $class, 10 ];
+				$item = [ $item, 10 ];
 			} else {
-				$class = [ $class[0], (int) $class[1] ];
+				$class = $item[0] ?? null;
+				if ( ! $class ) continue;
+				$item = [ $class, intval( $item[1] ?? 0 ) ];
 			}
-			self::$classes[ $index ] = $class;
+			self::$classes[ $index ] = $item;
 		}
 
 		\usort( self::$classes, function ( $a, $b ) {
@@ -48,22 +50,32 @@ abstract class Loader {
 		foreach ( self::$classes as $item ) {
 			$class_name = $item[0];
 			$priority = $item[1];
+			$loaded = false;
 
-			if ( ! \class_exists( $class_name ) ) {
+			if ( is_string( $class_name ) && ! \class_exists( $class_name ) ) {
 				throw new \Error( 'class ' . $class_name . ' does not exist' );
 			}
 
-			$instance = new $class_name();
+			$instance = is_string( $class_name ) ? new $class_name() : $class_name;
+			$class_name = get_class( $instance );
+
 			if ( \method_exists( $instance, '__start' ) ) {
 				\add_action( $hook_start, [ $instance, '__start' ], $priority );
+				$loaded = true;
 			}
 
 			if ( \method_exists( $class_name, '__activation' ) ) {
 				\register_activation_hook( self::$main_file, [ $class_name, '__activation' ] );
+				$loaded = true;
 			}
 
 			if ( \method_exists( $class_name, '__deactivation' ) ) {
 				\register_deactivation_hook( self::$main_file, [ $class_name, '__deactivation' ] );
+				$loaded = true;
+			}
+
+			if ( ! $loaded ) {
+				throw new \Error( "class $class_name must have at least one of the following methods: __start, __activation (static) or __deactivation (static)" )
 			}
 		}
 	}
