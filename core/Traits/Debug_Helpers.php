@@ -16,8 +16,8 @@ trait Debug_Helpers {
 	}
 
 	public static function log ( ...$values ) {
-		$debug_log = defined( WP_DEBUG_LOG ) && WP_DEBUG_LOG;
-		if ( ! WP_DEBUG && ! $debug_log ) return;
+		$debug_log_enabled = WP_DEBUG && defined( 'WP_DEBUG_LOG' ) && WP_DEBUG_LOG;
+		if ( ! $debug_log_enabled ) return;
 		$message = '';
 		foreach ( $values as $value ) {
 			if ( \is_string( $value ) ) {
