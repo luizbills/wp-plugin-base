@@ -4,6 +4,14 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+
+## 1.4.0 - 2022-09-01
+
+[Source code changes](https://github.com/luizbills/wp-plugin-base/compare/1.3.1...1.4.0)
+
+- Feat: allow class instances in `loader.php`.
+- Fix: remove *falsy* values from `loader.php`. 
+
 ## 1.3.1 - 2022-08-19
 
 [Source code changes](https://github.com/luizbills/wp-plugin-base/compare/1.3.0...1.3.1)
