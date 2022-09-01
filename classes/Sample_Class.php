@@ -18,7 +18,7 @@ final class Sample_Class {
 
 		// see /templates/sample-notice.php file
 		echo h::get_template( 'sample-notice', [
-			'text' => "Hello world from plugin $plugin_name plugin",
+			'text' => sprintf( 'Hello world from "%s" plugin', $plugin_name ),
 		] );
 	}
 
