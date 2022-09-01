@@ -31,13 +31,13 @@ abstract class Loader {
 		}
 
 		foreach ( self::$classes as $index => $item ) {
-			if ( ! $class ) continue;
-			if ( ! is_array( $class ) ) {
+			if ( ! $item ) continue;
+			if ( ! is_array( $item ) ) {
 				$item = [ $item, 10 ];
 			} else {
 				$class = $item[0] ?? null;
 				if ( ! $class ) continue;
-				$item = [ $class, intval( $item[1] ?? 0 ) ];
+				$item = [ $class, intval( $item[1] ?? 10 ) ];
 			}
 			self::$classes[ $index ] = $item;
 		}
@@ -75,7 +75,7 @@ abstract class Loader {
 			}
 
 			if ( ! $loaded ) {
-				throw new \Error( "class $class_name must have at least one of the following methods: __start, __activation (static) or __deactivation (static)" )
+				throw new \Error( "class $class_name must have at least one of the following methods: __start, __activation (static) or __deactivation (static)" );
 			}
 		}
 	}
