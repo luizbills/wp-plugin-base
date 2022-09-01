@@ -3,7 +3,6 @@
 namespace Your_Namespace\Core;
 
 abstract class Loader {
-	protected static $classes;
 	protected static $initialized = false;
 	protected static $main_file;
 
@@ -24,46 +23,58 @@ abstract class Loader {
 
 	public static function load_classes () {
 		$root = Config::get( 'DIR' );
-		self::$classes = include_once $root . '/loader.php';
+		$loader = include_once $root . '/loader.php';
 
-		if ( ! is_array( self::$classes ) ) {
+		if ( ! is_array( $loader ) ) {
 			throw new \Error( $root . '/loader.php must return an Array' );
 		}
 
-		foreach ( self::$classes as $index => $class ) {
-			if ( ! $class ) continue;
-			if ( ! is_array( $class ) ) {
-				$class = [ $class, 10 ];
+		$classes = [];
+		foreach ( $loader as $item ) {
+			if ( ! $item ) continue;
+			if ( ! is_array( $item ) ) {
+				$item = [ $item, 10 ];
 			} else {
-				$class = [ $class[0], (int) $class[1] ];
+				if ( ! ( $item[0] ?? null ) ) continue;
+				$item = [ $item[0], intval( $item[1] ?? 10 ) ];
 			}
-			self::$classes[ $index ] = $class;
+			$classes[] = $item;
 		}
 
-		\usort( self::$classes, function ( $a, $b ) {
+		\usort( $classes, function ( $a, $b ) {
 			return $a[1] <=> $b[1];
 		} );
 
 		$hook_start = self::get_hook_start_plugin();
-		foreach ( self::$classes as $item ) {
+		foreach ( $classes as $item ) {
 			$class_name = $item[0];
 			$priority = $item[1];
+			$loaded = false;
 
-			if ( ! \class_exists( $class_name ) ) {
+			if ( is_string( $class_name ) && ! \class_exists( $class_name ) ) {
 				throw new \Error( 'class ' . $class_name . ' does not exist' );
 			}
 
-			$instance = new $class_name();
+			$instance = is_string( $class_name ) ? new $class_name() : $class_name;
+			$class_name = get_class( $instance );
+
 			if ( \method_exists( $instance, '__start' ) ) {
 				\add_action( $hook_start, [ $instance, '__start' ], $priority );
+				$loaded = true;
 			}
 
 			if ( \method_exists( $class_name, '__activation' ) ) {
 				\register_activation_hook( self::$main_file, [ $class_name, '__activation' ] );
+				$loaded = true;
 			}
 
 			if ( \method_exists( $class_name, '__deactivation' ) ) {
 				\register_deactivation_hook( self::$main_file, [ $class_name, '__deactivation' ] );
+				$loaded = true;
+			}
+
+			if ( ! $loaded ) {
+				throw new \Error( "class $class_name must have at least one of the following methods: __start, __activation (static) or __deactivation (static)" );
 			}
 		}
 	}
