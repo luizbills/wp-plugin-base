@@ -25,6 +25,10 @@ wp_plugin_base_clone_dir=".wp_plugin_base_$(date +%s)" \
 && rm -rf "../$wp_plugin_base_clone_dir"
 ```
 
+## Upgrade
+
+You can update the `core` folder of your plugin running the command `composer run upgrade-core`.
+
 ## Getting started
 
 This boilerplace is organized into several files and folders. It is essential that you understand each of them.
