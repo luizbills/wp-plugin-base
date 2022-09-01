@@ -3,7 +3,6 @@
 namespace Your_Namespace\Core;
 
 abstract class Loader {
-	protected static $classes;
 	protected static $initialized = false;
 	protected static $main_file;
 
@@ -24,30 +23,30 @@ abstract class Loader {
 
 	public static function load_classes () {
 		$root = Config::get( 'DIR' );
-		self::$classes = include_once $root . '/loader.php';
+		$loader = include_once $root . '/loader.php';
 
-		if ( ! is_array( self::$classes ) ) {
+		if ( ! is_array( $loader ) ) {
 			throw new \Error( $root . '/loader.php must return an Array' );
 		}
 
-		foreach ( self::$classes as $index => $item ) {
+		$classes = [];
+		foreach ( $loader as $item ) {
 			if ( ! $item ) continue;
 			if ( ! is_array( $item ) ) {
 				$item = [ $item, 10 ];
 			} else {
-				$class = $item[0] ?? null;
-				if ( ! $class ) continue;
-				$item = [ $class, intval( $item[1] ?? 10 ) ];
+				if ( ! ( $item[0] ?? null ) ) continue;
+				$item = [ $item[0], intval( $item[1] ?? 10 ) ];
 			}
-			self::$classes[ $index ] = $item;
+			$classes[] = $item;
 		}
 
-		\usort( self::$classes, function ( $a, $b ) {
+		\usort( $classes, function ( $a, $b ) {
 			return $a[1] <=> $b[1];
 		} );
 
 		$hook_start = self::get_hook_start_plugin();
-		foreach ( self::$classes as $item ) {
+		foreach ( $classes as $item ) {
 			$class_name = $item[0];
 			$priority = $item[1];
 			$loaded = false;
