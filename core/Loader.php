@@ -47,6 +47,7 @@ abstract class Loader {
 
 		$hook_start = self::get_hook_start_plugin();
 		foreach ( $classes as $item ) {
+			/** @var string|object */
 			$class_name = $item[0];
 			$priority = $item[1];
 			$loaded = false;

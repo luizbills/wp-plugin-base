@@ -98,9 +98,10 @@ abstract class Dependencies {
 			case 'wordpress':
 				return version_compare( \get_bloginfo( 'version' ), $value, '>=' );
 			default:
-				throw new \Error( "Unexpected shortcut: $shortcut" );
+				break;
 		}
-		return false;
+
+		throw new \Error( "Unexpected shortcut: $shortcut" );
 	}
 
 	protected static function display_notice_missing_deps ( $messages ) {
@@ -120,7 +121,7 @@ abstract class Dependencies {
 			echo "<div class='notice notice-error'><p>";
 			echo sprintf(
 				/* translators: %s is replaced with plugin name */
-				__( 'Missing dependencies for %s:', 'your_text_domain' ),
+				__( 'Missing dependencies for %s:', 'wc-variations-table' ),
 				"<strong>" . Config::get( 'NAME' ) . "</strong>",
 			);
 
