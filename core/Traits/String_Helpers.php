@@ -31,6 +31,11 @@ trait String_Helpers {
 		return self::str_before( $string, $search ) !== $string;
 	}
 
+	public static function str_contains ( $string, $search, $encoding = null ) {
+		$encoding = $encoding ? $encoding : 'UTF-8';
+		return '' === $search || \mb_strpos( $string, $search, 0, $encoding ) !== false;
+	}
+
 	// usage: `h::str_mask( 'XXX.XXX.XXX-XX', '83699642062' ); // outputs 836.996.420-62`
 	public static function str_mask ( $string, $mask, $symbol = 'X' ) {
 		$result = '';
