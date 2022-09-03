@@ -1,0 +1,83 @@
+#!/usr/bin/env bash
+
+# This script zips your plugin to make it easy for you to install or share it.
+# By Luiz Bills
+# License: GPL v3
+
+CURRENT_DIR="."
+DIR="$(realpath $CURRENT_DIR)"
+PLUGIN_NAME="$(basename $DIR)"
+TMP_DIR="/tmp/wp-plugin/$PLUGIN_NAME"
+DEST_DIR="wp-build"
+
+clear >$(tty) # clear the terminal
+
+mkdir -p "$(dirname $TMP_DIR)"
+rm -rf $TMP_DIR
+echo "Copying plugin files from $DIR..."
+cp -R $DIR $TMP_DIR
+cd $TMP_DIR
+
+# PHP syntax checker
+if ! command -v php &> /dev/null
+then
+	echo "Checking PHP syntax..."
+	find . -type f -name '*.php' ! -path './vendor/*' -print0 | while read -d $'\0' file
+	do
+		output=$(php -l "$file")
+		if [ ! $? -eq 0 ];
+		then
+			#echo "$output"
+			echo -e "\e[31mPHP Syntax Error!\e[0m"
+			exit 1
+		fi
+	done
+fi
+
+# composer install
+if command -v composer &> /dev/null
+then
+	if [ -f 'composer.json' ];
+	then
+		rm -rf ./vendor
+		echo "Installing composer packages..."
+		composer install --no-ansi --no-dev --no-interaction --no-plugins --no-progress --no-scripts --optimize-autoloader
+	fi
+fi
+
+# npm install
+if command -v npm &> /dev/null
+then
+	if [ -f 'package.json' ];
+	then
+		echo "Installing NPM packages..."
+		npm ci --no-progress
+	fi
+fi
+
+# delete some dev files
+echo "Erasing development files..."
+rm -rf ./.git/
+rm -rf ./.editorconfig
+rm -rf ./.gitignore
+rm -rf ./node_modules/
+rm -rf ./package-lock.json
+rm -rf ./composer.lock
+rm -rf "./$DEST_DIR"
+rm -rf ./logs/
+rm -rf ./core/scripts/
+
+# find and delete any zip files
+find $TMP_DIR -name "*.zip" -type f -delete
+
+# build the zip file
+echo "Creating zip file..."
+mkdir -p "$DIR/$DEST_DIR"
+rm -rf "$DIR/$DEST_DIR/$PLUGIN_NAME.zip" # erase any old build
+cd ..
+zip -qr "$DIR/$DEST_DIR/$PLUGIN_NAME.zip" "$PLUGIN_NAME" #zip tmp dir
+
+# erase tmp dir
+rm -rf $TMP_DIR
+
+echo "Zip file created in $DIR/$DEST_DIR/$PLUGIN_NAME.zip"

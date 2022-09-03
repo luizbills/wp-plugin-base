@@ -5,20 +5,16 @@
     "require-dev": {},
     "autoload": {
         "psr-4": {
-            "Your_Namespace\\": [
-                "classes/"
-            ],
-            "Your_Namespace\\Core\\": [
-                "core/"
-            ]
+            "Your_Namespace\\": ["classes/"],
+            "Your_Namespace\\Core\\": ["core/classes/"]
         }
     },
     "scripts": {
-        "build": "./scripts/build",
-        "deploy": "./scripts/svn-push",
-        "update-trunk": "./scripts/svn-push --only-trunk",
-        "make-pot": "wp i18n make-pot . languages/your_text_domain.pot",
-        "upgrade-core": "./scripts/upgrade-core"
+        "build": "./core/scripts/build",
+        "publish": "./core/scripts/svn-push",
+        "push-only-trunk": "./core/scripts/svn-push --only-trunk",
+        "upgrade-core": "./core/scripts/upgrade-core",
+        "make-pot": "wp i18n make-pot . languages/your_text_domain.pot"
     },
     "wp-plugin-base": {
         "namespace": "Your_Namespace",
