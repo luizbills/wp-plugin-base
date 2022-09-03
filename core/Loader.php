@@ -23,7 +23,7 @@ abstract class Loader {
 
 	public static function load_classes () {
 		$root = Config::get( 'DIR' );
-		$loader = include_once $root . '/loader.php';
+		$loader = include_once $root . '/config/loader.php';
 
 		if ( ! is_array( $loader ) ) {
 			throw new \Error( $root . '/loader.php must return an Array' );

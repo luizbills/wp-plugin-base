@@ -11,7 +11,7 @@ abstract class Config {
 		}
 
 		$root = dirname( $main_file );
-		$config = require $root . '/config.php';
+		$config = include_once $root . '/config/config.php';
 
 		if ( ! is_array( $config ) ) {
 			throw new \Error( $root . '/config.php must return an Array' );

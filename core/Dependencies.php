@@ -12,7 +12,7 @@ abstract class Dependencies {
 		}
 
 		$root = Config::get( 'DIR' );
-		self::$dependencies = include_once $root . '/dependencies.php';
+		self::$dependencies = include_once $root . '/config/dependencies.php';
 		if ( ! is_array( self::$dependencies ) ) {
 			throw new \Error( $root . '/dependencies.php must return an Array' );
 		}
