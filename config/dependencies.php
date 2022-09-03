@@ -1,19 +1,21 @@
 <?php
+/*
+In this file you must inform your plugin requirements. By default, the plugin will already check the server's PHP version (v7.4 or later) in the main.php file.
+
+Each dependency is an array that must contain the following keys:
+  - `check`: a function that should check if any requirements have been met.
+  - `message`: a string (or function that returns a string) that will be displayed if the requirement is not met.
+*/
 
 use Your_Namespace\Helpers as h;
 
 defined( 'WPINC' ) || exit( 1 );
 
-// Each index of `$deps` array must be a array with 'check' and 'message'
-// 'check' must be a callable or a string
-// 'message' must be a string or callable that returns a string
-$deps = [];
+$dependencies = [];
 
-// See some examples:
-
-// Requires WooCommerce plugin
+// See an example:
 /*
-$deps[] = [
+$dependencies[] = [
 	'check' => function () {
 		// return true if WooCommerce is activated
 		return class_exists( 'WooCommerce' );
@@ -37,5 +39,5 @@ $deps[] = [
 // 'check' => 'wordpress:4.9' will check if the WordPress version is v4.9 or later
 // 'check' => 'extension:curl' will check if 'curl' PHP module is installed on server
 
-// always returns your dependencies or an empty array
-return $deps;
+// You should returns all dependencies
+return $dependencies;
