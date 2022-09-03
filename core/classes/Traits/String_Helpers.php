@@ -3,16 +3,20 @@
 namespace Your_Namespace\Core\Traits;
 
 trait String_Helpers {
-	public static function str_length ( $string, $encoding = null ) {
-		return \mb_strlen( $string, $encoding ? $encoding : 'UTF-8' );
+	public static function str_length ( $string, $encoding = 'UTF-8' ) {
+		return \mb_strlen( $string, $encoding );
 	}
 
-	public static function str_lower ( $string, $encoding = null ) {
-		return \mb_strtolower( $string, $encoding ? $encoding : 'UTF-8' );
+	public static function str_lower ( $string, $encoding = 'UTF-8' ) {
+		return \mb_strtolower( $string, $encoding );
 	}
 
-	public static function str_upper ( $string, $encoding = null ) {
-		return \mb_strtoupper( $string, $encoding ? $encoding : 'UTF-8' );
+	public static function str_upper ( $string, $encoding = 'UTF-8' ) {
+		return \mb_strtoupper( $string, $encoding );
+	}
+
+	public static function str_contains ( $string, $search, $encoding = 'UTF-8' ) {
+		return '' === $search || \mb_strpos( $string, $search, 0, $encoding ) !== false;
 	}
 
 	public static function str_before ( $string, $search ) {
@@ -29,11 +33,6 @@ trait String_Helpers {
 
 	public static function str_ends_with ( $string, $search ) {
 		return self::str_before( $string, $search ) !== $string;
-	}
-
-	public static function str_contains ( $string, $search, $encoding = null ) {
-		$encoding = $encoding ? $encoding : 'UTF-8';
-		return '' === $search || \mb_strpos( $string, $search, 0, $encoding ) !== false;
 	}
 
 	// usage: `h::str_mask( 'XXX.XXX.XXX-XX', '83699642062' ); // outputs 836.996.420-62`
