@@ -73,7 +73,7 @@ abstract class Dependencies {
 
 	protected static function handle_shortcut ( $shortcut ) {
 		$parts = explode( ':', $shortcut );
-		$value = implode( ':', array_slice( $parts, 1 ) );
+		$value = trim( implode( ':', array_slice( $parts, 1 ) ) );
 		$type = trim( $parts[0] );
 		if ( ! $value || ! $type ) {
 			throw new \Error( "Invalid shortcut syntax: $shortcut" );
