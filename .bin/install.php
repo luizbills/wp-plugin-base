@@ -88,7 +88,7 @@ $ignores = [
 	'/.bin/',
 	'/.snippets/',
 	'/README.md',
-	'/changelog.md',
+	'/CHANGELOG.md',
 	'/composer.lock',
 ];
 $files = [];
