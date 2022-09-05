@@ -107,35 +107,39 @@ abstract class Dependencies {
 	protected static function display_notice_missing_deps ( $messages ) {
 		if ( ! \is_admin() ) return;
 		if ( ! \current_user_can( 'install_plugins' ) ) return;
-		if ( 0 === ( $messages ) ) return;
+		if ( 0 === count( $messages ) ) return;
+
+		\usort( $messages, function ( $a, $b ) {
+			return $b['is_error'] <=> $a['is_error'];
+		} );
 
 		\add_action( 'admin_notices', function () use ( $messages ) {
-			$allowed_html = [
-				'a' => [ 'href' => [], 'title' => [] ],
-				'span' => [ 'class' => [], 'style' => [] ],
-				'br' => [],
-				'em' => [],
-				'strong' => [],
-			];
-
 			echo "<div class='notice notice-error'><p>";
 			echo sprintf(
 				/* translators: %s is replaced with plugin name */
-				__( 'Missing dependencies for %s:', 'wc-variations-table' ),
+				__( 'The %s plugin needs the following dependencies to work:', 'your-text-domain' ),
 				"<strong>" . Config::get( 'NAME' ) . "</strong>",
 			);
 
+			$indent = \str_repeat( '&nbsp;', 4 );
+			$missing = esc_html__( 'Missing', 'your-text-domain' );
+			$allowed_html = [
+				'a' => [ 'href' => [], 'target' => [] ],
+				'span' => [ 'class' => [], 'style' => [] ],
+				'em' => [],
+				'strong' => [],
+				'code' => [],
+			];
 			foreach ( $messages as $message ) {
-				$icon = $message['is_error'] ? 'no-alt' : 'yes';
-				$color = $message['is_error'] ? '#e03131' : '#2b8a3e';
 				$line = \sprintf(
-					'<br>%s<span style="color:%s"><span class="dashicons dashicons-%s"> </span>%s</span>',
-					\str_repeat( '&nbsp;', 4 ),
-					$color,
-					$icon,
-					$message['text']
+					'<span style="color:%s;"><span class="dashicons dashicons-%s">&nbsp;</span>%s%s</span>',
+					$message['is_error'] ? '#e03131' : '#2b8a3e',
+					$message['is_error'] ? 'minus' : 'yes',
+					$message['is_error'] ? "$missing: " : '',
+					\wp_kses( $message['text'], $allowed_html )
 				);
-				echo \wp_kses( $line, $allowed_html );
+				$line = $message['is_error'] ? $line : "<s>$line</s>";
+				echo "<br> {$indent} {$line}";
 			}
 
 			echo '</p></div>';
