@@ -11,10 +11,10 @@ abstract class Config {
 		}
 
 		$root = dirname( $main_file );
-		$config = include_once $root . '/config/config.php';
+		$config = include_once $root . '/config/plugin.php';
 
 		if ( ! is_array( $config ) ) {
-			throw new \Error( $root . '/config.php must return an Array' );
+			throw new \Error( $root . '/plugin.php must return an Array' );
 		}
 
 		foreach ( $config as $key => $value ) {
@@ -27,12 +27,12 @@ abstract class Config {
 
 		$slug = isset( self::$values[ 'SLUG' ] ) ? self::$values[ 'SLUG' ] : false;
 		if ( ! $slug || ! is_string( $slug ) ) {
-			throw new \Error( $root . '/config.php must define a string SLUG (Recommended: only alphanumeric and dashes)' );
+			throw new \Error( $root . '/plugin.php must define a string SLUG (Recommended: only alphanumeric and dashes)' );
 		}
 
 		$prefix = isset( self::$values[ 'PREFIX' ] ) ? self::$values[ 'PREFIX' ] : false;
 		if ( ! $prefix || ! is_string( $prefix ) ) {
-			throw new \Error( $root . '/config.php must define a string PREFIX (only alphanumeric and underscores)' );
+			throw new \Error( $root . '/plugin.php must define a string PREFIX (only alphanumeric and underscores)' );
 		}
 
 		self::$values[ 'FILE'] = $main_file;

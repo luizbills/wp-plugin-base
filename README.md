@@ -71,7 +71,7 @@ Take a look at some helper methods that you will enjoy using.
 
 #### ➞ `h::config_get( $key, $default = null )`
 
-Returns the values ​​you declared in the `/config/config.php` file. The first argument is the key and the second is a default value that will be returned if the key does not exist. However, if you don't want to declare a default value, the plugin will throw an exception (to help avoid typos).
+Returns the values ​​you declared in the `/config/plugin.php` file. The first argument is the key and the second is a default value that will be returned if the key does not exist. However, if you don't want to declare a default value, the plugin will throw an exception (to help avoid typos).
 
 #### ➞ `h::config_set( $key, $value )`
 
@@ -103,7 +103,7 @@ h::filled( 0 ); // true (it is filled with a number)
 
 #### ➞ `h::prefix( $string, $sanitize = true )`
 
-Prepends the plugin PREFIX (defined in `/config/config.php`) in the `$string`. By default, the `$string` is sanitized (only numbers, letters and underlines)`.
+Prepends the plugin PREFIX (defined in `/config/plugin.php`) in the `$string`. By default, the `$string` is sanitized (only numbers, letters and underlines)`.
 
 ```php
 use Your_Namespace\Helpers as h;

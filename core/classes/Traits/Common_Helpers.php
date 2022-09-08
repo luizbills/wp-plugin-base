@@ -30,7 +30,7 @@ trait Common_Helpers {
 		return Config::sanitize_slug( $string, $sep );
 	}
 
-	// appends the plugin prefix (defined in /config.php)
+	// appends the plugin prefix (defined in /plugin.php)
 	// example: h::prefix( 'something' ) returns "your_prefix_something"
 	public static function prefix ( $appends = '' ) {
 		return Config::get( 'PREFIX' ) . $appends;

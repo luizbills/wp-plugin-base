@@ -12,7 +12,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 - Break: command `composer run update-trunk` changed to `composer run push-only-trunk`.
 - Break: `/scripts` directory moved to `/core/scripts`.
 - Break: core classes moved to `/core/classes`.
-- Break: `/config.php` file moved to `/config/config.php`.
+- Break: `/plugin.php` file moved to `/config/plugin.php`.
 - Break: `/dependencies.php` file moved to `/config/dependencies.php`.
 - Break: `/loader.php` file moved to `/config/loader.php`.
 - Feat: added `str_contains` in `core/classes/Traits/String_Helpers.php`.
@@ -63,7 +63,7 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 [Source code changes](https://github.com/luizbills/wp-plugin-base/compare/1.0.3...1.1.0)
 
--   refactor: remove unused `LANGUAGES_DIR` key from `/config.php`
+-   refactor: remove unused `LANGUAGES_DIR` key from `/plugin.php`
 -   docs: better README.md
 
 ## 1.0.3 - 2022-08-08
