@@ -7,8 +7,7 @@ Each index should be an array (with the class name/instance and an integer to in
 
 namespace Your_Namespace;
 
-use Your_Namespace\Helpers as h;
-
+// prevents your PHP files from being executed via direct browser access
 defined( 'WPINC' ) || exit( 1 );
 
 return [

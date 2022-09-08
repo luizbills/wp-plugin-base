@@ -7,8 +7,7 @@ Each dependency is an array that must contain the following keys:
   - `message`: a string (or function that returns a string) that will be displayed if the requirement is not met.
 */
 
-use Your_Namespace\Helpers as h;
-
+// prevents your PHP files from being executed via direct browser access
 defined( 'WPINC' ) || exit( 1 );
 
 $dependencies = [];
