@@ -1,6 +1,7 @@
 <?php
 
-include_once __DIR__ . '/helpers.php';
+define( 'WP_PLUGIN_BASE', 'installer' );
+require_once dirname( __DIR__ ) . '/core/scripts/.includes.php';
 
 $debug = in_array( '--debug', $argv );
 $values = null;
@@ -120,6 +121,7 @@ foreach ( $files as $file ) {
 	// don not change any script (only copy them)
 	if ( 'scripts' === basename( $target_dir ) ) {
 		file_put_contents( $target, $content );
+		chmod( $target, 700 );
 		continue;
 	};
 
@@ -160,5 +162,3 @@ if ( $debug ) {
 }
 
 echo PHP_EOL . success( "Your plugin was successfully created in $dest_dir" ) . PHP_EOL;
-
-file_put_contents( $src_dir . '/install.log', $dest_dir );
