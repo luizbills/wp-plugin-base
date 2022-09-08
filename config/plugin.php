@@ -11,6 +11,7 @@ Internally, the plugin will also declare the following values:
 To get these values, you should use the `config_get`. See core/Traits/Config_Helpers.php to learn more.
 */
 
+// prevents your PHP files from being executed via direct browser access
 defined( 'WPINC' ) || exit( 1 );
 
 return [
