@@ -78,7 +78,7 @@ if ( file_exists( $dest_dir ) && is_dir( $dest_dir ) ) {
 }
 
 cls();
-echo info( 'Copying files ...' ) . PHP_EOL;
+echo info( 'Copying files... ' );
 
 // list of files and folders
 $all_files = rscandir( $src_dir );
@@ -93,6 +93,9 @@ $ignores = [
 	'/composer.lock',
 ];
 $files = [];
+
+echo 'DONE!' . PHP_EOL;
+echo info( 'Preparing files... ' );
 
 foreach ( $all_files as $file ) {
 	$ignored = false;
@@ -141,13 +144,16 @@ foreach ( $files as $file ) {
 	file_put_contents( $target, $content );
 }
 
+echo 'DONE!' . PHP_EOL;
+
 chdir( $dest_dir );
 
 // install dependencies via composer
 if ( shell_cmd_exists( 'composer' ) && ! file_exists( "$dest_dir/vendor" ) ) {
-	echo info( 'Installing composer autoloader ...' ) . PHP_EOL;
+	echo info( 'Installing composer autoloader... ' );
 	$output = shell_exec( 'composer update' );
 	if ( $debug ) echo $output;
+	echo 'DONE!' . PHP_EOL;
 }
 
 if ( $debug ) {
