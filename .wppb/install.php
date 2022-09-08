@@ -152,8 +152,8 @@ chdir( $dest_dir );
 if ( shell_cmd_exists( 'composer' ) && ! file_exists( "$dest_dir/vendor" ) ) {
 	echo info( 'Installing composer autoloader... ' );
 	$output = shell_exec( 'composer update' );
-	if ( $debug ) echo $output;
 	echo 'DONE!' . PHP_EOL;
+	if ( $debug ) echo $output;
 }
 
 if ( $debug ) {
