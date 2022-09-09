@@ -9,6 +9,7 @@ use Your_Namespace\Core\Traits\String_Helpers;
 use Your_Namespace\Core\Traits\Template_Helpers;
 use Your_Namespace\Core\Traits\Throw_Helpers;
 use Your_Namespace\Core\Traits\WordPress_Helpers;
+use WC_Role_Based_Prices\Helpers as h;
 
 /**
  * This class contains several useful helpers for your plugin.
@@ -25,7 +26,7 @@ abstract class Helpers {
 		Throw_Helpers,
 		WordPress_Helpers;
 
-	// YOUR CUSTOM HELPERS (ALWAYS STATIC)
+	// Your custom helpers (always STATIC)
 	// public static function foo () {
 	//     return 'bar';
 	// }
