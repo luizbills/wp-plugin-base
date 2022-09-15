@@ -9,7 +9,8 @@ use Your_Namespace\Core\Traits\String_Helpers;
 use Your_Namespace\Core\Traits\Template_Helpers;
 use Your_Namespace\Core\Traits\Throw_Helpers;
 use Your_Namespace\Core\Traits\WordPress_Helpers;
-use WC_Role_Based_Prices\Helpers as h;
+
+use Your_Namespace\Helpers as h;
 
 /**
  * This class contains several useful helpers for your plugin.
