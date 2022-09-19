@@ -48,7 +48,7 @@ $remote_version = trim( get_remote_content( $remote_file ) );
 
 if ( version_compare( $remote_version, $current_version, '>' ) ) {
 	echo info( "The plugin core can be upgraded to $remote_version" ) . PHP_EOL;
-	echo infob("I: ") . "See the changelog in $github_repo_url/blob/main/changelog.md" . PHP_EOL;
+	echo infob("I: ") . "See the changelog in $github_repo_url/blob/main/CHANGELOG.md" . PHP_EOL;
 	echo infob( 'I: ' ) . 'Do not forget to commit your changes or backup your code.' . PHP_EOL;
 	echo alertb( 'W: ' ) . "ONLY the $plugin_folder/core folder will be updated." . PHP_EOL;
 	echo PHP_EOL;
