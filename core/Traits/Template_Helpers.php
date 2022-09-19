@@ -38,10 +38,13 @@ trait Template_Helpers {
 	}
 
 	public static function get_template_path ( $template_path ) {
-		$template_path .= ! self::str_ends_with( $template_path, '.php' ) ? '.php' : '';
-		$templates = \trim( Config::get( 'TEMPLATES_DIR', 'templates' ), '/' );
-		$dir = Config::get( 'DIR' ) . "/{$templates}/";
-		$full_path = "$dir/$template_path";
+		$template_path .= '.php' === substr( $template_path, -4 ) ? '' : '.php';
+		$full_path = self::get_templates_dir() . ltrim( $template_path, '/' );
 		return apply_filters( self::prefix( 'get_template_full_path' ), $full_path, $template_path );
+	}
+
+	public static function get_templates_dir () {
+		$templates = \trim( Config::get( 'TEMPLATES_DIR', 'templates' ), '/' );
+		return Config::get( 'DIR' ) . "/{$templates}/";
 	}
 }
