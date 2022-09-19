@@ -17,11 +17,9 @@ trait Template_Helpers {
 	}
 
 	// TEMPLATE RENDERER
-	public static function get_template ( $path, $args = [] ) {
-		$args = \apply_filters( self::prefix( 'get_template_args' ), $args, $path );
-		$dir = \trim( Config::get( 'TEMPLATES_DIR', 'templates' ), '/' );
-		$full_path = Config::get( 'DIR' ) . "/{$dir}/$path" . ( ! self::str_ends_with( $path, '.php' ) ? '.php' : '' );
-		$full_path = apply_filters( self::prefix( 'get_template_full_path' ), $full_path, $path );
+	public static function get_template ( $template_path, $args = [] ) {
+		$args = \apply_filters( self::prefix( 'get_template_args' ), $args, $template_path );
+		$full_path = self::get_template_path( $template_path );
 		$html = '';
 		try {
 			\extract( $args );
@@ -37,5 +35,13 @@ trait Template_Helpers {
 			}
 		}
 		return $html;
+	}
+
+	public static function get_template_path ( $template_path ) {
+		$template_path .= ! self::str_ends_with( $template_path, '.php' ) ? '.php' : '';
+		$templates = \trim( Config::get( 'TEMPLATES_DIR', 'templates' ), '/' );
+		$dir = Config::get( 'DIR' ) . "/{$templates}/";
+		$full_path = "$dir/$template_path";
+		return apply_filters( self::prefix( 'get_template_full_path' ), $full_path, $template_path );
 	}
 }
