@@ -3,7 +3,7 @@
 /**
  * Script to upgrade the core folder
  *
- * @version 1.3.2
+ * @version 1.3.3
 */
 
 if ( ! function_exists( 'curl_init' ) ) {
