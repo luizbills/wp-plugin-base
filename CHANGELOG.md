@@ -8,8 +8,8 @@ This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.htm
 
 [Source code changes](https://github.com/luizbills/wp-plugin-base/compare/1.5.0...1.6.0)
 
-- Added `get_template_path` in [`core/Traits/Template_Helpers.php`](/core/Traits/Template_Helpers.php).
-- Added `get_templates_dir` in [`core/Traits/Template_Helpers.php`](/core/Traits/Template_Helpers.php).
+- Added `get_template_path` method in [`core/Traits/Template_Helpers.php`](/core/Traits/Template_Helpers.php).
+- Added `get_templates_dir` method in [`core/Traits/Template_Helpers.php`](/core/Traits/Template_Helpers.php).
 
 ## 1.5.0 - 2022-09-01
 
