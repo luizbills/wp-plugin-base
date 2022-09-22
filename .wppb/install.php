@@ -1,7 +1,8 @@
 <?php
 
-define( 'WP_PLUGIN_BASE', 'installer' );
-require_once dirname( __DIR__ ) . '/core/scripts/.includes.php';
+define( 'PLUGIN_ROOT', dirname( __DIR__ ) );
+
+require_once PLUGIN_ROOT . '/core/scripts/.includes.php';
 
 $debug = in_array( '--debug', $argv );
 $values = null;
@@ -61,7 +62,7 @@ $find_replace = [
 
 // useful informations
 $slug = $find_replace['your_plugin_slug'];
-$src_dir = dirname( dirname( __FILE__ ) );
+$src_dir = PLUGIN_ROOT;
 $dest_dir = dirname( $src_dir ) . '/' . $slug;
 
 // remove old plugin

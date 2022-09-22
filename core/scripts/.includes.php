@@ -1,6 +1,6 @@
 <?php
 
-defined( 'WP_PLUGIN_BASE' ) || die(1);
+defined( 'PLUGIN_ROOT' ) || die(1);
 
 function slugify ( $text ) {
 	$sanitized_text = remove_accents( $text ); // Convert to ASCII
