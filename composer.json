@@ -3,7 +3,6 @@
         "php": ">=7.4",
         "ext-mbstring": "*"
     },
-    "require-dev": {},
     "autoload": {
         "psr-4": {
             "Your_Namespace\\": [
