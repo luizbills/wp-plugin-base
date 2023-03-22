@@ -13,6 +13,9 @@
             ]
         }
     },
+    "config": {
+        "platform-check": false
+    },
     "scripts": {
         "build": "./scripts/build",
         "deploy": "./scripts/svn-push",
