@@ -4,7 +4,7 @@ namespace Your_Namespace\Core\Traits;
 
 trait Throw_Helpers {
 	public static function get_error_class () {
-		return \Error::class;
+		return \Exception::class;
 	}
 
 	public static function throw_if ( $condition, $message, $exception_class = null ) {
