@@ -210,6 +210,10 @@ if [ "$ONLY_TRUNK" == "no" ];
 then
 	# DELETE VERSION TAG
 	rm -Rf tags/${VERSION}
+
+	# COPY TRUNK TO TAGS/$VERSION
+	echo "Copying trunk to new tag"
+	cp -a trunk/ tags/${VERSION}
 fi
 
 # DO THE ADD ALL NOT KNOWN FILES UNIX COMMAND
@@ -223,13 +227,6 @@ for MISSING_PATH in $MISSING_PATHS;
 do
     svn rm --force "$MISSING_PATH"
 done
-
-if [ "$ONLY_TRUNK" == "no" ];
-then
-	# COPY TRUNK TO TAGS/$VERSION
-	echo "Copying trunk to new tag"
-	svn copy trunk tags/${VERSION} || { echo "Unable to create tag."; exit 1; }
-fi
 
 clear >$( tty ) # clear the terminal
 
