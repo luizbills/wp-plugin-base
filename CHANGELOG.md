@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.7.1 - 2023-06-07
+
+- Fix: `h::get_transient()` was not respecting the `CACHE_ENABLED` config.
+
 ## 1.7.0 - 2022-09-28
 
 - By default, `Helpers::throw_if()` now throws `\Exception` rather than `\Error`.

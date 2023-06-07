@@ -5,8 +5,13 @@ namespace Your_Namespace\Core\Traits;
 use Your_Namespace\Core\Config;
 
 trait WordPress_Helpers {
+	/**
+	 * Usage: `$script_url = h::plugin_url( 'assets/js/app.js' );`
+	 *
+	 * @param string $path
+	 * @return string the link
+	 */
 	public static function plugin_url ( $path = '' ) {
-		// usage: `$script_url = h::plugin_url( 'assets/js/app.js' );`
 		return \plugins_url( $path, Config::get( 'FILE' ) );
 	}
 
@@ -19,7 +24,7 @@ trait WordPress_Helpers {
 		if ( is_callable( $value ) ) {
 			$value = \call_user_func( $value );
 		}
-		if ( self::config_get( 'CACHE_ENABLED', true ) ) {
+		if ( Config::get( 'CACHE_ENABLED', true ) ) {
 			$key = self::get_transient_key( $transient );
 			if ( ! self::filled( $value ) ) {
 				return \delete_transient( $key );
@@ -38,8 +43,11 @@ trait WordPress_Helpers {
 	}
 
 	public static function get_transient ( $transient, $default = false ) {
-		$key = self::get_transient_key( $transient );
-		$value = \get_transient( $key );
+		$value = false;
+		if ( Config::get( 'CACHE_ENABLED', true ) ) {
+			$key = self::get_transient_key( $transient );
+			$value = \get_transient( $key );
+		}
 		return false !== $value ? $value : $default;
 	}
 
