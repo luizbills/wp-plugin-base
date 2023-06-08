@@ -17,6 +17,15 @@ abstract class Config {
 			throw new \Error( $root . '/config.php must return an Array' );
 		}
 
+		if (
+			function_exists( 'wp_get_environment_type' )
+			&& in_array( \wp_get_environment_type(), [ 'local', 'development' ] )
+			&& file_exists( $root . '/config.dev.php' )
+		) {
+			$config_dev = include $root . '/config.dev.php';
+			$config = array_replace( $config, $config_dev );
+		}
+
 		foreach ( $config as $key => $value ) {
 			$key = \mb_strtoupper( $key );
 			if ( 'SLUG' === $key ) {
