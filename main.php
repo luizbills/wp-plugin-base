@@ -43,7 +43,7 @@ try {
 			)
 		);
 	}
-	include_once $autoload;
+	include $autoload;
 } catch ( Throwable $e ) {
 	return add_action( 'admin_notices', function () use ( $e ) {
 		if ( ! current_user_can( 'install_plugins' ) ) return;
