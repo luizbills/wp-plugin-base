@@ -161,6 +161,7 @@ rm -rf docs
 rm -rf scripts
 rm -rf logs
 rm -rf node_modules
+rm -rf wp-build
 rm -f .gitattributes
 rm -f .gitignore
 rm -f .gitmodules

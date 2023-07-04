@@ -12,9 +12,7 @@ DEST_DIR="wp-build"
 
 set -e
 
-if [ -f "$DIR/$DEST_DIR/$PLUGIN_NAME.zip" ]; then
-	rm -rf "$DIR/$DEST_DIR/$PLUGIN_NAME.zip"
-fi
+rm -f "$DIR/$DEST_DIR/$PLUGIN_NAME.zip" # delete old build
 
 clear >$(tty) # clear the terminal
 
@@ -90,7 +88,6 @@ find $TMP_DIR -name "*.zip" -type f -delete
 # build the zip file
 echo "Creating zip file..."
 mkdir -p "$DIR/$DEST_DIR"
-rm -rf "$DIR/$DEST_DIR/$PLUGIN_NAME.zip" # erase any old build
 cd ..
 zip -qr "$DIR/$DEST_DIR/$PLUGIN_NAME.zip" "$PLUGIN_NAME" #zip tmp dir
 
