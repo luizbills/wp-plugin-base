@@ -10,6 +10,12 @@ PLUGIN_NAME="$(basename $DIR)"
 TMP_DIR="/tmp/wp-plugin/$PLUGIN_NAME"
 DEST_DIR="wp-build"
 
+set -e
+
+if [ -f "$DIR/$DEST_DIR/$PLUGIN_NAME.zip" ]; then
+	rm -rf "$DIR/$DEST_DIR/$PLUGIN_NAME.zip"
+fi
+
 clear >$(tty) # clear the terminal
 
 mkdir -p "$(dirname $TMP_DIR)"
