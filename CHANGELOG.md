@@ -4,55 +4,60 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.9.0 - 2023-07-18
+
+-   Refactor: Now the `init` hook is used to load the plugin text domain (in `core/Main.php`)
+-   Refactor: Simplified the `main.php`
+
 ## 1.8.0 - 2023-06-08
 
-- Feat: allow secundary development config in [`config.dev.php`](/config.dev.php)
+-   Feat: allow secundary development config in [`config.dev.php`](/config.dev.php)
 
 ## 1.7.1 - 2023-06-07
 
-- Fix: `h::get_transient()` was not respecting the `CACHE_ENABLED` config.
+-   Fix: `h::get_transient()` was not respecting the `CACHE_ENABLED` config.
 
 ## 1.7.0 - 2022-09-28
 
-- By default, `Helpers::throw_if()` now throws `\Exception` rather than `\Error`.
+-   By default, `Helpers::throw_if()` now throws `\Exception` rather than `\Error`.
 
 ## 1.6.1 - 2022-09-28
 
 [Source code changes](https://github.com/luizbills/wp-plugin-base/compare/1.6.0...1.6.1)
 
-- Fix: Undefined variable `$path` in [`core/Traits/Template_Helpers.php`](/core/Traits/Template_Helpers.php).
+-   Fix: Undefined variable `$path` in [`core/Traits/Template_Helpers.php`](/core/Traits/Template_Helpers.php).
 
 ## 1.6.0 - 2022-09-01
 
 [Source code changes](https://github.com/luizbills/wp-plugin-base/compare/1.5.0...1.6.0)
 
-- Added `get_template_path` method in [`core/Traits/Template_Helpers.php`](/core/Traits/Template_Helpers.php).
-- Added `get_templates_dir` method in [`core/Traits/Template_Helpers.php`](/core/Traits/Template_Helpers.php).
+-   Added `get_template_path` method in [`core/Traits/Template_Helpers.php`](/core/Traits/Template_Helpers.php).
+-   Added `get_templates_dir` method in [`core/Traits/Template_Helpers.php`](/core/Traits/Template_Helpers.php).
 
 ## 1.5.0 - 2022-09-01
 
 [Source code changes](https://github.com/luizbills/wp-plugin-base/compare/1.4.1...1.5.0)
 
-- Fix and improve the missing dependencies notice.
+-   Fix and improve the missing dependencies notice.
 
 ## 1.4.1 - 2022-09-01
 
 [Source code changes](https://github.com/luizbills/wp-plugin-base/compare/1.4.0...1.4.1)
 
-- Fix: incorrect `h::log` output.
+-   Fix: incorrect `h::log` output.
 
 ## 1.4.0 - 2022-09-01
 
 [Source code changes](https://github.com/luizbills/wp-plugin-base/compare/1.3.1...1.4.0)
 
-- Feat: allow class instances in `loader.php`.
-- Fix: remove *falsy* values from `loader.php`.
+-   Feat: allow class instances in `loader.php`.
+-   Fix: remove _falsy_ values from `loader.php`.
 
 ## 1.3.1 - 2022-08-19
 
 [Source code changes](https://github.com/luizbills/wp-plugin-base/compare/1.3.0...1.3.1)
 
-- Fixed the `composer run upgrade-core` command.
+-   Fixed the `composer run upgrade-core` command.
 
 ## 1.3.0 - 2022-08-19
 

@@ -14,5 +14,15 @@ abstract class Main {
 		Config::init( $main_file );
 		Loader::init();
 		Dependencies::init();
+
+		add_action( 'init', [ __CLASS__, 'load_textdomain' ], 0 );
+	}
+
+	public static function load_textdomain () {
+		\load_plugin_textdomain(
+			'your_text_domain',
+			false,
+			dirname( plugin_basename( Config::get( 'FILE' ) ) ) . '/languages/'
+		);
 	}
 }
