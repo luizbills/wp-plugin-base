@@ -239,6 +239,14 @@ This folder contains some scripts that are used in the commands explained below:
 - `composer run deploy` updates your SVN repository and release a new version on https://wordpress.org (you need setup the [`/scripts/svn-push`](/scripts/svn-push) file first). This script also update your plugin assets (icon, banner and screenshot) when necessary in the `/.wordpress-org` directory.
 - `composer run update-trunk` updates the `/trunk` of your SVN repository on https://wordpress.org (you need setup the [`/scripts/svn-push`](/scripts/svn-push) file first). This script also update your plugin assets (icon, banner and screenshot) when necessary in the `/.wordpress-org` directory.
 
+## Recommended Tools
+
+- [CPT Model](https://gist.github.com/luizbills/b030beeff64380d300afa16670fde022)
+- [Git Updater](https://github.com/afragen/git-updater)
+- [PostTypes](https://github.com/jjgrainger/PostTypes/)
+- [Carbon Fields](https://carbonfields.net)
+- [WP Customizer Framework](https://github.com/inc2734/wp-customizer-framework/)
+
 ## Contributing
 
 - [Create an issue](https://github.com/luizbills/wp-plugin-base/issues/new) for questions, suggestions or bugs.
