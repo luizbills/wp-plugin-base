@@ -26,7 +26,7 @@ along with your_plugin_name. If not, see http://www.gnu.org/licenses/gpl-3.0.htm
 */
 
 // prevents your PHP files from being executed via direct browser access
-defined( 'WPINC' ) || exit( 1 );
+defined( 'ABSPATH' ) || exit( 1 );
 
 // uncomment below to load your plugin translations
 // load_plugin_textdomain( 'your_text_domain', false, dirname( plugin_basename( __FILE__ ) ) . '/languages/' );

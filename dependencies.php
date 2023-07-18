@@ -2,7 +2,7 @@
 
 use Your_Namespace\Helpers as h;
 
-defined( 'WPINC' ) || exit( 1 );
+defined( 'ABSPATH' ) || exit( 1 );
 
 // Each index of `$deps` array must be a array with 'check' and 'message'
 // 'check' must be a callable or a string

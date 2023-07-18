@@ -1,6 +1,6 @@
 <?php
 
-defined( 'WPINC' ) || exit( 1 );
+defined( 'ABSPATH' ) || exit( 1 );
 
 return [
 	'SLUG' => 'your_plugin_slug',
