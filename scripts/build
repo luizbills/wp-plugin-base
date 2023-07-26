@@ -95,3 +95,4 @@ zip -qr "$DIR/$DEST_DIR/$PLUGIN_NAME.zip" "$PLUGIN_NAME" #zip tmp dir
 rm -rf $TMP_DIR
 
 echo "Zip file created in $DIR/$DEST_DIR/$PLUGIN_NAME.zip"
+echo -e "\e[1;32mDone!\e[0m"
