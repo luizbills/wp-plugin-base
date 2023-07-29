@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.10.0 - 2023-07-29
+
+-   Feat: Added `h::critical_log()` helper
+
 ## 1.9.0 - 2023-07-18
 
 -   Refactor: Now the `init` hook is used to load the plugin text domain (in `core/Main.php`)
