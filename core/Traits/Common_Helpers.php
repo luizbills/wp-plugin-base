@@ -2,9 +2,12 @@
 
 namespace Your_Namespace\Core\Traits;
 
+use Your_Namespace\Core\Traits\Log_Helpers;
 use Your_Namespace\Core\Config;
 
 trait Common_Helpers {
+	use Log_Helpers;
+
 	// Get the value if set, otherwise return a default value or `null`. Prevents notices when data is not set.
 	public static function get ( &$var, $default = null ) {
 		return $var ?? $default;

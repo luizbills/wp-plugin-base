@@ -19,6 +19,8 @@ use Your_Namespace\Helpers as h;
  * remove any Trait below or even this entire class.
 */
 abstract class Helpers {
+
+	// See the /core/Traits to learn the helpers
 	use Common_Helpers,
 		Config_Helpers,
 		Debug_Helpers,
