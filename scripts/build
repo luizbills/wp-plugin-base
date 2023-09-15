@@ -23,7 +23,7 @@ cp -R $DIR $TMP_DIR
 cd $TMP_DIR
 
 # PHP syntax checker
-if ! command -v php &> /dev/null
+if command -v php &> /dev/null
 then
 	echo "Checking PHP syntax..."
 	find . -type f -name '*.php' ! -path './vendor/*' -print0 | while read -d $'\0' file
@@ -61,24 +61,17 @@ fi
 
 # delete some dev files
 echo "Erasing development files..."
+find $TMP_DIR -maxdepth 1 -type d -iname ".*" -exec rm -rf {} \; # delete hidden folders
+find $TMP_DIR -maxdepth 1 -type f -iname ".*" -exec rm -rf {} \; # delete hidden files
 rm -rf $DEST_DIR
-rm -rf .git
-rm -rf .github
-rm -rf tests
-rm -rf docs
-rm -rf scripts
-rm -rf logs
-rm -rf node_modules
-rm -f .gitattributes
-rm -f .gitignore
-rm -f .gitmodules
-rm -f .editorconfig
-rm -f .prettierrc.json
-rm -f package-lock.json
-rm -f pnpm-lock.yaml
-rm -f composer.lock
-rm -f phpunit.xml
-rm -f phpunit.xml.dist
+rm -Rf node_modules
+rm -Rf tests
+rm -Rf docs
+rm -Rf scripts
+rm -Rf logs
+rm -Rf *lock*
+rm -f *phpunit.xml*
+rm -f *phpstan*
 rm -f README.md
 rm -f CONTRIBUTING.md
 
