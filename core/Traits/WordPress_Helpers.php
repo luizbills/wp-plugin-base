@@ -20,6 +20,34 @@ trait WordPress_Helpers {
 		return $raw ? $version : preg_replace( '/[^0-9.]/', '', $version );
 	}
 
+	public static function enqueue_js ( $handle, $src, $deps = [], $version = false, $args = [] ) {
+		$plugin_asset = false;
+		if ( ! h::str_starts_with( $src, 'http://' ) && ! h::str_starts_with( $src, 'https://' ) ) {
+			$assets_dir = trim( Config::get( 'ASSETS_DIR', 'assets' ), '/' );
+			$filename = array_shift( explode( $src, '?' ) );
+			$plugin_asset = Config::get( 'DIR' ) . '/' . $assets_dir . '/js/' . ltrim( $filename, '/' );
+			$src = h::plugin_url( $assets_dir . '/js/' . ltrim( $src, '/' ) );
+			if ( h::get_defined( 'WP_DEBUG' ) && file_exists( $plugin_asset ) ) {
+				$version = filemtime( $plugin_asset );
+			}
+		}
+		return wp_enqueue_script( $handle, $src, $deps, $version, $args );
+	}
+
+	public static function enqueue_css ( $handle, $src, $deps = [], $version = false, $media = 'all' ) {
+		$plugin_asset = false;
+		if ( ! h::str_starts_with( $src, 'http://' ) && ! h::str_starts_with( $src, 'https://' ) ) {
+			$assets_dir = trim( Config::get( 'ASSETS_DIR', 'assets' ), '/' );
+			$filename = array_shift( explode( $src, '?' ) );
+			$plugin_asset = Config::get( 'DIR' ) . '/' . $assets_dir . '/css/' . ltrim( $filename, '/' );
+			$src = h::plugin_url( $assets_dir . '/css/' . ltrim( $src, '/' ) );
+			if ( h::get_defined( 'WP_DEBUG' ) && file_exists( $plugin_asset ) ) {
+				$version = filemtime( $plugin_asset );
+			}
+		}
+		return wp_enqueue_style( $handle, $src, $deps, $version, $media );
+	}
+
     public static function set_transient ( $transient, $value, $duration = 0 ) {
 		if ( is_callable( $value ) ) {
 			$value = \call_user_func( $value );
