@@ -117,12 +117,12 @@ abstract class Dependencies {
 			echo "<div class='notice notice-error'><p>";
 			echo sprintf(
 				/* translators: %s is replaced with plugin name */
-				__( 'The %s plugin needs the following dependencies to work:', 'your-text-domain' ),
+				__( 'The %s plugin needs the following dependencies to work:', 'your_text_domain' ),
 				"<strong>" . Config::get( 'NAME' ) . "</strong>",
 			);
 
 			$indent = \str_repeat( '&nbsp;', 4 );
-			$missing = esc_html__( 'Missing', 'your-text-domain' );
+			$missing = esc_html__( 'Missing', 'your_text_domain' );
 			$allowed_html = [
 				'a' => [ 'href' => [], 'target' => [] ],
 				'span' => [ 'class' => [], 'style' => [] ],
