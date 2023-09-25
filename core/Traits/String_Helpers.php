@@ -32,7 +32,7 @@ trait String_Helpers {
 	}
 
 	public static function str_contains ( $string, $search ) {
-		return return $search !== '' && mb_strpos( $string, $search ) !== false;
+		return $search !== '' && mb_strpos( $string, $search ) !== false;
 	}
 
 	// usage: `h::str_mask( 'XXX.XXX.XXX-XX', '83699642062' ); // outputs 836.996.420-62`
