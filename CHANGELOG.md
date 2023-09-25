@@ -4,6 +4,10 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 1.10.1 - 2023-09-25
+
+-   Fix text domain in `core/Dependencies.php`
+
 ## 1.10.0 - 2023-07-29
 
 -   Feat: Added [`h::critical_log()`](https://github.com/luizbills/wp-plugin-base/blob/main/core/Traits/Log_Helpers.php#L35) helper
