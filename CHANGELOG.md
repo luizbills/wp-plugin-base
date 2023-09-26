@@ -4,6 +4,12 @@ All notable changes to this project will be documented in this file.
 
 This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 2.0.0 - 2023-09-26
+
+-   Break: Now the core classes throws `Exception` instead of `Error`.
+-   Feat: Now all core classes has PHPDoc comments.
+-   Feat: Added `h::str_contains( $string, $search )` helper
+
 ## 1.10.1 - 2023-09-25
 
 -   Fix text domain in `core/Dependencies.php`

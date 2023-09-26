@@ -19,7 +19,7 @@ Open your terminal and execute the script below in your `wp-content/plugins` to 
 wp_plugin_base_clone_dir=".wp_plugin_base_$(date +%s)" \
 && git clone --branch main --single-branch --no-tags --quiet \
   https://github.com/luizbills/wp-plugin-base.git $wp_plugin_base_clone_dir \
-&& cd $wp_plugin_base_clone_dir && php .bin/install.php && sleep .1 \
+&& cd $wp_plugin_base_clone_dir && php .installer/install.php && sleep .1 \
 && cd $(cat install.log) \
 && chmod -R +x ./scripts \
 && rm -rf "../$wp_plugin_base_clone_dir"

@@ -82,10 +82,10 @@ echo info( 'Copying files ...' ) . PHP_EOL;
 // list of files and folders
 $all_files = rscandir( $src_dir );
 $ignores = [
+	'/.installer/',
 	'/.git/',
 	'/.github/',
 	'/vendor/',
-	'/.bin/',
 	'/.snippets/',
 	'/README.md',
 	'/CHANGELOG.md',

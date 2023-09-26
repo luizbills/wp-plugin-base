@@ -7,7 +7,7 @@ use Your_Namespace\Core\Config;
 trait Log_Helpers {
 
     /**
-	 * @param mixed[] $values
+	 * @param mixed ...$values
 	 * @return void
 	 */
     public static function log ( ...$values ) {

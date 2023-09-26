@@ -2,13 +2,20 @@
 
 namespace Your_Namespace\Core;
 
-abstract class Loader {
+final class Loader {
+	/** @var bool */
 	protected static $initialized = false;
+
+	/** @var string */
 	protected static $main_file;
 
+	/**
+	 * @return void
+	 * @throws \Exception
+	 */
 	public static function init () {
 		if ( self::$initialized ) {
-			throw new \Error( __CLASS__ . ' already initialized' );
+			throw new \Exception( __CLASS__ . ' already initialized' );
 		}
 
 		self::$main_file = Config::get( 'FILE' );
@@ -17,16 +24,23 @@ abstract class Loader {
 		self::$initialized = true;
 	}
 
+	/**
+	 * @return string
+	 */
 	public static function get_hook_start_plugin () {
 		return 'start_plugin_' . self::$main_file;
 	}
 
+	/**
+	 * @return void
+	 * @throws \Exception
+	 */
 	public static function load_classes () {
 		$root = Config::get( 'DIR' );
 		$loader = include_once $root . '/loader.php';
 
 		if ( ! is_array( $loader ) ) {
-			throw new \Error( $root . '/loader.php must return an Array' );
+			throw new \Exception( $root . '/loader.php must return an Array' );
 		}
 
 		$classes = [];
@@ -53,7 +67,7 @@ abstract class Loader {
 			$loaded = false;
 
 			if ( is_string( $class_name ) && ! \class_exists( $class_name ) ) {
-				throw new \Error( 'class ' . $class_name . ' does not exist' );
+				throw new \Exception( 'class ' . $class_name . ' does not exist' );
 			}
 
 			$instance = is_string( $class_name ) ? new $class_name() : $class_name;
@@ -75,7 +89,7 @@ abstract class Loader {
 			}
 
 			if ( ! $loaded ) {
-				throw new \Error( "class $class_name must have at least one of the following methods: __start, __activation (static) or __deactivation (static)" );
+				throw new \Exception( "class $class_name must have at least one of the following methods: __start, __activation (static) or __deactivation (static)" );
 			}
 		}
 	}

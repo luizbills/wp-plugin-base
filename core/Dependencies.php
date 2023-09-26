@@ -2,19 +2,26 @@
 
 namespace Your_Namespace\Core;
 
-abstract class Dependencies {
+final class Dependencies {
+	/** @var array */
 	protected static $dependencies;
+
+	/** @var bool */
 	protected static $initialized = false;
 
+	/**
+	 * @return void
+	 * @throws \Exception
+	 */
 	public static function init () {
 		if ( self::$initialized ) {
-			throw new \Error( __CLASS__ . ' already initialized' );
+			throw new \Exception( __CLASS__ . ' already initialized' );
 		}
 
 		$root = Config::get( 'DIR' );
 		self::$dependencies = include_once $root . '/dependencies.php';
 		if ( ! is_array( self::$dependencies ) ) {
-			throw new \Error( $root . '/dependencies.php must return an Array' );
+			throw new \Exception( $root . '/dependencies.php must return an Array' );
 		}
 
 		\add_action( 'plugins_loaded', [ __CLASS__, 'maybe_start_plugin' ], 0 );
@@ -22,6 +29,9 @@ abstract class Dependencies {
 		self::$initialized = true;
 	}
 
+	/**
+	 * @return void
+	 */
 	public static function maybe_start_plugin () {
 		$result = self::check_dependencies();
 
@@ -32,6 +42,10 @@ abstract class Dependencies {
 		}
 	}
 
+	/**
+	 * @return array{success: bool, messages: string[]} The result
+	 * @throws \Exception
+	 */
 	public static function check_dependencies () {
 		$result = [
 			'success' => null,
@@ -47,7 +61,7 @@ abstract class Dependencies {
 			// check the message
 			if ( ! is_string( $message ) || '' === trim( $message ) ) {
 				$id = is_integer( $key ) ? '#' . ( 1 + $key ) : $key;
-				throw new \Error( "Dependency $id has an invalid 'message': its must be a string and and it cannot be empty." );
+				throw new \Exception( "Dependency $id has an invalid 'message': its must be a string and and it cannot be empty." );
 			}
 
 			// check the requirement
@@ -71,12 +85,17 @@ abstract class Dependencies {
 		return $result;
 	}
 
+	/**
+	 * @param string $shortcut
+	 * @return bool
+	 * @throws \Exception
+	 */
 	protected static function handle_shortcut ( $shortcut ) {
 		$parts = explode( ':', $shortcut );
 		$value = trim( implode( ':', array_slice( $parts, 1 ) ) );
 		$type = trim( $parts[0] );
 		if ( ! $value || ! $type ) {
-			throw new \Error( "Invalid shortcut syntax: $shortcut" );
+			throw new \Exception( "Invalid shortcut syntax: $shortcut" );
 		}
 		switch ( $type ) {
 			case 'class':
@@ -101,9 +120,13 @@ abstract class Dependencies {
 				break;
 		}
 
-		throw new \Error( "Unexpected shortcut: $shortcut" );
+		throw new \Exception( "Unexpected shortcut: $shortcut" );
 	}
 
+	/**
+	 * @param string[] $messages
+	 * @return void
+	 */
 	protected static function display_notice_missing_deps ( $messages ) {
 		if ( ! \is_admin() ) return;
 		if ( ! \current_user_can( 'install_plugins' ) ) return;

@@ -2,19 +2,25 @@
 
 namespace Your_Namespace\Core;
 
-abstract class Config {
+final class Config {
+	/** @var array */
 	protected static $values = [];
 
+	/**
+	 * @param string $main_file The file that contains the plugin headers
+	 * @return void
+	 * @throws \Exception
+	 */
 	public static function init ( $main_file ) {
 		if ( self::get_size() > 0 ) {
-			throw new \Error( __CLASS__ . ' already initialized' );
+			throw new \Exception( __CLASS__ . ' already initialized' );
 		}
 
 		$root = dirname( $main_file );
 		$config = require $root . '/config.php';
 
 		if ( ! is_array( $config ) ) {
-			throw new \Error( $root . '/config.php must return an Array' );
+			throw new \Exception( $root . '/config.php must return an Array' );
 		}
 
 		if (
@@ -36,12 +42,12 @@ abstract class Config {
 
 		$slug = isset( self::$values[ 'SLUG' ] ) ? self::$values[ 'SLUG' ] : false;
 		if ( ! $slug || ! is_string( $slug ) ) {
-			throw new \Error( $root . '/config.php must define a string SLUG (Recommended: only alphanumeric and dashes)' );
+			throw new \Exception( $root . '/config.php must define a string SLUG (Recommended: only alphanumeric and dashes)' );
 		}
 
 		$prefix = isset( self::$values[ 'PREFIX' ] ) ? self::$values[ 'PREFIX' ] : false;
 		if ( ! $prefix || ! is_string( $prefix ) ) {
-			throw new \Error( $root . '/config.php must define a string PREFIX (only alphanumeric and underscores)' );
+			throw new \Exception( $root . '/config.php must define a string PREFIX (only alphanumeric and underscores)' );
 		}
 
 		self::$values[ 'FILE'] = $main_file;
@@ -50,30 +56,51 @@ abstract class Config {
 		$data = \get_file_data( $main_file, [ 'Plugin Name', 'Version' ] );
 		self::$values[ 'NAME' ] = __( $data[0], 'your_text_domain' );
 		self::$values[ 'VERSION' ] = $data[1] ? $data[1] : '0.0.0';
+		self::$values[ 'VERSION' ] = $data[2] ? $data[1] : '0.0.0';
 	}
 
+	/**
+	 * @param string $key
+	 * @param mixed $value
+	 * @return mixed The value
+	 * @throws \Exception
+	 */
 	public static function set ( $key, $value ) {
 		$key = mb_strtoupper( $key );
 		if ( isset( self::$values[ $key ] ) ) {
-			throw new \Error( __METHOD__ . ": Key \"$key\" has already been assigned. No key can be assigned more than once." );
+			throw new \Exception( __METHOD__ . ": Key \"$key\" has already been assigned. No key can be assigned more than once." );
 		}
 		self::$values[ $key ] = $value;
 		return $value;
 	}
 
+	/**
+	 * @param string $key
+	 * @param mixed $default
+	 * @return mixed
+	 * @throws \Exception
+	 */
 	public static function get ( $key, $default = null ) {
 		$key = \mb_strtoupper( $key );
 		$value = isset( self::$values[ $key ] ) ? self::$values[ $key ] : $default;
 		if ( null === $value ) {
-			throw new \Error( __METHOD__ . ": Undefined key $key" );
+			throw new \Exception( __METHOD__ . ": Undefined key $key" );
 		}
 		return $value;
 	}
 
+	/**
+	 * @return positive-int
+	 */
 	public static function get_size () {
 		return count( self::$values );
 	}
 
+	/**
+	 * @param string $string
+	 * @param string $sep
+	 * @return string
+	 */
 	public static function sanitize_slug ( $string, $sep = '-' ) {
 		$slug = \strtolower( \remove_accents( $string ) ); // Convert to ASCII
 		// Standard replacements
