@@ -55,7 +55,7 @@ final class Config {
 
 		$data = \get_file_data( $main_file, [ 'Plugin Name', 'Version' ] );
 		self::$values[ 'NAME' ] = __( $data[0], 'your_text_domain' );
-		self::$values[ 'VERSION' ] = $data[1] ? $data[1] : '0.0.0';
+		self::$values[ 'VERSION' ] = $data[1] ? $data[1] : false;
 	}
 
 	/**
