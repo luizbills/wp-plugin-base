@@ -139,8 +139,21 @@ foreach ( $files as $file ) {
 	file_put_contents( $target, $content );
 }
 
-chdir( $dest_dir );
+// create a changelog file
+$today = date( 'Y-m-d' ); 
+file_put_contents( $dest_dir . '/CHANGELOG.md', "# Changelog
 
+All notable changes to this project will be documented in this file.
+
+This project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
+
+## 1.0.0 - $today
+
+-   Initial release
+"
+
+// create i18n pot file
+chdir( $dest_dir );
 if ( shell_cmd_exists( 'wp' ) ) {
 	echo info( "Generating languages/{$find_replace['your_text_domain']}.pot file ..." ) . PHP_EOL;
 	$output = shell_exec( 'composer run make-pot' );
@@ -154,6 +167,7 @@ if ( shell_cmd_exists( 'composer' ) && ! file_exists( "$dest_dir/vendor" ) ) {
 	if ( $debug ) echo $output;
 }
 
+// the end
 if ( $debug ) {
 	echo info( "Files generated:" ) . PHP_EOL;
 	echo shell_exec( 'ls -Apl' );
