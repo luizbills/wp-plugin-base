@@ -2,8 +2,6 @@
 
 Powerful Boilerplate for WordPress Plugins.
 
-> The lightweight successor of [luizbills/wp-plugin-skeleton](https://github.com/luizbills/wp-plugin-skeleton)
-
 ## Requirements
 
 - [PHP](http://php.net/) v7.4+
