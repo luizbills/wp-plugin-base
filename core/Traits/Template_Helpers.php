@@ -39,9 +39,9 @@ trait Template_Helpers {
 			require $full_path;
 			$html = \ob_get_clean();
 		} catch ( \Throwable $e ) {
+			self::log_critical( $e );
 			if ( self::get_defined( 'WP_DEBUG' ) && current_user_can( 'administrator' ) ) {
-				$error = wp_slash( "Error while rendering template '$template_path': " . $e->getMessage() );
-				$html = '<script>alert("' . esc_js( $error ) . '")</script>';
+				echo '<pre>' . esc_html( wp_slash( "Error while rendering template '$template_path': " . $e->getMessage() ) ) . '</pre>';
 			} else {
 				throw new \Exception( $e );
 			}
