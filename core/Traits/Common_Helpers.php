@@ -17,8 +17,9 @@ trait Common_Helpers {
 	 * @param mixed $default
 	 * @return mixed
 	 */
-	public static function get ( &$var, $default = null ) {
-		return $var ?? $default;
+	public static function get ( &$var, $default = null, $clean = true ) {
+		$value = isset( $var ) ? $var : $default;
+		return $clean && is_scalar( $value ) ? \sanitize_text_field( $value ) : $value;
 	}
 
 	/**
