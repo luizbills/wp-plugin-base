@@ -43,7 +43,7 @@ final class Dependencies {
 	}
 
 	/**
-	 * @return array{success: bool, messages: string[]} The result
+	 * @return array{success: bool, messages: array<int, array{text: string, is_error: bool}>}
 	 * @throws \Exception
 	 */
 	public static function check_dependencies () {
@@ -124,7 +124,7 @@ final class Dependencies {
 	}
 
 	/**
-	 * @param string[] $messages
+	 * @param array<int, array{text:string, is_error:bool}> $messages
 	 * @return void
 	 */
 	protected static function display_notice_missing_deps ( $messages ) {
@@ -132,20 +132,23 @@ final class Dependencies {
 		if ( ! \current_user_can( 'install_plugins' ) ) return;
 		if ( 0 === count( $messages ) ) return;
 
-		\usort( $messages, function ( $a, $b ) {
-			return $b['is_error'] <=> $a['is_error'];
-		} );
+		\usort(
+			$messages,
+			function ( $a, $b ) {
+				return $b['is_error'] <=> $a['is_error'];
+			}
+		);
 
 		\add_action( 'admin_notices', function () use ( $messages ) {
 			echo "<div class='notice notice-error'><p>";
 			echo sprintf(
 				/* translators: %s is replaced with plugin name */
-				__( 'The %s plugin needs the following dependencies to work:', 'your_text_domain' ),
+				__( 'The %s plugin needs the following dependencies to work:', 'wc-shipping-simulator' ),
 				"<strong>" . Config::get( 'NAME' ) . "</strong>",
 			);
 
 			$indent = \str_repeat( '&nbsp;', 4 );
-			$missing = esc_html__( 'Missing', 'your_text_domain' );
+			$missing = esc_html__( 'Missing', 'wc-shipping-simulator' );
 			$allowed_html = [
 				'a' => [ 'href' => [], 'target' => [] ],
 				'span' => [ 'class' => [], 'style' => [] ],

@@ -7,7 +7,7 @@ trait String_Helpers {
 	/**
 	 * @param string $string
 	 * @param string $encoding
-	 * @return string
+	 * @return int<0, max>
 	 */
 	public static function str_length ( $string, $encoding = 'UTF-8' ) {
 		return \mb_strlen( $string, $encoding );
@@ -34,7 +34,7 @@ trait String_Helpers {
 	/**
 	 * @param string $string
 	 * @param string $encoding
-	 * @return string
+	 * @return bool
 	 */
 	public static function str_contains ( $string, $search, $encoding = 'UTF-8' ) {
 		return $search !== '' && mb_strpos( $string, $search, 0, $encoding ) !== false;

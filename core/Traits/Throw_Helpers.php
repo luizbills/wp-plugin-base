@@ -15,7 +15,7 @@ trait Throw_Helpers {
 	 * If the condition is falsy, throws a Exception.
 	 *
 	 * @param bool $condition
-	 * @param string $message
+	 * @param callable|mixed $message
 	 * @param \Throwable|null $exception_class
 	 * @return void
 	 * @throws \Throwable

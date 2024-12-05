@@ -10,7 +10,7 @@ trait Debug_Helpers {
 	 * Dump and die
 	 *
 	 * @param mixed ...$values
-	 * @return null|never
+	 * @return void|never
 	 */
 	public static function dd ( ...$values ) {
 		if ( ! WP_DEBUG ) return;

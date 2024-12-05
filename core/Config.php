@@ -89,7 +89,7 @@ final class Config {
 	}
 
 	/**
-	 * @return positive-int
+	 * @return int<0, max>
 	 */
 	public static function get_size () {
 		return count( self::$values );
